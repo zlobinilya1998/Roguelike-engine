@@ -9,6 +9,9 @@ export class Events {
         },
         level: {
             up: 'player:level:up',
+        },
+        combat: {
+            takeDamage: 'player:combat:takeDamage',
         }
     }
     static inventory = {

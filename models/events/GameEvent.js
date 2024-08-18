@@ -17,6 +17,9 @@ export class GameEvent {
       level: {
         up: () => createEvent(Events.player.level.up),
       },
+      combat: {
+        takeDamage: (count) => createEvent(Events.player.combat.takeDamage, count)
+      }
     },
     inventory: {
       open: () => createEvent(Events.inventory.open),
@@ -50,6 +53,10 @@ export class GameEvent {
       });
       GameEvent.subscribe(Events.player.level.up, () => {
         Game.player.stats.level += 1;
+      });
+
+      GameEvent.subscribe(Events.player.combat.takeDamage, (e) => {
+        console.log('Damage take', e.detail);
       });
 
       GameEvent.subscribe(Events.player.move.left, () => {

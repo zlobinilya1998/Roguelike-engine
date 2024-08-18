@@ -9,6 +9,9 @@ export class Player extends Sprite {
 
   equipment = new Equipment();
   stats = new PlayerStats();
+
+
+  takeDamage(){}
 }
 
 

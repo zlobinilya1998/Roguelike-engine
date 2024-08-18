@@ -5,6 +5,7 @@ import { weapons } from "./models/entities/weapons.js";
 import { HealthBar } from "./src/components/Hud/Player/HealthBar.js";
 import { PlayerInventory } from "./src/components/Hud/Player/Inventory.js";
 import { GameEvent } from "./models/events/GameEvent.js";
+import { Creature, Enemy } from "./models/Creature.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -19,13 +20,16 @@ const inventory = new PlayerInventory(player);
 class Game {
   static objects = [new Chest("Solid chest", weapons)];
   static creature = [];
+  static enemies = [
+    new Enemy({ x: 40, y: 150 }, { width: 50, height: 50 })
+  ]
   static hud = [new HealthBar()];
   static inventory = inventory;
   static player = player;
   static ctx = c;
 
   static get entities() {
-    return [...this.hud, ...this.objects, ...this.creature, this.player];
+    return [...this.hud, ...this.objects, ...this.creature, this.player, ...this.enemies];
   }
 
   static start() {
@@ -35,6 +39,8 @@ class Game {
   }
   static update(timestamp) {
     console.log("Game update");
+    console.log(this.enemies[0]);
+    
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));
