@@ -1,4 +1,3 @@
-
 export class Equipment {
   items = {
     weapon: null,
@@ -10,7 +9,11 @@ export class Equipment {
     this.items[item.type] = item;
   }
 
-  get armourValue(){
-    return 20;
+  get weapon(){
+    return this.items.weapon;
+  }
+
+  get armourValue() {
+    return 0;
   }
 }

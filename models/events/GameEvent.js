@@ -18,8 +18,9 @@ export class GameEvent {
         up: () => createEvent(Events.player.level.up),
       },
       combat: {
-        takeDamage: (count) => createEvent(Events.player.combat.takeDamage, count)
-      }
+        takeDamage: (count) =>
+          createEvent(Events.player.combat.takeDamage, count),
+      },
     },
     inventory: {
       open: () => createEvent(Events.inventory.open),

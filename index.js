@@ -5,7 +5,7 @@ import { weapons } from "./models/entities/weapons.js";
 import { HealthBar } from "./src/components/Hud/Player/HealthBar.js";
 import { PlayerInventory } from "./src/components/Hud/Player/Inventory.js";
 import { GameEvent } from "./models/events/GameEvent.js";
-import { Creature, Enemy } from "./models/Creature.js";
+import { Creature, AgressiveEnemy } from "./models/Creature.js";
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -21,7 +21,7 @@ class Game {
   static objects = [new Chest("Solid chest", weapons)];
   static creature = [];
   static enemies = [
-    new Enemy({ x: 40, y: 150 }, { width: 50, height: 50 })
+    new AgressiveEnemy({ x: 40, y: 150 }, { width: 50, height: 50 })
   ]
   static hud = [new HealthBar()];
   static inventory = inventory;
