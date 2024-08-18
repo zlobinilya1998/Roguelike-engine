@@ -39,8 +39,6 @@ class Game {
   }
   static update(timestamp) {
     console.log("Game update");
-    console.log(this.enemies[0]);
-    
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));

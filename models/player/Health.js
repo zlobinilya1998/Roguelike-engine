@@ -19,4 +19,9 @@ export class Health {
     if (this.level === 1) return this._baseHealth;
     return this.level * this._healthPerLevel + this._baseHealth;
   }
+
+  takeDamage(damageCount){
+    const restHealth = this.health - damageCount
+    this.health = restHealth > 0 ? restHealth : 0; 
+  }
 }

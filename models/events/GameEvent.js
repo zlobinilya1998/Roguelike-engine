@@ -56,7 +56,7 @@ export class GameEvent {
       });
 
       GameEvent.subscribe(Events.player.combat.takeDamage, (e) => {
-        console.log('Damage take', e.detail);
+        Game.player.takeDamage(e.detail);
       });
 
       GameEvent.subscribe(Events.player.move.left, () => {

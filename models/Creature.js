@@ -1,5 +1,6 @@
 import { GameObjectUtils } from "../src/utils/GameObject.js";
 import { GameEvent } from "./events/GameEvent.js";
+import { PhysicDamage } from "./player/Damage.js";
 import { Sprite } from "./Sprite.js";
 
 export class Creature extends Sprite {
@@ -15,8 +16,7 @@ export class Enemy extends Sprite {
 
   attackSpeed = 1.2;
 
-
-  get player(){
+  get player() {
     return window.Game.player;
   }
 
@@ -24,14 +24,20 @@ export class Enemy extends Sprite {
     return GameObjectUtils.isInteractive(this.player.geometry, this.geometry);
   }
 
+  attackCooldown = null;
   attack() {
-    GameEvent.dispatch.player.combat.takeDamage(20);
+    if (this.attackCooldown) return;
+    const damage = new PhysicDamage(50);
+    GameEvent.dispatch.player.combat.takeDamage(damage);
+    this.attackCooldown = setTimeout(() => {
+      this.attackCooldown = null;
+    }, this.attackSpeed * 1_000);
   }
 
-
-  update(){
+  update() {
     super.update();
-    this.attack();
-    
+    if (this.isNearPlayer) {
+      this.attack();
+    }
   }
 }

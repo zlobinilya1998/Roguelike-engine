@@ -1,4 +1,4 @@
-const DamageType = {
+export const DamageType = {
   Physic: 1,
   Magic: 2,
 };
