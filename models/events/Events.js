@@ -6,6 +6,9 @@ export class Events {
             right: 'player:move:right',
             top: 'player:move:top',
             down: 'player:move:down',
+        },
+        level: {
+            up: 'player:level:up',
         }
     }
     static inventory = {

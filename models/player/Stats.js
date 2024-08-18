@@ -1,42 +1,40 @@
+import { Events } from "../events/Events.js";
+import { GameEvent } from "../events/GameEvent.js";
+import { Experience } from "./Experience.js";
+
 export class PlayerStats {
-    _level = 1;
-    _xp
-    _xpPerLevel = 300;
-    _baseHealth = 100;
-    _health = this._baseHealth;
-    _healthPerLevel = 10;
-    _mana = 30;
+  _level = 1;
 
-    get level(){
-        return this._level;
-    }
+  _baseHealth = 100;
+  _health = this._baseHealth;
+  _healthPerLevel = 10;
+  _mana = 30;
 
-    set level(val){
-        this._level = val;
-    }
+  experience = new Experience()
 
-    get xp() {
-        return this._xp
-    }
+  get level() {
+    return this._level;
+  }
 
-    set xp(val) {
-        this._xp = val
-    }
+  set level(val) {
+    this._level = val;
+  }
 
-    get health(){
-        return this._health
-    }
+  get health() {
+    return this._health;
+  }
 
-    set health(val){
-        this._health = val;
-    }
+  set health(val) {
+    this._health = val;
+  }
 
-    get maxHealth(){
-        return this.level + this._baseHealth;
-    }
-
-
-
-
-
+  get maxHealth() {
+    if (this.level === 1) return this._baseHealth;
+    return this.level * this._healthPerLevel + this._baseHealth;
+  }
 }
+
+GameEvent.subscribe(Events.player.level.up, () => {
+    Game.player.stats.level += 1;
+    
+})

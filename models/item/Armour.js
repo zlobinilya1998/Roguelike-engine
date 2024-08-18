@@ -1,4 +1,4 @@
-import { ItemType } from "./Item.js";
+import { ItemType, Item } from "./Item.js";
 
 export class Armour extends Item {
     constructor(title){

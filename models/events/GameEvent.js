@@ -13,6 +13,9 @@ export class GameEvent {
                 right: () => createEvent(Events.player.move.right),
                 top: () => createEvent(Events.player.move.top),
                 down: () => createEvent(Events.player.move.down),
+            },
+            level: {
+                up: () => createEvent(Events.player.level.up),
             }
         },
         inventory: {
