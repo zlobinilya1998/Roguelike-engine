@@ -11,7 +11,6 @@ export class Schedule {
 export class Schedulable {
     scheduleList = []
     update(ts){
-        console.log('Schedule');
     }
 
     addToSchedule(schedule){

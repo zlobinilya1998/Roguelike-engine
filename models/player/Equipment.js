@@ -12,9 +12,3 @@ export class Equipment {
     this.items[item.type] = item;
   }
 }
-
-
-
-GameEvent.subscribe(Events.player.equip, (e) => {
-    window.Game.player.equipment.equipItem(e.detail);
-})

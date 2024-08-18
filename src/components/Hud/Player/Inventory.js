@@ -61,8 +61,3 @@ export class PlayerInventory {
     draw(){}
     update(){}
 }
-
-
-GameEvent.subscribe(Events.inventory.open, () => window.Game.inventory.open())
-GameEvent.subscribe(Events.inventory.close, () => window.Game.inventory.close())
-GameEvent.subscribe(Events.inventory.toggle, () => window.Game.inventory.toggle())

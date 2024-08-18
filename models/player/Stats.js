@@ -1,5 +1,3 @@
-import { Events } from "../events/Events.js";
-import { GameEvent } from "../events/GameEvent.js";
 import { Experience } from "./Experience.js";
 
 export class PlayerStats {
@@ -33,7 +31,3 @@ export class PlayerStats {
     return this.level * this._healthPerLevel + this._baseHealth;
   }
 }
-
-GameEvent.subscribe(Events.player.level.up, () => {
-    Game.player.stats.level += 1;
-})

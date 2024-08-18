@@ -19,7 +19,7 @@ const inventory = new PlayerInventory(player)
 class Game {
     static objects = [new Chest("Solid chest", weapons)]
     static creature = []
-    static hud = [new HealthBar(player)]
+    static hud = [new HealthBar()]
     static inventory = inventory;
     static player = player;
     static ctx = c;
@@ -42,26 +42,8 @@ class Game {
 }
 
 
-window.Game = Game
+window.Game = Game;
+GameEvent.createListeners();
 
 Game.start()
 
-window.addEventListener('keydown', e => {
-    switch (e.key){
-        case 'i' :
-            GameEvent.dispatch.inventory.toggle();
-        case 'a' :
-            GameEvent.dispatch.player.move.left();
-            break;
-        case 'd' : 
-            GameEvent.dispatch.player.move.right();
-            break;
-        case 'w' : 
-            GameEvent.dispatch.player.move.top();
-            break;
-        case 's' :  
-            GameEvent.dispatch.player.move.down();
-            break;
-        
-    }
-})

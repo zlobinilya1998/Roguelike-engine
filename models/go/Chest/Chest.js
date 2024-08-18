@@ -38,7 +38,3 @@ export class Chest extends GameObject {
         }
     }
 }
-
-GameEvent.subscribe(Events.chest.dialog.open, () => {
-    ChestDialog.open(this.loot, this.title)
-})
