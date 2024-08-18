@@ -25,7 +25,7 @@ export class Chest extends GameObject {
   }
 
   styles = {
-    applyActiveStyle() {
+    applyActiveStyle: () => {
       window.Game.ctx.strokeStyle = "green";
       const { x, y, height, width } = this.geometry;
       window.Game.ctx.rect(x, y, width, height);
