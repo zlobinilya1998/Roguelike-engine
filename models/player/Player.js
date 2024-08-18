@@ -1,31 +1,13 @@
-import { Creature } from "../Creature.js";
-import { Events } from "../events/Events.js";
+import { Equipment } from "./Equipment.js";
+import { PlayerStats } from "./Stats.js";
 
-export class Player extends Creature {
-    constructor(position,size){
-        super(position,size)
-    }
+export class Player extends Sprite {
+  constructor() {
+    super({x: 100,y: 250},{width: 30, height: 100});
+  }
 
-    equipment = {
-        weapon: null,
-        armour: null,
-    }
-
-    combat = {
-        attackSpeed: 1,
-    }
-
-    equipItem(item){
-        if (!item) return;
-        this.equipment[item.type] = item;
-    }
-
-    get averageDamage(){
-        if (!this.equipment.weapon) return 0;       
-    }
+  equipment = new Equipment();
+  stats = new PlayerStats();
 }
 
-window.addEventListener(Events.player.equip, (e) => {
-    console.log('Player equip event', e);
-    window.Game.player.equipItem(e.detail);
-})
+

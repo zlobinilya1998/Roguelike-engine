@@ -1,8 +1,6 @@
 import { Events } from "../../../../models/events/Events.js";
 import { GameEvent } from "../../../../models/events/GameEvent.js";
 
-
-
 export class PlayerInventory {
     constructor(player){
         this.player = player
@@ -65,6 +63,6 @@ export class PlayerInventory {
 }
 
 
-GameEvent.subscribe(Events.inventory.open, () => Game.inventory.open())
-GameEvent.subscribe(Events.inventory.close, () => Game.inventory.close())
-GameEvent.subscribe(Events.inventory.toggle, () => Game.inventory.toggle())
+GameEvent.subscribe(Events.inventory.open, () => window.Game.inventory.open())
+GameEvent.subscribe(Events.inventory.close, () => window.Game.inventory.close())
+GameEvent.subscribe(Events.inventory.toggle, () => window.Game.inventory.toggle())

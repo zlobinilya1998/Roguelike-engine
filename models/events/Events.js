@@ -13,4 +13,10 @@ export class Events {
         close: 'inventory:close',
         toggle: 'inventory:toggle',
     }
+
+    static chest = {
+        dialog: {
+            open: 'chest:dialog:open',
+        }
+    }
 }

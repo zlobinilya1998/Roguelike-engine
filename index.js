@@ -14,7 +14,7 @@ canvas.height = 576;
 
 c.fillRect(0,0,canvas.width,canvas.height)
 
-const player = new Player({x: 100,y: 250},{width: 30, height: 100})
+const player = new Player()
 const inventory = new PlayerInventory(player)
 class Game {
     static objects = [new Chest("Solid chest", weapons)]
@@ -29,16 +29,13 @@ class Game {
     }
 
     static start(){
+        console.log('Game started');
         this.entities.forEach(obj => obj.draw());
         requestAnimationFrame((timestamp) => this.update(timestamp))
     }
     static update(timestamp){
-        if (this.player.health <= 0){
-            console.log('Game ended');
-            return;
-        }
-        this.ctx.clearRect(0,0, canvas.width,canvas.height)
         console.log('Game update');
+        this.ctx.clearRect(0,0, canvas.width,canvas.height)
         this.entities.forEach(obj => obj.update(timestamp))
         requestAnimationFrame((timestamp) => this.update(timestamp))
     }
@@ -49,32 +46,21 @@ window.Game = Game
 
 Game.start()
 
-
-
-
-
-
-
-
 window.addEventListener('keydown', e => {
     switch (e.key){
         case 'i' :
             GameEvent.dispatch.inventory.toggle();
         case 'a' :
             GameEvent.dispatch.player.move.left();
-            window.Game.player.position.x -= 1;
             break;
         case 'd' : 
             GameEvent.dispatch.player.move.right();
-            window.Game.player.position.x += 1;
             break;
         case 'w' : 
-        GameEvent.dispatch.player.move.top();
-            window.Game.player.position.y -= 1;
+            GameEvent.dispatch.player.move.top();
             break;
         case 's' :  
             GameEvent.dispatch.player.move.down();
-            window.Game.player.position.y += 1;
             break;
         
     }

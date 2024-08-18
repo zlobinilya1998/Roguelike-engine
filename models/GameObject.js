@@ -1,27 +1,26 @@
 export class GameObject {
-    constructor(position, size, title){
-        this.position = position
+    constructor(position, size, title, scale = 1){
+        this.position = position;
         this.size = size;
-        this.title = title
+        this.title = title;
+        this.scale = scale;
     }
-    previousTime = 0;
-    title = '';
-
 
     draw(ts){
         window.Game.ctx.fillStyle = 'gold';
-        window.Game.ctx.fillRect(this.position.x,this.position.y,50,50)
+        window.Game.ctx.fillRect(this.position.x,this.position.y,this.geometry.width,this.geometry.height)
     }
 
     update(ts){
         this.draw();
-        // const currentTime = ts * 0.001;
-        // const delta = currentTime - this.previousTime;
-        // if (delta > 5){
-        //     console.log('5 sec. passed');
-        //     this.previousTime = currentTime;
-        //     this.position.x += 1;
-        //     this.draw();
-        // }
+    }
+
+    get geometry(){
+        return {
+            x: this.position.x,
+            y: this.position.y,
+            width: this.size.width * this.scale,
+            height: this.size.height * this.scale,
+        }
     }
 }

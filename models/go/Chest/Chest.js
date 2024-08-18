@@ -1,19 +1,17 @@
 import { GameObjectUtils } from "../../../src/utils/GameObject.js";
 import { NumberUltils } from "../../../src/utils/Numbers.js";
+import { Events } from "../../events/Events.js";
+import { GameEvent } from "../../events/GameEvent.js";
 import { GameObject } from "../../GameObject.js";
 import { ChestDialog } from "./ChestDialog.js";
 
-
-
-
 export class Chest extends GameObject {
     constructor(title, loot){
-        super({x: NumberUltils.randomInteger(20,300),y:NumberUltils.randomInteger(50,300)},{width:50,height:50}, title || 'Chest');
+        const position = {x: NumberUltils.randomInteger(20,300),y:NumberUltils.randomInteger(50,300)};
+        const size = {width:50,height:50};
+        super(position, size, title || 'Chest');
         this.loot = loot || []
     }
-
-    loot = []
-
     get isCanInteract(){
         const player = window.Game.player;
         const playerPosition = {
@@ -39,11 +37,8 @@ export class Chest extends GameObject {
             window.Game.ctx.stroke();
         }
     }
-
-    open(){
-        ChestDialog.open(this.loot, this.title)
-    }
-
-
 }
 
+GameEvent.subscribe(Events.chest.dialog.open, () => {
+    ChestDialog.open(this.loot, this.title)
+})

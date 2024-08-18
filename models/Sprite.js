@@ -1,7 +1,9 @@
 export class Sprite {
-    constructor(position, size){
+    constructor(position, size, imageSrc){
         this.position = position
         this.size = size
+        this.image = new Image();
+        this.image.src = imageSrc;
     }
 
     draw() {

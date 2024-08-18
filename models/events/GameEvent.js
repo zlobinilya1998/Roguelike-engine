@@ -20,6 +20,11 @@ export class GameEvent {
             close: () => createEvent(Events.inventory.close),
             toggle: () => createEvent(Events.inventory.toggle),
         },
+        chest: {
+            dialog: {
+                open: (payload) => createEvent(Events.chest.dialog.open, payload)
+            }
+        },
     }
 
     static subscribe(event, callback){
