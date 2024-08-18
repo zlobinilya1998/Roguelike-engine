@@ -36,5 +36,4 @@ export class PlayerStats {
 
 GameEvent.subscribe(Events.player.level.up, () => {
     Game.player.stats.level += 1;
-    
 })
