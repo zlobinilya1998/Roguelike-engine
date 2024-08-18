@@ -1,3 +1,5 @@
+import { weapons } from "../entities/weapons.js";
+
 export class Equipment {
   items = {
     weapon: null,
@@ -9,11 +11,18 @@ export class Equipment {
     this.items[item.type] = item;
   }
 
-  get weapon(){
+  get weapon() {
     return this.items.weapon;
   }
 
   get armourValue() {
     return 0;
+  }
+}
+
+export class AgressiveEnemyEquipment extends Equipment {
+  constructor() {
+    super();
+    this.equipItem(weapons[0]);
   }
 }

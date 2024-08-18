@@ -1,9 +1,9 @@
 import { GameObjectUtils } from "../src/utils/GameObject.js";
 import { GameEvent } from "./events/GameEvent.js";
 import { PhysicDamage } from "./player/Damage.js";
-import { Equipment } from "./player/Equipment.js";
+import { AgressiveEnemyEquipment } from "./player/Equipment.js";
 import { Sprite } from "./Sprite.js";
-import { weapons } from "./entities/weapons.js";
+
 export class Creature extends Sprite {
   constructor(position, size) {
     super(position, size);
@@ -26,15 +26,13 @@ export class Enemy extends Sprite {
 export class AgressiveEnemy extends Enemy {
   constructor(position, size) {
     super(position, size);
-    this.equipment = new Equipment();
-    this.equipment.equipItem(weapons[1]);
+    this.equipment = new AgressiveEnemyEquipment();
   }
   attackCooldown = null;
   attack() {
     const weapon = this.equipment.weapon;
     if (!weapon || this.attackCooldown) return;
-    const weaponDamage = this.equipment.weapon.averageDamage;
-    const damage = new PhysicDamage(weaponDamage);
+    const damage = weapon.getDamage();
     GameEvent.dispatch.player.combat.takeDamage(damage);
     this.attackCooldown = setTimeout(() => {
       this.attackCooldown = null;
