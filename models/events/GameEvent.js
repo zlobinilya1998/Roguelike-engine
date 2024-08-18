@@ -52,6 +52,22 @@ export class GameEvent {
         Game.player.stats.level += 1;
       });
 
+      GameEvent.subscribe(Events.player.move.left, () => {
+        Game.player.position.x -= 1;
+      });
+
+      GameEvent.subscribe(Events.player.move.right, () => {
+        Game.player.position.x += 1;
+      });
+
+      GameEvent.subscribe(Events.player.move.top, () => {
+        Game.player.position.y -= 1;
+      });
+
+      GameEvent.subscribe(Events.player.move.down, () => {
+        Game.player.position.y += 1;
+      });
+
       GameEvent.subscribe(Events.inventory.open, () =>
         window.Game.inventory.open()
       );
