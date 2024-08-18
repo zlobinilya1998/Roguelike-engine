@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.player-stats {
+    padding: 10px;
+}
+.player-inventory {
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: repeat(6, 50px);
+    gap: 10px;
+    padding: 10px;
+}
