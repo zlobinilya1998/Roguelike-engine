@@ -1,4 +1,4 @@
-import { PhysicDamage } from "models/player/Damage.js";
+import { PhysicDamage } from "game/Damage.js";
 import { ItemType, Item } from "models/item/Item.js";
 
 export class Weapon extends Item {

@@ -1,6 +1,6 @@
-import { GameObjectUtils } from "utils/GameObject.js";
+import { GameUtils } from "utils";
 import { GameEvent } from "models/events/GameEvent.js";
-import { AggressiveEnemyEquipment } from "models/player/Equipment.js";
+import { AggressiveEnemyEquipment } from "game/Equipment.js";
 import { Sprite } from "models/Sprite.js";
 
 export class Creature extends Sprite {
@@ -19,7 +19,7 @@ export class Enemy extends Sprite {
   }
 
   get isNearPlayer() {
-    return GameObjectUtils.isInteractive(this.player.geometry, this.geometry);
+    return GameUtils.gameObject.isInteractive(this.player.geometry, this.geometry);
   }
 }
 export class AggressiveEnemy extends Enemy {

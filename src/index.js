@@ -1,5 +1,5 @@
 import './css/index.css'
-import { Chest } from "models/go/Chest/Chest.js";
+import { Chest } from "models/GameObject/Chest/Chest.js";
 import { Player } from "models/player/Player.js";
 
 import { weapons } from "models/entities/weapons.js";

@@ -12,7 +12,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: ['style-loader', 'css-loader','postcss-loader'],
             }
         ],
     },
@@ -34,6 +34,8 @@ module.exports = {
         alias: {
             "@": path.resolve(__dirname, 'src/'),
             models: path.resolve(__dirname, 'src/models/'),
+            game: path.resolve(__dirname, 'src/models/game/'),
+            event: path.resolve(__dirname, 'src/models/events/'),
             components: path.resolve(__dirname, 'src/components/'),
             utils: path.resolve(__dirname, 'src/utils/'),
             assets: path.resolve(__dirname, 'src/assets/'),

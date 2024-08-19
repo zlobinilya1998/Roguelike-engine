@@ -1,12 +1,11 @@
-import { GameObjectUtils } from "utils/GameObject.js";
-import { NumberUtils } from "utils/Numbers.js";
-import { GameObject } from "models/GameObject.js";
+import { GameUtils } from "utils";
+import { GameObject } from "models/GameObject/GameObject.js";
 
 export class Chest extends GameObject {
   constructor(title, loot) {
     const position = {
-      x: NumberUtils.randomInteger(20, 300),
-      y: NumberUtils.randomInteger(50, 300),
+      x: GameUtils.number.randomInteger(20, 300),
+      y: GameUtils.number.randomInteger(50, 300),
     };
     const size = { width: 50, height: 50 };
     super(position, size, title || "Chest");
@@ -14,7 +13,7 @@ export class Chest extends GameObject {
   }
   get isCanInteract() {
     const player = window.Game.player;
-    return GameObjectUtils.isInteractive(player.geometry, this.geometry);
+    return GameUtils.gameObject.isInteractive(player.geometry, this.geometry);
   }
 
   draw() {
