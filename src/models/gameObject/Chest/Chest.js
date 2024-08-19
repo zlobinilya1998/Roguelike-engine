@@ -1,5 +1,5 @@
 import { GameUtils } from "utils";
-import { GameObject } from "models/GameObject/GameObject.js";
+import { GameObject } from "models/gameObject/GameObject";
 
 export class Chest extends GameObject {
   constructor(title, loot) {

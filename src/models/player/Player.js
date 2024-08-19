@@ -1,7 +1,7 @@
-import { Equipment } from "game/Equipment.js";
-import { PlayerStats } from "./Stats.js";
-import { Sprite } from "../Sprite.js";
-import { DamageType } from "game/Damage.js";
+import { Equipment } from "game/Equipment";
+import { PlayerStats } from "./Stats";
+import { Sprite } from "models/Sprite";
+import { DamageType } from "game/Damage";
 
 export class Player extends Sprite {
   constructor() {

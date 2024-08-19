@@ -1,5 +1,11 @@
+import { SpritePosition, SpriteSize } from 'models/types/Sprite'
+
 export class Sprite {
-  constructor(position, size, imageSrc) {
+  position: SpritePosition;
+  size: SpriteSize;
+  image: HTMLImageElement;
+  
+  constructor(position: SpritePosition, size: SpriteSize, imageSrc: string) {
     this.position = position;
     this.size = size;
     this.image = new Image();
@@ -17,8 +23,8 @@ export class Sprite {
 
   draw() {
     window.Game.ctx.fillStyle = "red";
-    const {x,y,height,width} = this.geometry;
-    window.Game.ctx.fillRect(x,y,width,height);
+    const { x, y, height, width } = this.geometry;
+    window.Game.ctx.fillRect(x, y, width, height);
   }
 
   update() {

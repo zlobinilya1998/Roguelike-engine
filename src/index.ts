@@ -1,12 +1,14 @@
-import './css/index.css'
-import { Chest } from "models/GameObject/Chest/Chest.js";
-import { Player } from "models/player/Player.js";
+import './style/index.css'
+import { Chest } from "@/models/gameObject/chest/Chest.js";
+import { Player } from "@/models/player/Player.js";
 
 import { weapons } from "models/entities/weapons.js";
 import { HealthBar } from "components/Hud/Player/HealthBar.js";
 import { PlayerInventory } from "components/Hud/Player/Inventory.js";
-import { GameEvent } from "models/events/GameEvent.js";
-import { AggressiveEnemy } from "models/Creature.js";
+import { GameEvent } from "event/index";
+import { AggressiveEnemy } from "models/enemy/AggressiveEnemy";
+import { Enemy } from "models/enemy/Enemy";
+import { Creature } from 'models/Creature';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -18,10 +20,10 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 const player = new Player();
 const inventory = new PlayerInventory(player);
-class Game {
+export class Game {
   static objects = [new Chest("Solid chest", weapons)];
-  static creature = [];
-  static enemies = [
+  static creature: Creature[] = [];
+  static enemies: Enemy[] = [
     new AggressiveEnemy({ x: 40, y: 150 }, { width: 50, height: 50 })
   ]
   static hud = [new HealthBar()];
@@ -38,7 +40,7 @@ class Game {
     this.entities.forEach((obj) => obj.draw());
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
-  static update(timestamp) {
+  static update(timestamp: EpochTimeStamp) {
     console.log("Game update");
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.entities.forEach((obj) => obj.update(timestamp));

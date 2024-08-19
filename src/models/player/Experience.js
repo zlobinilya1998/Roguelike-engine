@@ -1,4 +1,4 @@
-import { GameEvent } from "models/events/GameEvent.js";
+import { GameEvent } from "event/index";
 
 export class Experience {
   _baseXp = 0;

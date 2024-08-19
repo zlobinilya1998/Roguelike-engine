@@ -2,8 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
-
+    entry: './src/index.ts',
+    devtool: 'inline-source-map',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
@@ -11,8 +11,13 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader','postcss-loader'],
+                use: ['style-loader', 'css-loader', 'postcss-loader'],
             }
         ],
     },
@@ -31,6 +36,7 @@ module.exports = {
     },
 
     resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
         alias: {
             "@": path.resolve(__dirname, 'src/'),
             models: path.resolve(__dirname, 'src/models/'),
@@ -42,5 +48,5 @@ module.exports = {
         },
     },
 
-    mode: 'development', // Режим сборки
+    mode: 'development',
 }
