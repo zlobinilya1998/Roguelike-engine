@@ -1,4 +1,4 @@
-import { ItemType, Item } from "./Item.js";
+import { ItemType, Item } from "models/item/Item.js";
 
 export class Armour extends Item {
     constructor(title){

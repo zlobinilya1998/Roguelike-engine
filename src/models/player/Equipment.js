@@ -1,4 +1,4 @@
-import { weapons } from "../entities/weapons.js";
+import { weapons } from "models/entities/weapons.js";
 
 export class Equipment {
   items = {
@@ -20,7 +20,7 @@ export class Equipment {
   }
 }
 
-export class AgressiveEnemyEquipment extends Equipment {
+export class AggressiveEnemyEquipment extends Equipment {
   constructor() {
     super();
     this.equipItem(weapons[0]);

@@ -1,4 +1,4 @@
-import { Events } from "./Events.js";
+import { Events } from "models/events/Events.js";
 
 export const createEvent = (name, data) => {
   const event = new CustomEvent(name, { detail: data });

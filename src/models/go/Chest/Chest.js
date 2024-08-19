@@ -1,12 +1,12 @@
-import { GameObjectUtils } from "../../../src/utils/GameObject.js";
-import { NumberUltils } from "../../../src/utils/Numbers.js";
-import { GameObject } from "../../GameObject.js";
+import { GameObjectUtils } from "utils/GameObject.js";
+import { NumberUtils } from "utils/Numbers.js";
+import { GameObject } from "models/GameObject.js";
 
 export class Chest extends GameObject {
   constructor(title, loot) {
     const position = {
-      x: NumberUltils.randomInteger(20, 300),
-      y: NumberUltils.randomInteger(50, 300),
+      x: NumberUtils.randomInteger(20, 300),
+      y: NumberUtils.randomInteger(50, 300),
     };
     const size = { width: 50, height: 50 };
     super(position, size, title || "Chest");

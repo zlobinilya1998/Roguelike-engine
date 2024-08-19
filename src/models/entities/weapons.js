@@ -1,4 +1,4 @@
-import { Weapon } from "../item/Weapon.js"
+import { Weapon } from "models/item/Weapon.js"
 const items = [
     {"title": "Sword of zeal", "minDmg": 10, "maxDmg": 25, speed: 1.5},
     {"title": "Mace of warlord", "minDmg": 5, "maxDmg": 40, speed: 3},
