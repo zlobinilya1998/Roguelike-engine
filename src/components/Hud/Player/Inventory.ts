@@ -1,3 +1,5 @@
+import { Item } from "@/models/item/Item";
+import { Inventory } from "@/models/player/Inventory";
 import { Player } from "@/models/player/Player";
 
 export class PlayerInventory {
@@ -6,6 +8,10 @@ export class PlayerInventory {
 
   get player(): Player {
     return window.Game.player;
+  }
+
+  get inventory(): Inventory {
+    return this.player.inventory
   }
 
   create = {
@@ -17,29 +23,25 @@ export class PlayerInventory {
     },
     wrapper: () => {
       const wrapper = document.createElement("div");
-      wrapper.classList.add("flex", "gap-4", "mt-10");
       return wrapper;
-    },
-    weapon: () => {
-      const weapon = document.createElement("div");
-      weapon.innerText = this.player.equipment.weapon.title;
-      return weapon;
     },
     inventory: () => {
       const inventory = document.createElement("div");
-      inventory.classList.add("player-inventory", "bg-amber-600");
+      inventory.classList.add("player-inventory");
 
-      for (let i = 0; i < 36; i++) {
-        const item = document.createElement("div");
-        item.innerText = `${i}`;
-        item.classList.add(
-          "p-4",
-          "bg-white",
-          "hover:bg-gray-400",
-          "cursor-pointer"
-        );
-        inventory.appendChild(item);
-      }
+      const items = document.createElement("div");
+      items.classList.add("player-inventory-items")
+      
+
+      this.inventory.items.forEach((item: Item) => {
+        const element = document.createElement("div");
+        const img = item.image;
+        element.appendChild(item.image);
+        element.classList.add("player-inventory-item");
+        items.appendChild(element);
+      })
+
+      inventory.appendChild(items)
 
       return inventory;
     },
@@ -52,18 +54,8 @@ export class PlayerInventory {
 
     const title = this.create.title();
     this.dialog.appendChild(title);
-    const wrapper = this.create.wrapper();
-    const stats = document.createElement("div");
     const inventory = this.create.inventory();
-
-    if (this.player.equipment.weapon) {
-      const weapon = this.create.weapon();
-      stats.appendChild(weapon);
-    }
-    
-    wrapper.appendChild(stats);
-    wrapper.appendChild(inventory);
-    this.dialog.appendChild(wrapper);
+    this.dialog.appendChild(inventory);
   }
 
   close() {
@@ -80,6 +72,6 @@ export class PlayerInventory {
     }
   }
 
-  draw() {}
-  update() {}
+  draw() { }
+  update() { }
 }

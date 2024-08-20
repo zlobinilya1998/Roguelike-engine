@@ -3,8 +3,10 @@ import { PlayerStats } from "./Stats";
 import { Sprite } from "models/Sprite";
 import { Damage, DamageSystem } from "game/Damage";
 import { SpritePosition, SpriteSize } from "models/types/Sprite";
+import { Inventory } from "models/player/Inventory";
 
 export class Player extends Sprite {
+  inventory = new Inventory();
   equipment = new Equipment();
   stats = new PlayerStats();
 

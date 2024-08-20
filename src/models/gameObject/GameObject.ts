@@ -21,6 +21,11 @@ export class GameObject {
         this.draw();
     }
 
+
+    get game(){
+        return window.Game;
+    }
+
     get geometry(): GameObjectGeometry {
         return {
             x: this.position.x,

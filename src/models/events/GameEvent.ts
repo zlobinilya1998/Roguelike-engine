@@ -60,7 +60,7 @@ export class GameEvent {
         window.Game.dialog.chest.close();
       });
       GameEvent.subscribe(Events.player.item.take, (e) => {
-        window.Game.player.equipment.equipItem(e.detail);
+        window.Game.player.inventory.takeItem(e.detail);
       });
       GameEvent.subscribe(Events.player.item.equip, (e) => {
         window.Game.player.equipment.equipItem(e.detail);
