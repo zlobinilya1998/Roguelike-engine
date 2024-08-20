@@ -38,6 +38,10 @@ export class Health {
     return this.percent > 0 && this.percent < 20;
   }
 
+  get isDead() {
+    return this.health === 0;
+  }
+
   takeDamage(damage: number) {
     const restHealth = this.health - damage;
     this.health = restHealth > 0 ? restHealth : 0;

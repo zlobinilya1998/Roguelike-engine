@@ -1,15 +1,22 @@
-import { SpritePosition, SpriteSize } from 'models/types/Sprite'
+import { SpritePosition, SpriteSize, SpriteFrames } from 'models/types/Sprite'
 
 export class Sprite {
   position: SpritePosition;
   size: SpriteSize;
   image: HTMLImageElement;
-  
-  constructor(position: SpritePosition, size: SpriteSize, imageSrc: string) {
+  frames: SpriteFrames;
+  scale: number;
+  constructor(position: SpritePosition, size: SpriteSize, imageSrc: string, frames: SpriteFrames, scale = 1) {
     this.position = position;
     this.size = size;
+    this.frames = frames;
     this.image = new Image();
     this.image.src = imageSrc;
+    this.scale = scale;
+  }
+
+  get game() {
+    return window.Game;
   }
 
   get geometry() {
@@ -22,12 +29,36 @@ export class Sprite {
   }
 
   draw() {
-    window.Game.ctx.fillStyle = "red";
-    const { x, y, height, width } = this.geometry;
-    window.Game.ctx.fillRect(x, y, width, height);
+    if (this.frames) {
+      this.game.ctx.drawImage(
+        this.image,
+        this.frames.current * (this.image.width / this.frames.max),
+        0,
+        this.image.width / this.frames.max,
+        this.image.height,
+        this.position.x,
+        this.position.y,
+        (this.image.width / this.frames.max) * this.scale,
+        this.image.height * this.scale,
+      )
+    }
   }
 
   update() {
     this.draw();
+
+    if (this.frames) this.updateFrames();
+  }
+
+  updateFrames() {
+    if (!this.frames.active) return;
+    this.frames.elapsed++;
+    if (this.frames.elapsed % this.frames.hold === 0) {
+      if (this.frames.current < this.frames.max - 1) {
+        this.frames.current++;
+      } else {
+        this.frames.current = 0;
+      }
+    }
   }
 }

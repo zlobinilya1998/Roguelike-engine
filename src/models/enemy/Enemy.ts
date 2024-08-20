@@ -4,7 +4,7 @@ import { SpritePosition, SpriteSize } from "models/types/Sprite";
 
 export class Enemy extends Sprite {
     constructor(position: SpritePosition, size: SpriteSize) {
-        super(position, size, "");
+        super(position, size, "", null);
     }
 
     get player() {
