@@ -1,21 +1,26 @@
-import { GameUtils } from "utils";
+import { GameUtils } from '@/utils';
 import { GameObject } from "models/gameObject/GameObject";
-import ChestPng from '@/assets/Chest/Chests.png';
 import { GameEvent } from "@/models/events";
 import { GameFont } from "@/models/font/Font";
+import { Item } from "@/models/item/Item";
+
+import ChestPng from '@/assets/Chest/Chests.png';
+import { GameObjectPosition, GameObjectSize } from '@/models/types/GameObject';
+
+export type ChestLoot = Item[];
 
 export class Chest extends GameObject {
-  constructor(title, loot) {
-    const position = {
-      x: 150,
-      y: 250,
-    };
-    const size = { width: 32, height: 30 };
-    super(position, size, title || "Chest");
-    this.loot = loot || [];
+  loot: ChestLoot;
+  image: HTMLImageElement;
+  isOpen: boolean;
+
+  constructor(title: string = 'Chest', loot: ChestLoot = []) {
+    const position = new GameObjectPosition(150, 250);
+    const size = new GameObjectSize(32, 30);
+    super(position, size, title);
+    this.loot = loot
     this.image = new Image();
     this.image.src = ChestPng;
-
     this.isOpen = false;
   }
   get isCanInteract() {
@@ -52,8 +57,8 @@ export class Chest extends GameObject {
     }
   }
 
-  update(timestamp) {
-    super.update();
+  update(timestamp: EpochTimeStamp) {
+    super.update(timestamp);
 
     // this.framesElapsed++
 
@@ -67,7 +72,7 @@ export class Chest extends GameObject {
     // }
   }
 
-  renderTitle(){
+  renderTitle() {
     window.Game.ctx.font = GameFont.options.chest.title;
     window.Game.ctx.fillText(this.title, this.position.x - 20, this.position.y)
   }

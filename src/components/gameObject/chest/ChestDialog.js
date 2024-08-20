@@ -2,6 +2,7 @@ import { GameEvent } from "models/events/GameEvent.js";
 
 export class ChestDialog {
   static dialog = window.chestDialog;
+
   static open(loot, title) {
     const chestTitle = document.createElement("h1");
     chestTitle.classList.add("text-xl", "text-center", "font-bold",'text-yellow-600');

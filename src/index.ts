@@ -1,12 +1,13 @@
 import './style/index.css';
 import './style/variables/variables.scss';
+import './style/components/components.scss'
 
-import { Chest } from "@/models/gameObject/chest/Chest.js";
-import { Player } from "@/models/player/Player.js";
+import { Chest } from "@/models/gameObject/chest/Chest";
+import { Player } from "@/models/player/Player";
 
-import { weapons } from "models/entities/weapons.js";
-import { HealthBar } from "components/Hud/Player/HealthBar.js";
-import { PlayerInventory } from "components/Hud/Player/Inventory.js";
+import { weapons } from "models/entities/weapons";
+import { HealthBar } from "components/Hud/Player/HealthBar";
+import { PlayerInventory } from "components/Hud/Player/Inventory";
 import { GameEvent } from "event/index";
 import { AggressiveEnemy } from "models/enemy/AggressiveEnemy";
 import { Enemy } from "models/enemy/Enemy";
