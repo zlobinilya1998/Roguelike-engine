@@ -1,4 +1,4 @@
-import { PhysicDamage } from "game/Damage";
+import { PhysicDamage } from "core/damage/Damage";
 import { ItemType, Item } from "models/item/Item";
 import WeaponPng from 'assets/Weapon/pistol.png'
 

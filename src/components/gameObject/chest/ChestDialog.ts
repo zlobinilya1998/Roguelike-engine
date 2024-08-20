@@ -1,6 +1,6 @@
 import { Chest, ChestItem } from "@/models/gameObject/chest/Chest";
 import { Weapon } from "@/models/item/Weapon";
-import { GameEvent } from "models/events/GameEvent";
+import { GameEvent } from "@/core/events/GameEvent";
 
 export class ChestDialog {
   static dialog = window.chestDialog;

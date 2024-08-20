@@ -19,13 +19,16 @@
                 "src/models/game/*"
             ],
             "event/*": [
-                "src/models/events/*"
+                "src/core/events/*"
             ],
             "components/*": [
                 "src/components/*"
             ],
             "utils/*": [
                 "src/utils/*"
+            ],
+            "core/*": [
+                "src/core/*",
             ],
         },
         "outDir": "./dist/",

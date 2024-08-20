@@ -1,0 +1,31 @@
+#playerEffects {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.player-effect {
+    text-align: center;
+    border: 2px solid gray;
+    border-radius: 10px;
+    width: 24px;
+    height: 24px;
+
+    img {
+        max-width: 100%;
+        border-radius: 10px;
+        object-fit: contain;
+    }
+
+    &:hover {
+        border-color: gold;
+    }
+}
+.player-effect-positive {
+    border-color: greenyellow;
+}
+.player-effect-negative {
+    border-color: red;
+}

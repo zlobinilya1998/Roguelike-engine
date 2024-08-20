@@ -1,8 +1,8 @@
 import { GameUtils } from "@/utils";
-import { Sprite } from "models/Sprite";
+import { Sprite } from "@/models/base/Sprite";
 import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Player } from "models/player/Player";
-import { Damage, DamageSystem, DamageType } from "../game/Damage";
+import { Damage, DamageSystem, DamageType } from "../../../core/damage/Damage";
 import { Equipment } from "models/game/Equipment";
 
 

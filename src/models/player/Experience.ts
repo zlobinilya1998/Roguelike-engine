@@ -1,5 +1,5 @@
-import { GameEvent } from "event/index";
-import { Player } from "./Player";
+import { GameEvent } from "core/events/GameEvent";
+import { Player } from "models/player/Player";
 
 export class Experience {
   _baseXp = 0;

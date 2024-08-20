@@ -9,13 +9,12 @@ import { weapons } from "models/entities/weapons";
 import { HealthBar } from "components/Hud/Player/HealthBar";
 import { ExperienceBar } from "components/Hud/Player/ExperienceBar";
 import { PlayerInventory } from "components/Hud/Player/Inventory";
-import { GameEvent } from "event/index";
-import { AggressiveEnemy } from "models/enemy/AggressiveEnemy";
-import { Enemy } from "models/enemy/Enemy";
-import { Creature } from 'models/Creature';
+import { GameEvent } from "core/events/GameEvent";
+import { AggressiveEnemy } from "@/models/base/enemy/AggressiveEnemy";
+import { Enemy } from "@/models/base/enemy/Enemy";
 import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
-import { GameObject } from './models/gameObject/GameObject';
-import { FireTrap, Trap } from './components/gameObject/Trap';
+import { GameObject } from './models/base/GameObject';
+import { FireTrap } from './components/gameObject/Trap';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -27,7 +26,6 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 
 export class Game {
   static objects: GameObject[] = [new Chest("Solid chest", weapons), new FireTrap()];
-  static creature: Creature[] = [];
   static enemies: Enemy[] = [
     new AggressiveEnemy()
   ]
@@ -47,7 +45,7 @@ export class Game {
   }
 
   static get entities() {
-    return [...this.hud, ...this.objects, ...this.creature, this.player, ...this.enemies];
+    return [...this.hud, ...this.objects, this.player, ...this.enemies];
   }
 
   static start() {

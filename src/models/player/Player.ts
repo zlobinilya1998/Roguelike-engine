@@ -1,14 +1,14 @@
 import { Equipment } from "game/Equipment";
 import { PlayerStats } from "./Stats";
-import { Sprite } from "models/Sprite";
-import { Damage, DamageSystem } from "game/Damage";
+import { Sprite } from "@/models/base/Sprite";
+import { Damage, DamageSystem } from "@/core/damage/Damage";
 import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Inventory } from "models/player/Inventory";
-import { PlayerEffects } from "./Effects";
+import { PlayerEffects } from "core/effects/Effects";
+import { Enemy } from "@/models/base/enemy/Enemy";
 
 import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
-import { Enemy } from "../enemy/Enemy";
 
 export class Player extends Sprite {
   inventory = new Inventory();

@@ -1,5 +1,5 @@
 import { Player } from "models/player/Player";
-import { Enemy } from "../enemy/Enemy";
+import { Enemy } from "@/models/base/enemy/Enemy";
 
 export enum DamageType {
   Physic = 1,
@@ -14,8 +14,6 @@ export type DamageCount = number;
 export class DamageSystem {
   static calculate(damage: Damage, from: Enemy | Player | null, to: Enemy | Player) {
     let damageCount = damage.damageCount;
-    console.log(damage);
-    
     if (damage.damageType === DamageType.Pure) return damageCount;
 
     if (damage.damageType === DamageType.Physic) {

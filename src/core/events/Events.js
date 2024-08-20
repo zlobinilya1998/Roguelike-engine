@@ -15,6 +15,9 @@ export class Events {
         },
         combat: {
             takeDamage: 'player:combat:takeDamage',
+        },
+        effect: {
+            apply: 'player:effect:apply',
         }
     }
     static inventory = {

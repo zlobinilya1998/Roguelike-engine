@@ -1,5 +1,7 @@
-import { Damage, DamageType } from "@/models/game/Damage";
-import { GameObject } from "@/models/gameObject/GameObject";
+import { Damage, DamageType } from "@/core/damage/Damage";
+import { EffectList } from "@/core/effects/EffectList";
+import { GameEvent } from "@/core/events/GameEvent";
+import { GameObject } from "@/models/base/GameObject";
 import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/GameObject";
 import { InteractionRadius } from "@/models/types/Geometry";
 
@@ -25,6 +27,7 @@ export class Trap extends GameObject {
         if ((ts - this.lastAttack) < this.attackPerSecond) return;
         this.lastAttack = ts;
         this.player.damage.take(this.damage);
+        GameEvent.dispatch.player.effect.apply(EffectList.trap.fire)
     }
 
     update(ts: EpochTimeStamp): void {
