@@ -1,4 +1,4 @@
-import { SpritePosition, SpriteSize, SpriteFrames } from 'models/types/Sprite'
+import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry } from 'models/types/Sprite'
 
 export class Sprite {
   position: SpritePosition;
@@ -19,7 +19,7 @@ export class Sprite {
     return window.Game;
   }
 
-  get geometry() {
+  get geometry(): SpriteGeometry {
     return {
       x: this.position.x,
       y: this.position.y,
@@ -28,7 +28,13 @@ export class Sprite {
     };
   }
 
+  drawBorder() {
+    this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
+  }
+
   draw() {
+    this.drawBorder();
+
     if (this.frames) {
       this.game.ctx.drawImage(
         this.image,

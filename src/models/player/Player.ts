@@ -4,18 +4,21 @@ import { Sprite } from "models/Sprite";
 import { Damage, DamageSystem } from "game/Damage";
 import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Inventory } from "models/player/Inventory";
+import { PlayerEffects } from "./Effects";
 
 import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
+import { Enemy } from "../enemy/Enemy";
 
 export class Player extends Sprite {
   inventory = new Inventory();
   equipment = new Equipment();
   stats = new PlayerStats();
-
+  effects = new PlayerEffects();
+  velocity = 1;
   constructor() {
     const position = new SpritePosition(100, 250);
-    const size = new SpriteSize(32, 32);
+    const size = new SpriteSize(30, 30);
     const frames = new SpriteFrames(0, 11, 4);
     super(position, size, Idle, frames);
   }
@@ -26,9 +29,9 @@ export class Player extends Sprite {
 
   damage = {
     immune: false,
-    take: (damage: Damage) => {
+    take: (damage: Damage, from: Enemy = null) => {
       if (this.damage.immune) return;
-      const damageCount = DamageSystem.calculate(damage, '', this)
+      const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
       this.image.src = Hit;
       this.frames.max = 7;
@@ -42,16 +45,16 @@ export class Player extends Sprite {
 
   move = {
     left: () => {
-      this.position.x -= 1;
+      this.position.x -= 1 * this.velocity;
     },
     right: () => {
-      this.position.x += 1;
+      this.position.x += 1 * this.velocity;
     },
     top: () => {
-      this.position.y -= 1;
+      this.position.y -= 1 * this.velocity;
     },
     down: () => {
-      this.position.y += 1;
+      this.position.y += 1 * this.velocity;
     },
   }
 }

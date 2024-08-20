@@ -29,7 +29,7 @@ export class Game {
   static objects: GameObject[] = [new Chest("Solid chest", weapons), new FireTrap()];
   static creature: Creature[] = [];
   static enemies: Enemy[] = [
-    new AggressiveEnemy({ x: 40, y: 150 }, { width: 50, height: 50 })
+    new AggressiveEnemy()
   ]
   static dialog = {
     chest: ChestDialog,

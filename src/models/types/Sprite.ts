@@ -15,6 +15,13 @@ export class SpriteSize {
     }
 }
 
+export class SpriteGeometry {
+    x: number
+    y: number
+    width: number
+    height: number
+}
+
 export class SpriteFrames {
     active: boolean = true;
     current: number = 0;

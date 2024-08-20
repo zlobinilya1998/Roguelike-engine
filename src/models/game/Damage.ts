@@ -1,4 +1,5 @@
 import { Player } from "models/player/Player";
+import { Enemy } from "../enemy/Enemy";
 
 export enum DamageType {
   Physic = 1,
@@ -11,7 +12,7 @@ export type DamageCount = number;
 
 
 export class DamageSystem {
-  static calculate(damage: Damage, from: any, to: Player) {
+  static calculate(damage: Damage, from: Enemy | Player | null, to: Enemy | Player) {
     let damageCount = damage.damageCount;
     console.log(damage);
     
@@ -25,12 +26,12 @@ export class DamageSystem {
     return damageCount;
   }
 
-  static calculatePhysicalDamage(damageCount: number, to: Player) {
+  static calculatePhysicalDamage(damageCount: number, to: Player | Enemy) {
     const armour = to.equipment.armourValue;
     if (armour >= damageCount) return 0;
     return damageCount - to.equipment.armourValue;
   }
-  static calculateMagicalDamage(damageCount: number, to: Player) {
+  static calculateMagicalDamage(damageCount: number, to: Player | Enemy) {
     return damageCount;
   }
 }

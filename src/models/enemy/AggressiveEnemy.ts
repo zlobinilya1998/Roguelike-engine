@@ -1,15 +1,21 @@
 import { GameEvent } from "event/index";
 import { AggressiveEnemyEquipment } from "game/Equipment";
 import { Enemy } from "models/enemy/Enemy";
-import { SpritePosition, SpriteSize } from "models/types/Sprite";
+import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
+
+import Idle from 'assets/Enemy/Idle.png';
 
 export class AggressiveEnemy extends Enemy {
     equipment: AggressiveEnemyEquipment;
-    constructor(position: SpritePosition, size: SpriteSize) {
-        super(position, size);
+    isCanAttack = true;
+
+    constructor() {
+        const position = new SpritePosition(40,150);
+        const size = new SpriteSize(32,32);
+        const frames = new SpriteFrames(0,11,5);
+        super(position, size, Idle, frames);
         this.equipment = new AggressiveEnemyEquipment();
     }
-    isCanAttack = true;
     attack() {
         const weapon = this.equipment.weapon;
         if (!weapon || !this.isCanAttack) return;

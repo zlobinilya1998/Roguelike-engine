@@ -1,18 +1,19 @@
 import { Damage, DamageType } from "@/models/game/Damage";
 import { GameObject } from "@/models/gameObject/GameObject";
 import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/GameObject";
+import { InteractionRadius } from "@/models/types/Geometry";
 
 import Fire from 'assets/Trap/Fire.png'
 
 export class Trap extends GameObject {
     damage: Damage;
-    attackRate = 1;
+    attackRate = 10;
     lastAttack: number = null;
 
     constructor(damage: Damage, position: GameObjectPosition, size: GameObjectSize, frames: GameObjectFrames, imageSrc: string) {
         super(position, size, "", 1, frames, imageSrc)
         this.damage = damage;
-        this.interactionRadius = -5;
+        this.interactionRadius = -InteractionRadius.Near;
     }
 
     get attackPerSecond() {

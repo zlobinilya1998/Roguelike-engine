@@ -1,6 +1,7 @@
 import { GameUtils } from "@/utils";
 import { GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize, GameObjectTitle } from "models/types/GameObject";
-import { Player } from "../player/Player";
+import { Player } from "models/player/Player";
+import { InteractionRadius } from "models/types/Geometry";
 
 export class GameObject {
     position: GameObjectPosition;
@@ -10,7 +11,7 @@ export class GameObject {
     scale: number;
     image: HTMLImageElement;
     
-    interactionRadius = 10;
+    interactionRadius = InteractionRadius.Medium;
 
     constructor(position: GameObjectPosition, size: GameObjectSize, title: GameObjectTitle, scale = 1, frames: GameObjectFrames, imageSrc: string) {
         this.position = position;
@@ -48,12 +49,15 @@ export class GameObject {
                 this.image.height * this.scale,
             )
         }
-
     }
 
-    update(ts: EpochTimeStamp) {
-        this.draw();
+    drawBorder() {
+        this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
+      }
 
+    update(ts: EpochTimeStamp) {
+        this.drawBorder()
+        this.draw();
         if (this.frames) this.updateFrames();
     }
 

@@ -4,6 +4,7 @@ import { Item } from "@/models/item/Item";
 
 import ChestPng from '@/assets/Chest/Chests.png';
 import { GameObjectPosition, GameObjectSize } from '@/models/types/GameObject';
+import { InteractionRadius } from "@/models/types/Geometry";
 
 export type ChestItem = Item;
 export type ChestLoot = Item[];
@@ -18,6 +19,7 @@ export class Chest extends GameObject {
     super(position, size, title, 1, null, ChestPng);
     this.loot = loot
     this.isOpen = false;
+    this.interactionRadius = InteractionRadius.Near
   }
 
   get isEmpty() {
@@ -47,8 +49,9 @@ export class Chest extends GameObject {
   }
 
   renderTitle() {
-    window.Game.ctx.font = GameFont.options.chest.title;
-    window.Game.ctx.fillText(this.title, this.position.x - 20, this.position.y)
+    this.game.ctx.font = GameFont.options.chest.title;
+    this.game.ctx.fillStyle = 'gold'
+    this.game.ctx.fillText(this.title, this.position.x - 20, this.position.y - 5)
   }
 
   styles = {
