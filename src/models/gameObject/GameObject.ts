@@ -12,13 +12,13 @@ export class GameObject {
         this.scale = scale;
     }
 
-    draw(ts: EpochTimeStamp) {
+    draw() {
         window.Game.ctx.fillStyle = 'gold';
         window.Game.ctx.fillRect(this.position.x, this.position.y, this.geometry.width, this.geometry.height)
     }
 
     update(ts: EpochTimeStamp) {
-        this.draw(ts);
+        this.draw();
     }
 
     get geometry(): GameObjectGeometry {

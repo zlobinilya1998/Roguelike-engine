@@ -7,6 +7,7 @@ import { Item } from "@/models/item/Item";
 import ChestPng from '@/assets/Chest/Chests.png';
 import { GameObjectPosition, GameObjectSize } from '@/models/types/GameObject';
 
+export type ChestItem = Item;
 export type ChestLoot = Item[];
 
 export class Chest extends GameObject {
@@ -28,6 +29,10 @@ export class Chest extends GameObject {
     return GameUtils.gameObject.isInteractive(player.geometry, this.geometry);
   }
 
+  get isEmpty() {
+    return this.loot.length === 0;
+  }
+
   draw() {
     // super.draw();
 
@@ -46,9 +51,8 @@ export class Chest extends GameObject {
 
     if (this.isCanInteract) {
       this.renderTitle();
-
       if (!this.isOpen) {
-        GameEvent.dispatch.chest.dialog.open({ loot: this.loot, title: this.title })
+        GameEvent.dispatch.chest.dialog.open(this)
         this.isOpen = true;
       }
     } else if (this.isOpen) {
@@ -70,6 +74,13 @@ export class Chest extends GameObject {
     //     this.framesCurrent = 0;
     //   }
     // }
+  }
+
+  removeItem(item: Item) {
+    const index = this.loot.indexOf(item);
+    if (index !== -1){
+      this.loot.splice(index,1);
+    }
   }
 
   renderTitle() {

@@ -7,12 +7,14 @@ import { Player } from "@/models/player/Player";
 
 import { weapons } from "models/entities/weapons";
 import { HealthBar } from "components/Hud/Player/HealthBar";
+import { ExperienceBar } from "components/Hud/Player/ExperienceBar";
 import { PlayerInventory } from "components/Hud/Player/Inventory";
 import { GameEvent } from "event/index";
 import { AggressiveEnemy } from "models/enemy/AggressiveEnemy";
 import { Enemy } from "models/enemy/Enemy";
 import { Creature } from 'models/Creature';
 import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
+import { GameObject } from './models/gameObject/GameObject';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -22,10 +24,8 @@ canvas.height = 576;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const player = new Player();
-const inventory = new PlayerInventory(player);
 export class Game {
-  static objects = [new Chest("Solid chest", weapons)];
+  static objects: GameObject[] = [new Chest("Solid chest", weapons)];
   static creature: Creature[] = [];
   static enemies: Enemy[] = [
     new AggressiveEnemy({ x: 40, y: 150 }, { width: 50, height: 50 })
@@ -33,10 +33,17 @@ export class Game {
   static dialog = {
     chest: ChestDialog,
   }
-  static hud = [new HealthBar()];
-  static inventory = inventory;
-  static player = player;
+  static hud = [new HealthBar(), new ExperienceBar()];
+  static inventory = new PlayerInventory();
+  static player = new Player();
   static ctx = c;
+
+  static removeGameObject(gameObject: GameObject) {
+    const index = this.objects.indexOf(gameObject);
+    if (index !== -1) {
+      this.objects.splice(index, 1)
+    }
+  }
 
   static get entities() {
     return [...this.hud, ...this.objects, ...this.creature, this.player, ...this.enemies];

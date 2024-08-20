@@ -14,15 +14,26 @@ export class Player extends Sprite {
     super(position, size, '');
   }
 
-  takeDamage(damage: Damage) {
-    const damageCount = DamageSystem.calculate(damage,'', this)
-    this.stats.health.takeDamage(damageCount);
+
+  damage = {
+    take: (damage: Damage) => {
+      const damageCount = DamageSystem.calculate(damage, '', this)
+      this.stats.health.takeDamage(damageCount);
+    }
   }
 
-
-  draw(): void {
-    super.draw();
-    console.log(this.equipment);
-    
+  move = {
+    left: () => {
+      this.position.x -= 1;
+    },
+    right: () => {
+      this.position.x += 1;
+    },
+    top: () => {
+      this.position.y -= 1;
+    },
+    down: () => {
+      this.position.y += 1;
+    },
   }
 }

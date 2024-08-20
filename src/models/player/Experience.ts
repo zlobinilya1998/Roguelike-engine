@@ -25,6 +25,11 @@ export class Experience {
     if (this.level === 1) return this._xpPerLevel;
     return this._xpPerLevel * this.level;
   }
+
+  get percent() {
+    return this.xpCurrent / this.xpOnLevel * 100;
+  }
+
   add(count: number) {
     this._xp += count;
     if (this._xp >= this.xpOnLevel) {

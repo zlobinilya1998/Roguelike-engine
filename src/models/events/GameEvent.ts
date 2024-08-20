@@ -1,7 +1,7 @@
 import { Events } from "models/events/Events.js";
 import { Item } from "models/item/Item";
 import { Damage } from "models/game/Damage";
-import { ChestLoot } from "models/gameObject/chest/Chest";
+import { Chest } from "models/gameObject/chest/Chest";
 
 export const createEvent = (name: string, data?: unknown) => {
   const event = new CustomEvent(name, { detail: data });
@@ -10,7 +10,10 @@ export const createEvent = (name: string, data?: unknown) => {
 export class GameEvent {
   static dispatch = {
     player: {
-      equip: (item: Item) => createEvent(Events.player.equip, item),
+      item: {
+        take: (item: Item) => createEvent(Events.player.item.take, item),
+        equip: (item: Item) => createEvent(Events.player.item.equip, item),
+      },
       move: {
         left: () => createEvent(Events.player.move.left),
         right: () => createEvent(Events.player.move.right),
@@ -32,7 +35,7 @@ export class GameEvent {
     },
     chest: {
       dialog: {
-        open: (payload: {loot: ChestLoot, title: string}) => createEvent(Events.chest.dialog.open, payload),
+        open: (payload: Chest) => createEvent(Events.chest.dialog.open, payload),
         close: () => createEvent(Events.chest.dialog.close)
       },
     },
@@ -50,39 +53,41 @@ export class GameEvent {
   static create = {
     baseListeners() {
       GameEvent.subscribe(Events.chest.dialog.open, (event) => {
-        const { loot, title } = event.detail;
-        window.Game.dialog.chest.open(loot, title);
+        window.Game.dialog.chest.open(event.detail);
       });
 
       GameEvent.subscribe(Events.chest.dialog.close, () => {
         window.Game.dialog.chest.close();
       });
-
-      GameEvent.subscribe(Events.player.equip, (e) => {
+      GameEvent.subscribe(Events.player.item.take, (e) => {
         window.Game.player.equipment.equipItem(e.detail);
       });
+      GameEvent.subscribe(Events.player.item.equip, (e) => {
+        window.Game.player.equipment.equipItem(e.detail);
+      });
+
       GameEvent.subscribe(Events.player.level.up, () => {
         window.Game.player.stats.level += 1;
       });
 
       GameEvent.subscribe(Events.player.combat.takeDamage, (e) => {
-        window.Game.player.takeDamage(e.detail);
+        window.Game.player.damage.take(e.detail);
       });
 
       GameEvent.subscribe(Events.player.move.left, () => {
-        window.Game.player.position.x -= 1;
+        window.Game.player.move.left();
       });
 
       GameEvent.subscribe(Events.player.move.right, () => {
-        window.Game.player.position.x += 1;
+        window.Game.player.move.right();
       });
 
       GameEvent.subscribe(Events.player.move.top, () => {
-        window.Game.player.position.y -= 1;
+        window.Game.player.move.top();
       });
 
       GameEvent.subscribe(Events.player.move.down, () => {
-        window.Game.player.position.y += 1;
+        window.Game.player.move.down();
       });
 
       GameEvent.subscribe(Events.inventory.open, () =>

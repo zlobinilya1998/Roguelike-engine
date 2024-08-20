@@ -1,9 +1,12 @@
+import { Player } from "@/models/player/Player";
+
 export class PlayerInventory {
-  constructor(player) {
-    this.player = player;
-  }
   dialog = window.inventoryDialog;
   isOpened = false;
+
+  get player(): Player {
+    return window.Game.player;
+  }
 
   create = {
     title: () => {
@@ -28,7 +31,7 @@ export class PlayerInventory {
 
       for (let i = 0; i < 36; i++) {
         const item = document.createElement("div");
-        item.innerText = i;
+        item.innerText = `${i}`;
         item.classList.add(
           "p-4",
           "bg-white",
@@ -64,7 +67,7 @@ export class PlayerInventory {
   }
 
   close() {
-    this.innerHTML = "";
+    this.dialog.innerHTML = "";
     this.isOpened = false;
     this.dialog.close();
   }

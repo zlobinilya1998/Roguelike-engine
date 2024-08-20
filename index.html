@@ -11,8 +11,14 @@
         <div id="healthBarText"></div>
     </div>
 
-    <dialog id="chestDialog" class="p-4 px-6 rounded-xl bg-amber-700"></dialog>
-    <dialog id="inventoryDialog" class="p-4 px-6 rounded-xl bg-amber-500"></dialog>
+    <div id="experienceBar">
+        <div id="experienceBarBg"></div>
+        <div id="experienceBarText"></div>
+        <div id="experienceBarLevel" class="bg-white"></div>
+    </div>
+
+    <dialog id="chestDialog" class="p-4 px-6 rounded-xl"></dialog>
+    <dialog id="inventoryDialog" class="p-4 px-6 rounded-xl"></dialog>
     <button id="inventoryToggle" class="p-2 rounded absolute right-0 top-0 bg-teal-200 z-10" onclick="Game.inventory.toggle()">Inventory</button>
     <canvas id="game"></canvas>
 </body>

@@ -1,6 +1,9 @@
 export class Events {
     static player = {
-        equip: 'player:equip',
+        item: {
+            equip: 'player:item:equip',
+            take: 'player:item:take',
+        },
         move: {
             left: 'player:move:left',
             right: 'player:move:right',
