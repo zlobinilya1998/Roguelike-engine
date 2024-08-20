@@ -20,17 +20,19 @@ export class Player extends Sprite {
     super(position, size, Idle, frames);
   }
 
-  get isDead(){
+  get isDead() {
     return this.stats.health.isDead;
   }
 
   damage = {
+    immune: false,
     take: (damage: Damage) => {
+      if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, '', this)
       this.stats.health.takeDamage(damageCount);
-
       this.image.src = Hit;
       this.frames.max = 7;
+
       setTimeout(() => {
         this.image.src = Idle;
         this.frames.max = 11;

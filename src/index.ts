@@ -15,6 +15,7 @@ import { Enemy } from "models/enemy/Enemy";
 import { Creature } from 'models/Creature';
 import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
 import { GameObject } from './models/gameObject/GameObject';
+import { FireTrap, Trap } from './components/gameObject/Trap';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -25,7 +26,7 @@ canvas.height = 576;
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 export class Game {
-  static objects: GameObject[] = [new Chest("Solid chest", weapons)];
+  static objects: GameObject[] = [new Chest("Solid chest", weapons), new FireTrap()];
   static creature: Creature[] = [];
   static enemies: Enemy[] = [
     new AggressiveEnemy({ x: 40, y: 150 }, { width: 50, height: 50 })

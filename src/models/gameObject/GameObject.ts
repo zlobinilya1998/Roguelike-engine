@@ -9,6 +9,8 @@ export class GameObject {
     frames: GameObjectFrames;
     scale: number;
     image: HTMLImageElement;
+    
+    interactionRadius = 10;
 
     constructor(position: GameObjectPosition, size: GameObjectSize, title: GameObjectTitle, scale = 1, frames: GameObjectFrames, imageSrc: string) {
         this.position = position;
@@ -78,7 +80,7 @@ export class GameObject {
 
     get isCanInteract() {
         const player = this.player;
-        return GameUtils.gameObject.isInteractive(player.geometry, this.geometry);
+        return GameUtils.gameObject.isInteractive(player.geometry, this.geometry, this.interactionRadius);
     }
 
     get geometry(): GameObjectGeometry {

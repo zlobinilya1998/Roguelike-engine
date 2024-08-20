@@ -1,5 +1,4 @@
 import { GameObject } from "models/gameObject/GameObject";
-import { GameEvent } from "@/models/events";
 import { GameFont } from "@/models/font/Font";
 import { Item } from "@/models/item/Item";
 
