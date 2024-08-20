@@ -4,7 +4,7 @@ export class ChestDialog {
   static dialog = window.chestDialog;
   static open(loot, title) {
     const chestTitle = document.createElement("h1");
-    chestTitle.classList.add("text-xl", "text-center", "font-bold");
+    chestTitle.classList.add("text-xl", "text-center", "font-bold",'text-yellow-600');
     chestTitle.innerText = title;
     this.dialog.appendChild(chestTitle);
 
@@ -29,6 +29,7 @@ export class ChestDialog {
   static create = {
     title: (item) => {
       const title = document.createElement("h3");
+      title.classList.add('text-amber-300')
       title.innerText = item.title;
       return title;
     },
@@ -43,14 +44,23 @@ export class ChestDialog {
       damageRange.innerText = `Damage: ${item.minDmg}-${item.maxDmg}`;
       return damageRange;
     },
+    img: (item) => {
+      const img = document.createElement('img');
+      img.src = item.image.src
+      img.width = 20;
+      img.height = 20;
+      return img;
+    },
   };
 
   static createItem(item) {
     const chestItem = document.createElement("div");
     const title = this.create.title(item);
     const type = this.create.type(item);
+    const img = this.create.img(item);
     chestItem.appendChild(title);
     chestItem.appendChild(type);
+    chestItem.appendChild(img);
 
     if (item.isWeapon) {
       const damageRange = this.create.damageRange(item);

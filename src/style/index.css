@@ -1,6 +1,18 @@
+@import url(./font.css);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+html {
+    font-size: 10px;
+}
+
+body {
+    font-family: 'Ugly';
+}
 
 .player-stats {
     padding: 10px;
@@ -11,4 +23,27 @@
     grid-template-rows: repeat(6, 50px);
     gap: 10px;
     padding: 10px;
+}
+
+#healthBar {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 20px;
+    width: 200px;
+    height: 25px;
+    border: 3px solid white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px 2px;
+}
+
+#healthBarBg {
+    position: absolute;
+    left: 0;
+    background-color: red;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    transition: .3s ease-in-out;
 }

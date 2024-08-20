@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <dialog id="chestDialog" class="p-4 px-6 rounded-xl"></dialog>
+<body class="bg-sky-900">
+    <div id="healthBar">
+        <div id="healthBarBg"></div>
+        <div id="healthBarText" class="text-center text-white">250/250</div>
+    </div>
+
+    <dialog id="chestDialog" class="p-4 px-6 rounded-xl bg-amber-700"></dialog>
     <dialog id="inventoryDialog" class="p-4 px-6 rounded-xl bg-amber-500"></dialog>
     <button id="inventory" class="p-2 rounded absolute right-10 top-10 bg-teal-200 z-10" onclick="Game.inventory.toggle()">Inventory</button>
     <canvas id="game"></canvas>

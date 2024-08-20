@@ -1,9 +1,10 @@
 import { PhysicDamage } from "game/Damage.js";
 import { ItemType, Item } from "models/item/Item.js";
+import WeaponPng from 'assets/Weapon/pistol.png'
 
 export class Weapon extends Item {
   constructor(title, damage, speed) {
-    super(title, ItemType.weapon);
+    super(title, ItemType.weapon, WeaponPng );
     this.minDmg = damage.min;
     this.maxDmg = damage.max;
     this.speed = speed;

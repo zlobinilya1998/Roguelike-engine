@@ -4,9 +4,11 @@ export const ItemType = {
 }
 
 export class Item {
-    constructor(title, type){
+    constructor(title, type, imageSrc){
         this.title = title;
         this.type = type;
+        this.image = new Image();
+        this.image.src = imageSrc
     }
 
     get isWeapon(){

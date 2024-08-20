@@ -9,6 +9,8 @@ export class GameObject {
     draw(ts){
         window.Game.ctx.fillStyle = 'gold';
         window.Game.ctx.fillRect(this.position.x,this.position.y,this.geometry.width,this.geometry.height)
+        console.log(this);
+        
     }
 
     update(ts){

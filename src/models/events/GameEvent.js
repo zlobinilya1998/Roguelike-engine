@@ -30,6 +30,7 @@ export class GameEvent {
     chest: {
       dialog: {
         open: (payload) => createEvent(Events.chest.dialog.open, payload),
+        close: () => createEvent(Events.chest.dialog.close)
       },
     },
   };
@@ -45,8 +46,13 @@ export class GameEvent {
 
   static create = {
     baseListeners() {
-      GameEvent.subscribe(Events.chest.dialog.open, () => {
-        ChestDialog.open(this.loot, this.title);
+      GameEvent.subscribe(Events.chest.dialog.open, (event) => {
+        const { loot, title} = event.detail;
+        window.Game.dialog.chest.open(loot, title);
+      });
+
+      GameEvent.subscribe(Events.chest.dialog.close, () => {
+        window.Game.dialog.chest.close();
       });
 
       GameEvent.subscribe(Events.player.equip, (e) => {

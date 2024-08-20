@@ -1,4 +1,6 @@
-import './style/index.css'
+import './style/index.css';
+import './style/variables/variables.scss';
+
 import { Chest } from "@/models/gameObject/chest/Chest.js";
 import { Player } from "@/models/player/Player.js";
 
@@ -9,6 +11,7 @@ import { GameEvent } from "event/index";
 import { AggressiveEnemy } from "models/enemy/AggressiveEnemy";
 import { Enemy } from "models/enemy/Enemy";
 import { Creature } from 'models/Creature';
+import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -26,6 +29,9 @@ export class Game {
   static enemies: Enemy[] = [
     new AggressiveEnemy({ x: 40, y: 150 }, { width: 50, height: 50 })
   ]
+  static dialog = {
+    chest: ChestDialog,
+  }
   static hud = [new HealthBar()];
   static inventory = inventory;
   static player = player;
@@ -41,7 +47,6 @@ export class Game {
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
   static update(timestamp: EpochTimeStamp) {
-    console.log("Game update");
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));

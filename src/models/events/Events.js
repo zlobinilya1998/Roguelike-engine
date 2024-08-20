@@ -23,6 +23,7 @@ export class Events {
     static chest = {
         dialog: {
             open: 'chest:dialog:open',
+            close: 'chest:dialog:close',
         }
     }
 }
