@@ -1,13 +1,16 @@
 import { Events } from "models/events/Events.js";
+import { Item } from "models/item/Item";
+import { Damage } from "models/game/Damage";
+import { ChestLoot } from "models/gameObject/chest/Chest";
 
-export const createEvent = (name, data) => {
+export const createEvent = (name: string, data?: unknown) => {
   const event = new CustomEvent(name, { detail: data });
   window.dispatchEvent(event);
 };
 export class GameEvent {
   static dispatch = {
     player: {
-      equip: (item) => createEvent(Events.player.equip, item),
+      equip: (item: Item) => createEvent(Events.player.equip, item),
       move: {
         left: () => createEvent(Events.player.move.left),
         right: () => createEvent(Events.player.move.right),
@@ -18,8 +21,8 @@ export class GameEvent {
         up: () => createEvent(Events.player.level.up),
       },
       combat: {
-        takeDamage: (count) =>
-          createEvent(Events.player.combat.takeDamage, count),
+        takeDamage: (damage: Damage) =>
+          createEvent(Events.player.combat.takeDamage, damage),
       },
     },
     inventory: {
@@ -29,25 +32,25 @@ export class GameEvent {
     },
     chest: {
       dialog: {
-        open: (payload) => createEvent(Events.chest.dialog.open, payload),
+        open: (payload: {loot: ChestLoot, title: string}) => createEvent(Events.chest.dialog.open, payload),
         close: () => createEvent(Events.chest.dialog.close)
       },
     },
   };
 
-  static subscribe(event, callback) {
+  static subscribe(event: string, callback: (event: CustomEvent) => void) {
     window.addEventListener(event, callback);
   }
 
   static createListeners() {
     this.create.baseListeners();
-    this.create.keyboardListners();
+    this.create.keyboardListeners();
   }
 
   static create = {
     baseListeners() {
       GameEvent.subscribe(Events.chest.dialog.open, (event) => {
-        const { loot, title} = event.detail;
+        const { loot, title } = event.detail;
         window.Game.dialog.chest.open(loot, title);
       });
 
@@ -59,27 +62,27 @@ export class GameEvent {
         window.Game.player.equipment.equipItem(e.detail);
       });
       GameEvent.subscribe(Events.player.level.up, () => {
-        Game.player.stats.level += 1;
+        window.Game.player.stats.level += 1;
       });
 
       GameEvent.subscribe(Events.player.combat.takeDamage, (e) => {
-        Game.player.takeDamage(e.detail);
+        window.Game.player.takeDamage(e.detail);
       });
 
       GameEvent.subscribe(Events.player.move.left, () => {
-        Game.player.position.x -= 1;
+        window.Game.player.position.x -= 1;
       });
 
       GameEvent.subscribe(Events.player.move.right, () => {
-        Game.player.position.x += 1;
+        window.Game.player.position.x += 1;
       });
 
       GameEvent.subscribe(Events.player.move.top, () => {
-        Game.player.position.y -= 1;
+        window.Game.player.position.y -= 1;
       });
 
       GameEvent.subscribe(Events.player.move.down, () => {
-        Game.player.position.y += 1;
+        window.Game.player.position.y += 1;
       });
 
       GameEvent.subscribe(Events.inventory.open, () =>
@@ -92,7 +95,7 @@ export class GameEvent {
         window.Game.inventory.toggle()
       );
     },
-    keyboardListners() {
+    keyboardListeners() {
       window.addEventListener("keydown", (e) => {
         switch (e.key) {
           case "i":

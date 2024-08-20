@@ -1,5 +1,5 @@
-import { Experience } from "./Experience.js";
-import { Health } from "./Health.js";
+import { Experience } from "./Experience";
+import { Health } from "./Health";
 
 export class PlayerStats {
   _level = 1;

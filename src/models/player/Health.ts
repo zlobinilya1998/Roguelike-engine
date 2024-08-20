@@ -1,10 +1,16 @@
+import { Player } from "./Player";
+
 export class Health {
   _baseHealth = 100;
   _health = this._baseHealth;
   _healthPerLevel = 10;
 
+  get player(): Player {
+    return window.Game.player;
+  }
+
   get level() {
-    return window.Game.player.stats.level;
+    return this.player.stats.level;
   }
 
   get health() {
@@ -32,8 +38,8 @@ export class Health {
     return this.percent > 0 && this.percent < 20;
   }
 
-  takeDamage(damageCount) {
-    const restHealth = this.health - damageCount
+  takeDamage(damage: number) {
+    const restHealth = this.health - damage;
     this.health = restHealth > 0 ? restHealth : 0;
   }
 }

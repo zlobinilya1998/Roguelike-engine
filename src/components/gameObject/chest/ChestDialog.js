@@ -1,4 +1,4 @@
-import { GameEvent } from "models/events/GameEvent.js";
+import { GameEvent } from "models/events/GameEvent";
 
 export class ChestDialog {
   static dialog = window.chestDialog;
