@@ -75,7 +75,6 @@ export class GameObject {
 
     removeMe(){
         this.game.removeGameObject(this);
-        console.log("Removed");
     }
 
 

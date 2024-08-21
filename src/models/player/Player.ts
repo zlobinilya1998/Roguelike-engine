@@ -6,7 +6,7 @@ import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Inventory } from "models/player/Inventory";
 import { PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
-import { DamageBubble } from "models/base/animation/DamageBubble";
+import { TextBubble } from "@/models/base/animation/TextBubble";
 import { GameEvent } from "@/core/events/GameEvent";
 
 import Idle from 'assets/Player/Idle.png';
@@ -38,7 +38,11 @@ export class Player extends Sprite {
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
       this.animation.play.damage.take(damageCount);
-    }
+    },
+    restore: (count: number) => {
+      this.stats.health.heal(count);
+      this.animation.play.damage.restore(count);
+    },
   }
 
   move = {
@@ -57,13 +61,17 @@ export class Player extends Sprite {
     play: {
       damage: {
         take: (damageCount: number) => {
-          const bubble = new DamageBubble(damageCount, { x: this.position.x, y: this.position.y });
+          const bubble = new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
           GameEvent.dispatch.animation.spawn(bubble);
           this.animation.play.player.hit();
           setTimeout(() => {
             this.animation.play.player.idle();
             this.animation.lock = false;
           }, 400);
+        },
+        restore: (count: number) => {
+          const bubble = new TextBubble(`+${count}`, 'green', { x: this.position.x, y: this.position.y });
+          GameEvent.dispatch.animation.spawn(bubble);
         }
       },
       player: {

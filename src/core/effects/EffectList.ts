@@ -5,7 +5,7 @@ import { EffectIcons } from "core/effects/EffectIcons";
 
 const banana = new Effect("Banana", EffectIcons.Heal, 'You heal some health every second', EffectType.Positive, () => {
     const player: Player = window.Game.player;
-    player.stats.health.heal(1);
+    player.damage.restore(1);
 })
 
 const fireTrap = new Effect("Burning", EffectIcons.Fire, 'You take 1 fire damage every second', EffectType.Negative, () => {
