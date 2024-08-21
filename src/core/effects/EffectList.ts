@@ -3,6 +3,11 @@ import { Damage, DamageType } from "core/damage/Damage";
 import { Effect, EffectType } from "core/effects/Effects";
 import { EffectIcons } from "core/effects/EffectIcons";
 
+const banana = new Effect("Banana", EffectIcons.Heal, 'You heal some health every second', EffectType.Positive, () => {
+    const player: Player = window.Game.player;
+    player.stats.health.heal(1);
+})
+
 const fireTrap = new Effect("Burning", EffectIcons.Fire, 'You take 1 fire damage every second', EffectType.Negative, () => {
     const player: Player = window.Game.player;
     const damage = new Damage(1, DamageType.Fire);
@@ -27,6 +32,9 @@ const petrification = new Effect("Petrified",EffectIcons.Petrification, 'You are
     })
 
 export const EffectList = {
+    picking: {
+        banana,
+    },
     player: {
         petrification,
     },

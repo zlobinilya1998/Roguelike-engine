@@ -46,4 +46,10 @@ export class Health {
     const restHealth = this.health - damage;
     this.health = restHealth > 0 ? restHealth : 0;
   }
+
+  heal(points: number) {
+    const portion = this.health + points;
+    if (portion > this.maxHealth) return this.health = this.maxHealth
+    this.health += points;
+  }
 }

@@ -16,6 +16,7 @@ import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
 import { GameObject } from 'models/base/object/GameObject';
 import { FireTrap } from 'models/base/object/trap/FireTrap';
 import { SawTrap } from './models/base/object/trap/SawTrap';
+import { PickingBanana } from './models/base/object/picking/PickingBanana';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -26,7 +27,7 @@ canvas.height = 576;
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 export class Game {
-  static objects: GameObject[] = [new Chest("Solid chest", weapons), new FireTrap(), new SawTrap()];
+  static objects: GameObject[] = [new Chest("Solid chest", weapons), new FireTrap(), new SawTrap(), new PickingBanana()];
   static enemies: Enemy[] = [
     new AggressiveEnemy()
   ]

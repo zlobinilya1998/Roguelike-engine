@@ -6,7 +6,8 @@ export enum CollisionRadius {
 }
 
 export enum InteractionRadius {
-    Inside = 0,
+    Inside = -5,
     Near = 5,
-    Medium = 10
+    Medium = 10,
+    Large = 15,
 }

@@ -30,6 +30,10 @@
 }
 .player-effect-positive {
     border-color: greenyellow;
+
+    .player-effect-description {
+        border-color: rgb(17, 206, 17);
+    }
 }
 .player-effect-negative {
     border-color: red;

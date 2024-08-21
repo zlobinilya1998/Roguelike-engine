@@ -73,6 +73,11 @@ export class GameObject {
         }
     }
 
+    removeMe(){
+        this.game.removeGameObject(this);
+        console.log("Removed");
+    }
+
 
     get game() {
         return window.Game;
