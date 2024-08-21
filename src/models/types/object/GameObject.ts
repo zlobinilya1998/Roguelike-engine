@@ -13,7 +13,15 @@ export class GameObjectSize {
         this.width = width;
         this.height = height;
     }
+}
 
+export class GameObjectAnimation {
+    imageSrc: string;
+    maxFrames: number;
+    constructor(imageSrc: string, maxFrames: number){
+        this.imageSrc = imageSrc;
+        this.maxFrames = maxFrames;
+    }
 }
 
 export class GameObjectFrames {
@@ -37,21 +45,6 @@ export class GameObjectFrames {
         this.active = active
         this.loop = loop;
     }
-}
-
-export class GameObjectAnimation extends GameObjectFrames {
-    constructor(current: number,
-        max: number,
-        hold: number,
-        active: boolean,
-        loop: boolean,
-        imageSrc: string,
-    ) {
-        super(current, max, hold, active, loop)
-        this.imageSrc = imageSrc
-    }
-    imageSrc: string;
-
 }
 
 export type GameObjectGeometry = {

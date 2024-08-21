@@ -1,4 +1,4 @@
-import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
+import { GameObjectAnimation, GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 import { GameObject } from "../GameObject";
 
 import DoorIdle from 'assets/gameObject/Door/Idle.png';
@@ -13,6 +13,11 @@ export class Door extends GameObject {
         super(position, size, "Door", 1, frames, DoorIdle);
     }
 
+    animations = {
+        DoorIdle: new GameObjectAnimation(DoorIdle, 1),
+        DoorOpening: new GameObjectAnimation(DoorOpening, 5),
+        DoorClosing: new GameObjectAnimation(DoorClosing, 3),
+    };
 
     update(ts: EpochTimeStamp): void {
         super.update(ts);
@@ -21,11 +26,9 @@ export class Door extends GameObject {
 
     updateAnimation() {
         if (this.isCanInteract) {
-            this.animation.apply(5, DoorOpening)
-        } else {
-            if (this.image.src === DoorOpening) {
-                this.animation.apply(3, DoorClosing)
-            }
-        }
+            this.animation.apply(this.animations.DoorOpening)
+        } else if (this.image.src === DoorOpening) {
+            this.animation.apply(this.animations.DoorClosing)
+        } 
     }
 }

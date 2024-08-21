@@ -1,18 +1,9 @@
 import { GameUtils } from "@/utils";
-import { GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize, GameObjectTitle } from "@/models/types/object/GameObject";
+import { GameObjectAnimation, GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize, GameObjectTitle } from "@/models/types/object/GameObject";
 import { Player } from "models/player/Player";
 import { InteractionRadius } from "models/types/Geometry";
 
 export class GameObject {
-    position: GameObjectPosition;
-    size: GameObjectSize;
-    title: GameObjectTitle;
-    frames: GameObjectFrames;
-    scale: number;
-    image: HTMLImageElement;
-
-    interactionRadius = InteractionRadius.Medium;
-
     constructor(position: GameObjectPosition, size: GameObjectSize, title: GameObjectTitle, scale = 1, frames: GameObjectFrames, imageSrc: string) {
         this.position = position;
         this.size = size;
@@ -22,6 +13,18 @@ export class GameObject {
         this.image = new Image();
         this.image.src = imageSrc;
     }
+
+    position: GameObjectPosition;
+    size: GameObjectSize;
+    title: GameObjectTitle;
+    frames: GameObjectFrames;
+    scale: number;
+    image: HTMLImageElement;
+
+    animations = {};
+    interactionRadius = InteractionRadius.Medium;
+
+
 
     draw() {
         if (this.frames) {
@@ -105,12 +108,12 @@ export class GameObject {
 
 
     animation = {
-        apply: (maxFrames: number, imageSrc: string) => {
-            if (this.image.src !== imageSrc){
+        apply: (animation:GameObjectAnimation) => {
+            if (this.image.src !== animation.imageSrc) {
                 this.frames.current = 0;
             }
-            this.image.src = imageSrc;
-            this.frames.max = maxFrames;
+            this.image.src = animation.imageSrc;
+            this.frames.max = animation.maxFrames;
         }
     }
 }
