@@ -1,5 +1,5 @@
 import { Damage, DamageType } from "@/core/damage/Damage";
-import { GameObjectPosition, GameObjectSize, GameObjectFrames } from "@/models/types/GameObject";
+import { GameObjectPosition, GameObjectSize, GameObjectFrames } from "@/models/types/object/GameObject";
 import { Trap } from "models/base/object/trap/Trap";
 import { GameEvent } from "@/core/events/GameEvent";
 import { EffectList } from "@/core/effects/EffectList";

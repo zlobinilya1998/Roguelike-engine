@@ -3,7 +3,7 @@ import { GameFont } from "@/models/font/Font";
 import { Item } from "@/models/item/Item";
 
 import ChestPng from '@/assets/Chest/Chests.png';
-import { GameObjectPosition, GameObjectSize } from '@/models/types/GameObject';
+import { GameObjectPosition, GameObjectSize } from '@/models/types/object/GameObject';
 import { InteractionRadius } from "@/models/types/Geometry";
 
 export type ChestItem = Item;

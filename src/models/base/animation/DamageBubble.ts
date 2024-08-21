@@ -1,4 +1,4 @@
-import { GameObjectPosition, GameObjectSize } from "@/models/types/GameObject";
+import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
 
 export class DamageBubble extends GameAnimation {

@@ -1,8 +1,6 @@
 import { Damage } from "@/core/damage/Damage";
-import { EffectList } from "@/core/effects/EffectList";
-import { GameEvent } from "@/core/events/GameEvent";
 import { GameObject } from "@/models/base/object/GameObject";
-import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/GameObject";
+import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 import { InteractionRadius } from "@/models/types/Geometry";
 
 export class Trap extends GameObject {
@@ -32,5 +30,7 @@ export class Trap extends GameObject {
         if (!this.isCanInteract) return;
         this.onHit(ts);
     }
+
+    
 }
 

@@ -1,5 +1,5 @@
 import { GameUtils } from "@/utils";
-import { GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize, GameObjectTitle } from "models/types/GameObject";
+import { GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize, GameObjectTitle } from "@/models/types/object/GameObject";
 import { Player } from "models/player/Player";
 import { InteractionRadius } from "models/types/Geometry";
 

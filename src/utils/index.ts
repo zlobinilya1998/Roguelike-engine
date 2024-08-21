@@ -1,4 +1,4 @@
-import { GameObjectGeometry } from "@/models/types/GameObject";
+import { GameObjectGeometry } from "@/models/types/object/GameObject";
 import { InteractionRadius } from "@/models/types/Geometry";
 import { SpriteGeometry } from "@/models/types/Sprite";
 
