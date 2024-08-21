@@ -79,7 +79,6 @@ export class PlayerEffects {
                 }
                 effect.onApply()
                 effect.duration -= 1_000;
-                console.log(effect);
             })
         }, 1_000)
     }

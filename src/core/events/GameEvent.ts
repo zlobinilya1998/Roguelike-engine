@@ -4,6 +4,7 @@ import { Player } from "models/player/Player";
 import { Events } from "core/events/Events.js";
 import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
+import { GameAnimation } from "@/models/base/GameAnimation";
 
 export const createEvent = (name: string, data?: unknown) => {
   const event = new CustomEvent(name, { detail: data });
@@ -11,6 +12,9 @@ export const createEvent = (name: string, data?: unknown) => {
 };
 export class GameEvent {
   static dispatch = {
+    animation: {
+      spawn: (animation: GameAnimation) => createEvent(Events.animation.spawn, animation)
+    },
     player: {
       item: {
         take: (item: Item) => createEvent(Events.player.item.take, item),
@@ -66,6 +70,10 @@ export class GameEvent {
 
   static create = {
     baseListeners: () => {
+      GameEvent.subscribe(Events.animation.spawn, (event) => {
+        GameAnimation.spawn(event.detail);
+      });
+
       GameEvent.subscribe(Events.chest.dialog.open, (event) => {
         this.game.dialog.chest.open(event.detail);
       });

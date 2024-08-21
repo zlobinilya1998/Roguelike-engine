@@ -1,4 +1,7 @@
 export class Events {
+    static animation = {
+        spawn: 'animation:spawn',
+    }
     static player = {
         item: {
             equip: 'player:item:equip',

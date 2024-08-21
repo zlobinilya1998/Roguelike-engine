@@ -10,6 +10,7 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
 import { DamageBubble } from "models/base/animation/DamageBubble";
+import { GameEvent } from "@/core/events/GameEvent";
 
 export class Player extends Sprite {
   inventory = new Inventory();
@@ -34,14 +35,7 @@ export class Player extends Sprite {
       if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
-      DamageBubble.add(damageCount, { x: this.position.x, y: this.position.y })
-      this.image.src = Hit;
-      this.frames.max = 7;
-
-      setTimeout(() => {
-        this.image.src = Idle;
-        this.frames.max = 11;
-      }, 400)
+      this.animation.damage.take(damageCount);
     }
   }
 
@@ -58,5 +52,20 @@ export class Player extends Sprite {
     down: () => {
       this.position.y += 1 * this.velocity;
     },
+  }
+
+  animation = {
+    damage: {
+      take: (damageCount: number) => {
+        const bubble = new DamageBubble(damageCount, { x: this.position.x, y: this.position.y });
+        GameEvent.dispatch.animation.spawn(bubble);
+        this.image.src = Hit;
+        this.frames.max = 7;
+        setTimeout(() => {
+          this.image.src = Idle;
+          this.frames.max = 11;
+        }, 400)
+      }
+    }
   }
 }
