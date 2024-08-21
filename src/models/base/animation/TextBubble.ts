@@ -20,10 +20,10 @@ export class TextBubble extends GameAnimation {
     
     update(ts: EpochTimeStamp): void {
         super.update(ts);
-        this.animation();
+        this.updateText();
     }
 
-    animation(){
+    updateText(){
         this.position.y -= 2;
         this.game.ctx.font = '14px Ugly'
         this.game.ctx.fillStyle = this.color;

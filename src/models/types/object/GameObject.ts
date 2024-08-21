@@ -39,6 +39,21 @@ export class GameObjectFrames {
     }
 }
 
+export class GameObjectAnimation extends GameObjectFrames {
+    constructor(current: number,
+        max: number,
+        hold: number,
+        active: boolean,
+        loop: boolean,
+        imageSrc: string,
+    ) {
+        super(current, max, hold, active, loop)
+        this.imageSrc = imageSrc
+    }
+    imageSrc: string;
+
+}
+
 export type GameObjectGeometry = {
     x: number,
     y: number,

@@ -7,7 +7,7 @@ import DoorClosing from 'assets/gameObject/Door/Closing.png';
 
 export class Door extends GameObject {
     constructor() {
-        const position = new GameObjectPosition(800, 330);
+        const position = new GameObjectPosition(300, 330);
         const size = new GameObjectSize(46, 56);
         const frames = new GameObjectFrames(0, 1, 5, true, false);
         super(position, size, "Door", 1, frames, DoorIdle);
@@ -21,14 +21,10 @@ export class Door extends GameObject {
 
     updateAnimation() {
         if (this.isCanInteract) {
-            this.image.src = DoorOpening;
-            this.frames.active = true;
-            this.frames.max = 5;
+            this.animation.apply(5, DoorOpening)
         } else {
             if (this.image.src === DoorOpening) {
-                this.image.src = DoorClosing;
-                this.frames.current = 0;
-                this.frames.max = 3;
+                this.animation.apply(3, DoorClosing)
             }
         }
     }

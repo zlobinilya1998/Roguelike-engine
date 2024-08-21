@@ -10,7 +10,7 @@ export class GameObject {
     frames: GameObjectFrames;
     scale: number;
     image: HTMLImageElement;
-    
+
     interactionRadius = InteractionRadius.Medium;
 
     constructor(position: GameObjectPosition, size: GameObjectSize, title: GameObjectTitle, scale = 1, frames: GameObjectFrames, imageSrc: string) {
@@ -53,7 +53,7 @@ export class GameObject {
 
     drawBorder() {
         this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
-      }
+    }
 
     update(ts: EpochTimeStamp) {
         // this.drawBorder()
@@ -68,14 +68,14 @@ export class GameObject {
             if (this.frames.current < this.frames.max - 1) {
                 this.frames.current++;
             } else {
-                if (this.frames.loop){
+                if (this.frames.loop) {
                     this.frames.current = 0;
                 }
             }
         }
     }
 
-    removeMe(){
+    removeMe() {
         this.game.removeGameObject(this);
     }
 
@@ -99,6 +99,18 @@ export class GameObject {
             y: this.position.y,
             width: this.size.width * this.scale,
             height: this.size.height * this.scale,
+        }
+    }
+
+
+
+    animation = {
+        apply: (maxFrames: number, imageSrc: string) => {
+            if (this.image.src !== imageSrc){
+                this.frames.current = 0;
+            }
+            this.image.src = imageSrc;
+            this.frames.max = maxFrames;
         }
     }
 }
