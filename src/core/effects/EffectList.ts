@@ -1,16 +1,21 @@
 import { Player } from "@/models/player/Player";
 import { Damage, DamageType } from "core/damage/Damage";
 import { Effect, EffectType } from "core/effects/Effects";
+import { EffectIcons } from "core/effects/EffectIcons";
 
-import FireIcon from "assets/Effect/fire.jpg";
-import PetrificationIcon from "assets/Effect/petrification.jpg";
-const fireTrap = new Effect(FireIcon, 'You take 1 fire damage every second', EffectType.Negative, () => {
+const fireTrap = new Effect("Burning", EffectIcons.Fire, 'You take 1 fire damage every second', EffectType.Negative, () => {
     const player: Player = window.Game.player;
     const damage = new Damage(1, DamageType.Fire);
     player.damage.take(damage);
 })
 
-const petrification = new Effect(PetrificationIcon, 'You are Petrified',
+const sawTrapBleed = new Effect("Bleeding", EffectIcons.Bleed, 'You take 1 physical damage every second', EffectType.Negative, () => {
+    const player: Player = window.Game.player;
+    const damage = new Damage(1, DamageType.Physic);
+    player.damage.take(damage);
+})
+
+const petrification = new Effect("Petrified",EffectIcons.Petrification, 'You are Petrified',
     EffectType.Negative, () => {
         const player: Player = window.Game.player;
         player.velocity.x = 0
@@ -27,5 +32,6 @@ export const EffectList = {
     },
     trap: {
         fire: fireTrap,
+        saw: sawTrapBleed, 
     }
 }

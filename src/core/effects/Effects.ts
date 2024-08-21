@@ -4,15 +4,19 @@ export enum EffectType {
 }
 
 export class Effect {
+    title: string;
     type: EffectType;
     baseDuration: number = 10_000;
     duration: number;
     imageSrc: string;
     description: string;
+    stacks: number;
+    maxStacks: number;
     onApply: () => void;
     onEnd?: () => void;
 
-    constructor(imageSrc: string, description: string, type: EffectType, onApply: () => void, onEnd?: () => void, duration: number = 10_000) {
+    constructor(title: string, imageSrc: string, description: string, type: EffectType, onApply: () => void, onEnd?: () => void, duration: number = 10_000) {
+        this.title = title;
         this.type = type
         this.onApply = onApply
         this.onEnd = onEnd
@@ -47,9 +51,9 @@ export class PlayerEffects {
     }
 
     applyEffect(effect: Effect) {
-        const isEffectApplied = this.effects.includes(effect)
+        const isEffectApplied = this.effects.includes(effect);
         if (isEffectApplied) {
-            this.updateEffectDuration(effect)
+            this.updateEffectDuration(effect);
         } else {
             this.effects.push(effect)
         }
@@ -67,20 +71,22 @@ export class PlayerEffects {
     }
 
     createEffectQueue() {
-        if (this.applyEffectInterval) return;
         this.drawEffects();
-        this.applyEffectInterval = setInterval(() => {
-            if (this.isEmpty) return this.clearQueue();
-            this.effects.forEach(effect => {
-                if (effect.duration <= 0) {
-                    this.removeEffect(effect)
-                    effect.onEnd?.();
-                    return;
-                }
-                effect.onApply()
-                effect.duration -= 1_000;
-            })
-        }, 1_000)
+        if (!this.applyEffectInterval) {
+            this.applyEffectInterval = setInterval(() => {
+                if (this.isEmpty) return this.clearQueue();
+                this.effects.forEach(effect => {
+                    if (effect.duration <= 0) {
+                        this.removeEffect(effect)
+                        effect.onEnd?.();
+                        return;
+                    }
+                    effect.onApply()
+                    effect.duration -= 1_000;
+                })
+                this.drawEffects();
+            }, 1_000)
+        }
     }
 
     clearQueue() {
@@ -97,12 +103,20 @@ export class PlayerEffects {
             const image = document.createElement('img');
             image.src = effect.imageSrc;
 
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('player-effect-tooltip');
+
+            const title = document.createElement('div');
+            title.innerHTML = effect.title;
+            title.classList.add('player-effect-title')
             const description = document.createElement('div');
-            description.classList.add('player-effect-description');
-            description.innerText = effect.description;
+            description.innerHTML = effect.description;
+            description.classList.add('player-effect-description')
+            tooltip.appendChild(title)
+            tooltip.appendChild(description)
 
             element.appendChild(image)
-            element.appendChild(description)
+            element.appendChild(tooltip)
             this.bar.appendChild(element);
         })
     }

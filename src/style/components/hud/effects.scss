@@ -21,7 +21,7 @@
 
     &:hover {
         border-color: gold;
-        .player-effect-description {
+        .player-effect-tooltip {
             display: block;
         }
     }
@@ -35,7 +35,7 @@
     border-color: red;
 }
 
-.player-effect-description {
+.player-effect-tooltip {
     display: none;
     position: absolute;
     font-size: 0.8rem;
@@ -45,6 +45,7 @@
     min-width: 180px;
     background: white;
     text-align: left;
+    box-shadow: 1px 1px 1px 1px black;
 
 
     &::after {
@@ -58,4 +59,17 @@
         border-bottom-color: white;
         border-top: 0;
     }
+}
+
+.player-effect-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.player-effect-description {
+    padding: 5px;
+    border-left: 2px solid red;
+    border-bottom: 2px solid red;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: rgba(128, 128, 128, 0.2);
 }

@@ -30,13 +30,16 @@ export class Sprite {
     };
   }
 
+  get isMoves(){
+    return this.velocity.x !== 0 || this.velocity.y !== 0
+  }
+
   drawBorder() {
     this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
   }
 
   draw() {
     this.drawBorder();
-
     if (this.frames) {
       this.game.ctx.drawImage(
         this.image,

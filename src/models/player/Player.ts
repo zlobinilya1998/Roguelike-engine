@@ -6,11 +6,13 @@ import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Inventory } from "models/player/Inventory";
 import { PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
+import { DamageBubble } from "models/base/animation/DamageBubble";
+import { GameEvent } from "@/core/events/GameEvent";
 
 import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
-import { DamageBubble } from "models/base/animation/DamageBubble";
-import { GameEvent } from "@/core/events/GameEvent";
+import Run from 'assets/Player/Run.png';
+
 
 export class Player extends Sprite {
   constructor() {
@@ -35,7 +37,7 @@ export class Player extends Sprite {
       if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
-      this.animation.damage.take(damageCount);
+      this.animation.play.damage.take(damageCount);
     }
   }
 
@@ -51,17 +53,49 @@ export class Player extends Sprite {
   }
 
   animation = {
-    damage: {
-      take: (damageCount: number) => {
-        const bubble = new DamageBubble(damageCount, { x: this.position.x, y: this.position.y });
-        GameEvent.dispatch.animation.spawn(bubble);
-        this.image.src = Hit;
-        this.frames.max = 7;
-        setTimeout(() => {
+    lock: false,
+    play: {
+      damage: {
+        take: (damageCount: number) => {
+          const bubble = new DamageBubble(damageCount, { x: this.position.x, y: this.position.y });
+          GameEvent.dispatch.animation.spawn(bubble);
+          this.animation.play.player.hit();
+          setTimeout(() => {
+            this.animation.play.player.idle();
+            this.animation.lock = false;
+          }, 400);
+        }
+      },
+      player: {
+        idle: () => {
           this.image.src = Idle;
           this.frames.max = 11;
-        }, 400)
+        },
+        run: () => {
+          this.image.src = Run;
+          this.frames.max = 12;
+        },
+        hit: () => {
+          this.animation.lock = true;
+          this.image.src = Hit;
+          this.frames.max = 7;
+        }
       }
+    }
+
+  }
+
+  update() {
+    super.update();
+    this.movementAnimation();
+  }
+
+  movementAnimation() {
+    if (this.animation.lock) return;
+    if (this.isMoves) {
+      this.animation.play.player.run();
+    } else {
+      this.animation.play.player.idle();
     }
   }
 }
