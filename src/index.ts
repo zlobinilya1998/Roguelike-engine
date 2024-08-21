@@ -2,35 +2,31 @@ import './style/index.css';
 import './style/variables/variables.scss';
 import './style/components/components.scss'
 
-import { Chest } from "@/models/gameObject/chest/Chest";
 import { Player } from "@/models/player/Player";
 
-import { weapons } from "models/entities/weapons";
 import { HealthBar } from "components/Hud/Player/HealthBar";
 import { ExperienceBar } from "components/Hud/Player/ExperienceBar";
 import { PlayerInventory } from "components/Hud/Player/Inventory";
 import { GameEvent } from "core/events/GameEvent";
-import { AggressiveEnemy } from "@/models/base/enemy/AggressiveEnemy";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
 import { GameObject } from 'models/base/object/GameObject';
-import { FireTrap } from 'models/base/object/trap/FireTrap';
-import { SawTrap } from './models/base/object/trap/SawTrap';
-import { PickingBanana } from './models/base/object/picking/PickingBanana';
+
+import Background from 'assets/Background/level1.png'
+import collisionBlocks from './core/levels/collisions';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = 1024;
-canvas.height = 576;
+canvas.width = 64 * 16;
+canvas.height = 64 * 9;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
 export class Game {
-  static objects: GameObject[] = [new Chest("Solid chest", weapons), new FireTrap(), new SawTrap(), new PickingBanana()];
-  static enemies: Enemy[] = [
-    new AggressiveEnemy()
-  ]
+  static collisions = collisionBlocks;
+  static objects: GameObject[] = [];
+  static enemies: Enemy[] = []
   static animations: GameObject[] = [];
   static dialog = {
     chest: ChestDialog,
@@ -64,7 +60,10 @@ export class Game {
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
   static update(timestamp: EpochTimeStamp) {
-    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const image = new Image();
+    image.src = Background;
+    this.ctx.drawImage(image, 0, 0)
+    collisionBlocks.forEach(block => block.draw())
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }

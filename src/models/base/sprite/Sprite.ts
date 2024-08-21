@@ -1,12 +1,15 @@
-import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity } from 'models/types/Sprite'
+import { GameUtils } from '@/utils';
+import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes } from 'models/types/Sprite'
 
 export class Sprite {
   position: SpritePosition;
   size: SpriteSize;
+  sizes: SpriteSizes;
   velocity: SpriteVelocity
   frames: SpriteFrames;
   image: HTMLImageElement;
   scale: number;
+  gravity: number;
   constructor(position: SpritePosition, size: SpriteSize, imageSrc: string, frames: SpriteFrames, scale = 1) {
     this.position = position;
     this.size = size;
@@ -14,7 +17,10 @@ export class Sprite {
     this.image = new Image();
     this.image.src = imageSrc;
     this.scale = scale;
-    this.velocity = new SpriteVelocity(0,0)
+    this.velocity = new SpriteVelocity(0, 1)
+
+    this.sizes = new SpriteSizes(this);
+    this.gravity = 1;
   }
 
   get game() {
@@ -30,8 +36,12 @@ export class Sprite {
     };
   }
 
-  get isMoves(){
-    return this.velocity.x !== 0 || this.velocity.y !== 0
+  get isMoves() {
+    return this.velocity.x !== 0;
+  }
+
+  get isFalling() {
+    return this.velocity.y !== 0;
   }
 
   drawBorder() {
@@ -75,6 +85,64 @@ export class Sprite {
 
   updatePosition() {
     this.position.x += this.velocity.x;
+
+    this.collision.horizontal();
+
+
     this.position.y += this.velocity.y;
+    this.sizes.bottom = this.position.y + this.size.height;
+
+
+    this.collision.vertical();
+
+
+
+    if (this.sizes.bottom + this.velocity.y < this.game.ctx.canvas.height) {
+      this.velocity.y += this.gravity;
+      this.sizes.bottom = this.position.y + this.size.height;
+    } else {
+      this.velocity.y = 0
+    }
+  }
+
+
+  collision = {
+    vertical: () => {
+      const collisions = this.game.collisions;
+      for (let i = 0; i < collisions.length; i++) {
+        const block = collisions[i];
+        const isCollide = GameUtils.gameObject.isCollide(block, this.geometry);
+        if (isCollide) {
+          if (this.velocity.y < 0) {
+            this.gravity = 0
+            this.position.y = block.y + block.height + 0.01;
+            break;
+          } else if (this.velocity.y > 0) {
+            this.gravity = 0
+            this.position.y = block.y - this.size.height - 0.01;
+            break;
+          }
+        }
+
+      }
+    },
+    horizontal: () => {
+      const collisions = this.game.collisions;
+      for (let i = 0; i < collisions.length; i++) {
+        const block = collisions[i];
+        const isCollide = GameUtils.gameObject.isCollide(block, this.geometry);
+        if (isCollide) {
+          if (this.velocity.x < 0) {
+            this.position.x = block.x + block.width + 0.01;
+            break;
+          } else if (this.velocity.x > 0) {
+            this.position.x = block.x - this.size.width - 0.01;
+            break;
+          }
+        }
+
+      }
+    }
   }
 }
+

@@ -1,3 +1,5 @@
+import { Sprite } from "models/base/sprite/Sprite";
+
 export class SpritePosition {
     x: number;
     y: number;
@@ -13,6 +15,16 @@ export class SpriteSize {
         this.width = width;
         this.height = height;
     }
+}
+
+export class SpriteSizes {
+    constructor(sprite: Sprite){
+        this.bottom = sprite.position.y + sprite.size.height;
+    }
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
 }
 
 export class SpriteGeometry {

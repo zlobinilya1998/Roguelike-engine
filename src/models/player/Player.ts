@@ -16,7 +16,7 @@ import Run from 'assets/Player/Run.png';
 
 export class Player extends Sprite {
   constructor() {
-    const position = new SpritePosition(100, 250);
+    const position = new SpritePosition(220, 220);
     const size = new SpriteSize(30, 30);
     const frames = new SpriteFrames(0, 11, 4);
     super(position, size, Idle, frames);
