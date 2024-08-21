@@ -4,7 +4,7 @@ import { Player } from "models/player/Player";
 import { Events } from "core/events/Events.js";
 import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
-import { GameAnimation } from "@/models/base/GameAnimation";
+import { GameAnimation } from "@/models/base/animation/GameAnimation";
 
 export const createEvent = (name: string, data?: unknown) => {
   const event = new CustomEvent(name, { detail: data });
@@ -25,6 +25,10 @@ export class GameEvent {
         right: () => createEvent(Events.player.move.right),
         top: () => createEvent(Events.player.move.top),
         down: () => createEvent(Events.player.move.down),
+        stop: {
+          x: () => createEvent(Events.player.move.stop.x),
+          y: () => createEvent(Events.player.move.stop.y),
+        }
       },
       level: {
         up: () => createEvent(Events.player.level.up),
@@ -116,6 +120,14 @@ export class GameEvent {
         this.player.move.down();
       });
 
+      GameEvent.subscribe(Events.player.move.stop.x, () => {
+        this.player.move.stop.x();
+      });
+
+      GameEvent.subscribe(Events.player.move.stop.y, () => {
+        this.player.move.stop.y();
+      });
+
       GameEvent.subscribe(Events.inventory.open, () =>
         this.game.inventory.open()
       );
@@ -142,6 +154,23 @@ export class GameEvent {
             break;
           case "s":
             GameEvent.dispatch.player.move.down();
+            break;
+        }
+      });
+
+      window.addEventListener("keyup", (e) => {
+        switch (e.key) {
+          case "a":
+            GameEvent.dispatch.player.move.stop.x();
+            break;
+          case "d":
+            GameEvent.dispatch.player.move.stop.x();
+            break;
+          case "w":
+            GameEvent.dispatch.player.move.stop.y();
+            break;
+          case "s":
+            GameEvent.dispatch.player.move.stop.y();
             break;
         }
       });

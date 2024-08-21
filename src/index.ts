@@ -13,7 +13,7 @@ import { GameEvent } from "core/events/GameEvent";
 import { AggressiveEnemy } from "@/models/base/enemy/AggressiveEnemy";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
-import { GameObject } from './models/base/GameObject';
+import { GameObject } from './models/base/object/GameObject';
 import { FireTrap } from './components/gameObject/Trap';
 import { DamageBubble } from './models/base/animation/DamageBubble';
 

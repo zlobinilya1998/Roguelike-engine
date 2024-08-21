@@ -13,10 +13,12 @@ const fireTrap = new Effect(FireIcon, 'You take 1 fire damage every second', Eff
 const petrification = new Effect(PetrificationIcon, 'You are Petrified',
     EffectType.Negative, () => {
         const player: Player = window.Game.player;
-        player.velocity = 0
+        player.velocity.x = 0
+        player.velocity.y = 0
     }, () => {
         const player: Player = window.Game.player;
-        player.velocity = 1;
+        player.velocity.x = 1;
+        player.velocity.y = 1;
     })
 
 export const EffectList = {

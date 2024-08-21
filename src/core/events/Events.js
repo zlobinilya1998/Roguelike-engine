@@ -12,6 +12,10 @@ export class Events {
             right: 'player:move:right',
             top: 'player:move:top',
             down: 'player:move:down',
+            stop: {
+                x: 'player:move:stop:x',
+                y: 'player:move:stop:y',
+            }
         },
         level: {
             up: 'player:level:up',

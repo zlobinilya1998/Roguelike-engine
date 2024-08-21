@@ -1,4 +1,4 @@
-import { GameObject } from "models/base/GameObject";
+import { GameObject } from "@/models/base/object/GameObject";
 import { GameObjectSize, GameObjectPosition } from "models/types/GameObject";
 
 export class GameAnimation extends GameObject {

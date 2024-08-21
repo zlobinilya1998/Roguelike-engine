@@ -1,10 +1,11 @@
-import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry } from 'models/types/Sprite'
+import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity } from 'models/types/Sprite'
 
 export class Sprite {
   position: SpritePosition;
   size: SpriteSize;
-  image: HTMLImageElement;
+  velocity: SpriteVelocity
   frames: SpriteFrames;
+  image: HTMLImageElement;
   scale: number;
   constructor(position: SpritePosition, size: SpriteSize, imageSrc: string, frames: SpriteFrames, scale = 1) {
     this.position = position;
@@ -13,6 +14,7 @@ export class Sprite {
     this.image = new Image();
     this.image.src = imageSrc;
     this.scale = scale;
+    this.velocity = new SpriteVelocity(0,0)
   }
 
   get game() {
@@ -52,7 +54,7 @@ export class Sprite {
 
   update() {
     this.draw();
-
+    this.updatePosition();
     if (this.frames) this.updateFrames();
   }
 
@@ -66,5 +68,10 @@ export class Sprite {
         this.frames.current = 0;
       }
     }
+  }
+
+  updatePosition() {
+    this.position.x += this.velocity.x;
+    this.position.y += this.velocity.y;
   }
 }

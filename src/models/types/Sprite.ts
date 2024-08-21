@@ -22,6 +22,15 @@ export class SpriteGeometry {
     height: number
 }
 
+export class SpriteVelocity {
+    x: number
+    y: number
+    constructor(x: number,y: number){
+        this.x = x;
+        this.y = y;
+    }
+}
+
 export class SpriteFrames {
     active: boolean = true;
     current: number = 0;

@@ -1,7 +1,7 @@
 import { Damage, DamageType } from "@/core/damage/Damage";
 import { EffectList } from "@/core/effects/EffectList";
 import { GameEvent } from "@/core/events/GameEvent";
-import { GameObject } from "@/models/base/GameObject";
+import { GameObject } from "@/models/base/object/GameObject";
 import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/GameObject";
 import { InteractionRadius } from "@/models/types/Geometry";
 

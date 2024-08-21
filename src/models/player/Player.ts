@@ -1,6 +1,6 @@
 import { Equipment } from "game/Equipment";
 import { PlayerStats } from "./Stats";
-import { Sprite } from "@/models/base/Sprite";
+import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem } from "@/core/damage/Damage";
 import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Inventory } from "models/player/Inventory";
@@ -13,17 +13,17 @@ import { DamageBubble } from "models/base/animation/DamageBubble";
 import { GameEvent } from "@/core/events/GameEvent";
 
 export class Player extends Sprite {
-  inventory = new Inventory();
-  equipment = new Equipment();
-  stats = new PlayerStats();
-  effects = new PlayerEffects();
-  velocity = 1;
   constructor() {
     const position = new SpritePosition(100, 250);
     const size = new SpriteSize(30, 30);
     const frames = new SpriteFrames(0, 11, 4);
     super(position, size, Idle, frames);
   }
+  inventory = new Inventory();
+  equipment = new Equipment();
+  stats = new PlayerStats();
+  effects = new PlayerEffects();
+
 
   get isDead() {
     return this.stats.health.isDead;
@@ -40,18 +40,14 @@ export class Player extends Sprite {
   }
 
   move = {
-    left: () => {
-      this.position.x -= 1 * this.velocity;
-    },
-    right: () => {
-      this.position.x += 1 * this.velocity;
-    },
-    top: () => {
-      this.position.y -= 1 * this.velocity;
-    },
-    down: () => {
-      this.position.y += 1 * this.velocity;
-    },
+    left: () => this.velocity.x = -1,
+    right: () => this.velocity.x = 1,
+    top: () => this.velocity.y = -1,
+    down: () => this.velocity.y = 1,
+    stop: {
+      x: () => this.velocity.x = 0,
+      y: () => this.velocity.y = 0,
+    }
   }
 
   animation = {
