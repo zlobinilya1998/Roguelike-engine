@@ -15,6 +15,7 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
 import { GameObject } from './models/base/GameObject';
 import { FireTrap } from './components/gameObject/Trap';
+import { DamageBubble } from './models/base/animation/DamageBubble';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -29,6 +30,7 @@ export class Game {
   static enemies: Enemy[] = [
     new AggressiveEnemy()
   ]
+  static animations: GameObject[] = [];
   static dialog = {
     chest: ChestDialog,
   }
@@ -44,8 +46,15 @@ export class Game {
     }
   }
 
+  static removeAnimation(animation: GameObject) {
+    const index = this.animations.indexOf(animation);
+    if (index !== -1) {
+      this.animations.splice(index, 1)
+    }
+  }
+
   static get entities() {
-    return [...this.hud, ...this.objects, this.player, ...this.enemies];
+    return [...this.hud, ...this.objects, this.player, ...this.enemies, ...this.animations];
   }
 
   static start() {

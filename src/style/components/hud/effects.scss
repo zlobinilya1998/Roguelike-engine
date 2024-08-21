@@ -12,7 +12,7 @@
     border-radius: 10px;
     width: 24px;
     height: 24px;
-
+    box-shadow: 1px 1px 1px 2px black;
     img {
         max-width: 100%;
         border-radius: 10px;
@@ -21,11 +21,41 @@
 
     &:hover {
         border-color: gold;
+        .player-effect-description {
+            display: block;
+        }
     }
+
+
 }
 .player-effect-positive {
     border-color: greenyellow;
 }
 .player-effect-negative {
     border-color: red;
+}
+
+.player-effect-description {
+    display: none;
+    position: absolute;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    top: 35px;
+    padding: 10px;
+    min-width: 180px;
+    background: white;
+    text-align: left;
+
+
+    &::after {
+        top: -5px;
+        left: 2px;
+        display: block;
+        position: absolute;
+        width: 0px;
+        content: "";
+        border: 10px solid transparent;
+        border-bottom-color: white;
+        border-top: 0;
+    }
 }

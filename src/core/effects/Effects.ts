@@ -7,19 +7,21 @@ export class Effect {
     type: EffectType;
     baseDuration: number = 10_000;
     duration: number;
+    imageSrc: string;
+    description: string;
     onApply: () => void;
     onEnd?: () => void;
-    imageSrc: string;
 
-    constructor(imageSrc: string, type: EffectType, onApply: () => void, onEnd?: () => void, duration: number = 10_000) {
+    constructor(imageSrc: string, description: string, type: EffectType, onApply: () => void, onEnd?: () => void, duration: number = 10_000) {
         this.type = type
         this.onApply = onApply
         this.onEnd = onEnd
         this.duration = duration
         this.imageSrc = imageSrc;
+        this.description = description;
     }
 
-    get isPositive(){
+    get isPositive() {
         return this.type === EffectType.Positive
     }
 }
@@ -66,8 +68,8 @@ export class PlayerEffects {
 
     createEffectQueue() {
         if (this.applyEffectInterval) return;
+        this.drawEffects();
         this.applyEffectInterval = setInterval(() => {
-            this.drawEffects();
             if (this.isEmpty) return this.clearQueue();
             this.effects.forEach(effect => {
                 if (effect.duration <= 0) {
@@ -85,6 +87,7 @@ export class PlayerEffects {
     clearQueue() {
         clearInterval(this.applyEffectInterval);
         this.applyEffectInterval = null;
+        this.drawEffects();
     }
 
     drawEffects() {
@@ -94,10 +97,15 @@ export class PlayerEffects {
             element.classList.add('player-effect', effect.isPositive ? 'player-effect-positive' : 'player-effect-negative');
             const image = document.createElement('img');
             image.src = effect.imageSrc;
+
+            const description = document.createElement('div');
+            description.classList.add('player-effect-description');
+            description.innerText = effect.description;
+
             element.appendChild(image)
+            element.appendChild(description)
             this.bar.appendChild(element);
         })
-        console.log(this.game.ctx);
     }
 
     get isEmpty() {

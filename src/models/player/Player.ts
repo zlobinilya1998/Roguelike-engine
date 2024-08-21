@@ -9,6 +9,7 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 
 import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
+import { DamageBubble } from "models/base/animation/DamageBubble";
 
 export class Player extends Sprite {
   inventory = new Inventory();
@@ -33,6 +34,7 @@ export class Player extends Sprite {
       if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
+      DamageBubble.add(damageCount, { x: this.position.x, y: this.position.y })
       this.image.src = Hit;
       this.frames.max = 7;
 
