@@ -15,6 +15,7 @@ import { GameObject } from 'models/base/object/GameObject';
 import Background from 'assets/Background/level1.png'
 import collisionBlocks from './core/levels/collisions';
 import { Door } from './models/base/object/terrain/Door';
+import { TorchGoblin } from './models/base/enemy/goblin/Goblin';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -27,7 +28,7 @@ c.fillRect(0, 0, canvas.width, canvas.height);
 export class Game {
   static collisions = collisionBlocks;
   static objects: GameObject[] = [new Door()];
-  static enemies: Enemy[] = []
+  static enemies: Enemy[] = [new TorchGoblin()]
   static animations: GameObject[] = [];
   static dialog = {
     chest: ChestDialog,

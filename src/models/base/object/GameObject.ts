@@ -59,7 +59,7 @@ export class GameObject {
     }
 
     update(ts: EpochTimeStamp) {
-        // this.drawBorder()
+        this.drawBorder()
         this.draw();
         if (this.frames) this.updateFrames();
     }

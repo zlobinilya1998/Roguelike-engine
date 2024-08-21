@@ -17,9 +17,9 @@ import Run from 'assets/Player/Run.png';
 export class Player extends Sprite {
   constructor() {
     const position = new SpritePosition(220, 220);
-    const size = new SpriteSize(30,30);
-    const frames = new SpriteFrames(0, 11, 8);
-    super(position, size, Idle, frames);
+    const size = new SpriteSize(30, 30);
+    const frames = new SpriteFrames(0, 1, 0, 11, 8);
+    super(position, size, Idle, frames, 1,{x: 0,y:0,width:size.width,height: size.height});
   }
   inventory = new Inventory();
   equipment = new Equipment();
@@ -46,9 +46,12 @@ export class Player extends Sprite {
   }
 
   move = {
-    left: () => this.velocity.x = -1,
-    right: () => this.velocity.x = 1,
-    top: () => this.velocity.y = -1,
+    left: () => this.velocity.x = -3,
+    right: () => this.velocity.x = 3,
+    top: () => {
+      this.velocity.y = -15;
+      this.gravity = 1;
+    },
     down: () => this.velocity.y = 1,
     stop: {
       x: () => this.velocity.x = 0,
