@@ -22,17 +22,20 @@ export class GameObjectFrames {
     elapsed: number = 0;
     max: number = 1;
     hold: number = 1;
+    loop: boolean = true;
 
     constructor(
         current: number = 0,
         max: number,
         hold: number,
         active: boolean = true,
+        loop: boolean = true,
     ) {
         this.current = current;
         this.max = max;
         this.hold = hold
         this.active = active
+        this.loop = loop;
     }
 }
 

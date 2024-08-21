@@ -10,7 +10,7 @@ import { TrapMotionRange } from "@/models/types/object/trap/MovingTrap";
 export class SawTrap extends MovingTrap {
     constructor() {
         const damage = new Damage(1, DamageType.Physic);
-        const position = new GameObjectPosition(300, 300)
+        const position = new GameObjectPosition(500, 365)
         const size = new GameObjectSize(38,38);
         const frames = new GameObjectFrames(0, 8, 1);
         const motionRange = new TrapMotionRange(200,50)

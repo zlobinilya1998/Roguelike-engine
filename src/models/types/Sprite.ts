@@ -43,6 +43,11 @@ export class SpriteVelocity {
     }
 }
 
+export class SpriteFrame {
+    max: number = 1;
+    hold: number = 1;
+}
+
 export class SpriteFrames {
     active: boolean = true;
     current: number = 0;

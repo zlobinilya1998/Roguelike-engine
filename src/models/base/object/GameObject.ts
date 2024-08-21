@@ -68,7 +68,9 @@ export class GameObject {
             if (this.frames.current < this.frames.max - 1) {
                 this.frames.current++;
             } else {
-                this.frames.current = 0;
+                if (this.frames.loop){
+                    this.frames.current = 0;
+                }
             }
         }
     }
