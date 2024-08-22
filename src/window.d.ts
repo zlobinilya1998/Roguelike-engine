@@ -12,6 +12,7 @@ declare global {
     playerEffects: HTMLDivElement;
     chestDialog: HTMLDialogElement;
     inventoryDialog: HTMLDialogElement;
+    gameMenu: HTMLDivElement;
   }
 }
 

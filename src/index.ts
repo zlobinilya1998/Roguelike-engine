@@ -16,16 +16,14 @@ import Background from 'assets/Background/level1.png'
 import collisionBlocks from './core/levels/collisions';
 import { Door } from './models/base/object/terrain/Door';
 import { TorchGoblin } from './models/base/enemy/goblin/Goblin';
+import { UIComponent } from './components/ui/UIComponent';
+import { GameMenu } from './components/ui/GameMenu';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = 64 * 16;
-canvas.height = 64 * 9;
-
-c.fillRect(0, 0, canvas.width, canvas.height);
-
 export class Game {
+  public static paused = false;
   static collisions = collisionBlocks;
   static objects: GameObject[] = [new Door()];
   static enemies: Enemy[] = [new TorchGoblin()]
@@ -33,7 +31,8 @@ export class Game {
   static dialog = {
     chest: ChestDialog,
   }
-  static hud = [new HealthBar(), new ExperienceBar()];
+  static hud: UIComponent[] = [new HealthBar(), new ExperienceBar()];
+  static ui: UIComponent[] = [new GameMenu()]
   static inventory = new PlayerInventory();
   static player = new Player();
   static ctx = c;
@@ -53,7 +52,7 @@ export class Game {
   }
 
   static get entities() {
-    return [...this.hud, ...this.objects, this.player, ...this.enemies, ...this.animations];
+    return [...this.hud, ...this.ui, ...this.objects, this.player, ...this.enemies, ...this.animations];
   }
 
   static start() {
@@ -62,6 +61,8 @@ export class Game {
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
   static update(timestamp: EpochTimeStamp) {
+    if (this.paused) return;
+
     const image = new Image();
     image.src = Background;
     this.ctx.drawImage(image, 0, 0)
@@ -71,8 +72,17 @@ export class Game {
   }
 
   static setup() {
+    canvas.width = 64 * 16;
+    canvas.height = 64 * 9;
     window.Game = Game;
     GameEvent.createListeners();
+  }
+
+  public static pause() {
+    this.paused = true;
+  }
+  public static unpause() {
+    this.paused = false;
   }
 }
 Game.setup();

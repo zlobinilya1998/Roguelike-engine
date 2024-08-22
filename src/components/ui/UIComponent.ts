@@ -7,7 +7,7 @@ export class UIComponent {
         return window.Game.ctx;
     }
 
-    get game(): Game {
+    get game(): typeof Game {
         return window.Game
     }
 

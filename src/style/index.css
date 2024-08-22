@@ -13,6 +13,11 @@ html {
 body {
     font-family: 'Ugly';
     background-color: #3F3851;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    overflow: hidden;
+    transition: 0.3s;
 }
 
 canvas {

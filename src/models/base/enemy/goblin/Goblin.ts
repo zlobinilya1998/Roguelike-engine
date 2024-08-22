@@ -11,7 +11,7 @@ const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Goblin, 
 
 export class TorchGoblin extends AggressiveEnemy {
     constructor() {
-        const position = new SpritePosition(300, 300)
+        const position = new SpritePosition(500, 300)
         const size = new SpriteSize(192, 192);
         const hitBox = new SpriteHitBox(50, 50, 80, 80)
         super(position, size, hitBox);
