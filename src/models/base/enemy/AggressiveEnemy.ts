@@ -6,8 +6,6 @@ export class AggressiveEnemy extends Enemy {
     equipment: AggressiveEnemyEquipment = new AggressiveEnemyEquipment();
     isCanAttack = true;
 
-    
-
     tryAttack() {
         const weapon = this.equipment.weapon;
         if (!weapon || !this.isCanAttack) return;

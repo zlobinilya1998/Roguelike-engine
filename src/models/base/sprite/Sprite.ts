@@ -30,9 +30,10 @@ export class Sprite {
   };
   hitboxOffset: SpriteGeometry;
   animations = {
-    idle: null,
-    attack: null,
-    moving: null,
+    idle: null as SpriteFrames,
+    attack: null as SpriteFrames,
+    moving: null as SpriteFrames,
+    hit: null as SpriteFrames,
   }
 
 
@@ -96,7 +97,16 @@ export class Sprite {
   update() {
     this.draw();
     this.updatePosition();
+    this.updateAnimations();
     if (this.frames) this.updateFrames();
+  }
+
+  updateAnimations(){
+    if (this.isMoves) {
+      this.animation.use.moving()
+    } else {
+      this.animation.use.idle()
+    }
   }
 
   updateFrames() {
@@ -150,17 +160,19 @@ export class Sprite {
 
   animation = {
     resolve: null as (value?: unknown) => void,
-    play: (frames: SpriteFrames) => {
+    play: (frames: SpriteFrames, onStart?: () => void) => {
       if (!frames) return;
+      onStart?.();
       return new Promise((res) => {
         this.animation.resolve = res;
         this.frames = frames;
       });
     },
     use: {
-      attack: () => this.animation.play(this.animations.attack),
-      moving: () => this.animation.play(this.animations.moving),
-      idle: () => this.animation.play(this.animations.idle),
+      attack: (onStart?: () => void) => this.animation.play(this.animations.attack, onStart),
+      moving: (onStart?: () => void) => this.animation.play(this.animations.moving, onStart),
+      idle: (onStart?: () => void) => this.animation.play(this.animations.idle, onStart),
+      hit: (onStart?: () => void) => this.animation.play(this.animations.hit, onStart),
     }
   }
 
