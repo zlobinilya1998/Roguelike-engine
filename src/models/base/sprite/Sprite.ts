@@ -145,7 +145,7 @@ export class Sprite {
       width: this.hitboxOffset.width,
       height: this.hitboxOffset.height,
     };
-    // this.game.ctx.strokeRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height)
+    this.game.ctx.strokeRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height)
   }
 
   animation = {

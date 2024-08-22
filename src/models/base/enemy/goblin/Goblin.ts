@@ -2,6 +2,8 @@ import { SpritePosition, SpriteSize, SpriteHitbox, SpriteAnimation, SpriteAnimat
 import { AggressiveEnemy } from "models/base/enemy/AggressiveEnemy";
 
 import Goblin from 'assets/Enemy/Goblin.png';
+import { GameEvent } from "@/core/events/GameEvent";
+import { EffectList } from "@/core/effects/EffectList";
 
 const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, Goblin, 3, 5, 0, 6, 6, true, 1);
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, Goblin, 0, 5, 0, 7, 7, true,0);
@@ -14,5 +16,10 @@ export class TorchGoblin extends AggressiveEnemy {
         const hitbox = new SpriteHitbox(50, 50, 80, 80)
         super(position, size, hitbox);
         this.animations.addList([IdleAnimation, AttackAnimation,MovingAnimation]);
+    }
+
+    onAttack(): void {
+        super.onAttack();
+        GameEvent.dispatch.player.effect.apply(EffectList.trap.fire)
     }
 }

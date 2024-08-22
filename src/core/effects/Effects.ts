@@ -28,6 +28,14 @@ export class Effect {
     get isPositive() {
         return this.type === EffectType.Positive
     }
+
+    resetDuration(){
+        this.duration = this.baseDuration;
+    }
+
+    get durationText(){
+        return `${this.duration/1000}s`;
+    }
 }
 
 
@@ -52,8 +60,10 @@ export class PlayerEffects {
 
     applyEffect(effect: Effect) {
         const isEffectApplied = this.effects.includes(effect);
+        console.log(effect);
+        console.log(isEffectApplied);
         if (isEffectApplied) {
-            this.updateEffectDuration(effect);
+            effect.resetDuration();
         } else {
             this.effects.push(effect)
         }
@@ -68,6 +78,7 @@ export class PlayerEffects {
         const index = this.effects.indexOf(effect);
         if (index === -1) return;
         this.effects.splice(index, 1);
+        effect.resetDuration();
     }
 
     createEffectQueue() {
@@ -111,12 +122,18 @@ export class PlayerEffects {
             title.classList.add('player-effect-title')
             const description = document.createElement('div');
             description.innerHTML = effect.description;
-            description.classList.add('player-effect-description')
+            description.classList.add('player-effect-description');
+
+            const duration = document.createElement('div');
+            duration.innerHTML = effect.durationText;
+            duration.classList.add('player-effect-duration');
+
             tooltip.appendChild(title)
             tooltip.appendChild(description)
 
             element.appendChild(image)
             element.appendChild(tooltip)
+            element.appendChild(duration)
             this.bar.appendChild(element);
         })
     }

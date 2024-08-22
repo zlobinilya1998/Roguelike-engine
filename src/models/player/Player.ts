@@ -9,22 +9,20 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 import { TextBubble } from "@/models/base/animation/TextBubble";
 import { GameEvent } from "@/core/events/GameEvent";
 
-import Idle from 'assets/Player/Idle.png';
-import Hit from 'assets/Player/Hit.png';
-import Run from 'assets/Player/Run.png';
-const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, Idle, 0, 1, 0, 11, 8, true, 0)
-const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Run, 0, 1, 0, 12, 3, true, 0)
-const TakeDamageAnimation = new SpriteAnimation(SpriteAnimationType.TakeDamage, Hit, 0, 1, 0, 7, 5, true, 0)
+import PlayerImage from 'assets/Player/Player.png';
+
+const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
+const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
 
 export class Player extends Sprite {
   constructor() {
     const position = new SpritePosition(220, 220);
-    const size = new SpriteSize(30, 30);
-    const scale = 1;
-    const hitbox = { x: 0, y: 0, width: size.width, height: size.height };
+    const size = new SpriteSize(192, 192);
+    const scale = 0.5;
+    const hitbox = { x: 30, y: 25, width: 30, height: 40 };
     super(position, size, scale, hitbox);
 
-    this.animations.addList([IdleAnimation, MovingAnimation, TakeDamageAnimation])
+    this.animations.addList([IdleAnimation, MovingAnimation])
   }
   inventory = new Inventory();
   equipment = new Equipment();
