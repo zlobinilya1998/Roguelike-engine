@@ -2,7 +2,7 @@ import { Equipment } from "game/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem } from "@/core/damage/Damage";
-import { SpriteAnimation, SpriteAnimationType, SpriteFrames, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
+import { SpriteAnimation, SpriteAnimationType, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
 import { Inventory } from "models/player/Inventory";
 import { PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
@@ -13,7 +13,7 @@ import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
 import Run from 'assets/Player/Run.png';
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, Idle, 0, 1, 0, 11, 8, true, 0)
-const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Run, 0, 1, 0, 12, 8, true, 0)
+const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Run, 0, 1, 0, 12, 3, true, 0)
 const TakeDamageAnimation = new SpriteAnimation(SpriteAnimationType.TakeDamage, Hit, 0, 1, 0, 7, 5, true, 0)
 
 export class Player extends Sprite {

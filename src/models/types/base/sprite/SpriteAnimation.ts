@@ -28,22 +28,22 @@ export class SpriteAnimation extends SpriteFrames {
 }
 
 export class SpriteAnimations {
-    list: Map<SpriteAnimationType,SpriteAnimation> = new Map();
+    list: Map<SpriteAnimationType, SpriteAnimation> = new Map();
 
-    add(animation: SpriteAnimation){
-        this.list.set(animation.type,animation);
+    add(animation: SpriteAnimation) {
+        this.list.set(animation.type, animation);
         return this.list
     }
 
-    remove(type: SpriteAnimationType){
+    remove(type: SpriteAnimationType) {
         this.list.delete(type);
     }
 
-    addList(list: SpriteAnimation[]){
+    addList(list: SpriteAnimation[]) {
         list.forEach(animation => this.add(animation));
     }
 
-    get(type: SpriteAnimationType){
+    get(type: SpriteAnimationType) {
         return this.list.get(type);
     }
 }

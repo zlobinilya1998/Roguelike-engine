@@ -5,11 +5,12 @@ import { Enemy } from "models/base/enemy/Enemy";
 
 export class AggressiveEnemy extends Enemy {
     equipment: AggressiveEnemyEquipment = new AggressiveEnemyEquipment();
-    isCanAttack = true;
+    
+    canAttack = true;
 
     tryAttack() {
         const weapon = this.equipment.weapon;
-        if (!weapon || !this.isCanAttack) return;
+        if (!weapon || !this.canAttack) return;
         this.onAttack();
     }
 
@@ -18,11 +19,10 @@ export class AggressiveEnemy extends Enemy {
         const damage = weapon.createDamage();
         GameEvent.dispatch.player.combat.takeDamage(damage);
 
-        this.isCanAttack = false;
+        this.canAttack = false;
         setTimeout(() => {
-            this.isCanAttack = true;
+            this.canAttack = true;
         }, weapon.swingTime);
-
         this.animation.play(SpriteAnimationType.Attack, true, true);
     }
 
@@ -34,14 +34,16 @@ export class AggressiveEnemy extends Enemy {
         this.chasePlayer();
     }
 
+    get isCanAttack(){
+        return Math.abs(this.geometry.x - this.player.geometry.x) < this.player.geometry.width;
+    }
+
     chasePlayer() {
-        if (this.position.y > this.player.position.y) {
-            if (this.state.moves) this.velocity.x = 0;
-            this.animation.play(SpriteAnimationType.Idle, false, true)
+        if (this.isCanAttack){
+            this.velocity.x = 0;
             return;
         }
 
-        this.animation.play(SpriteAnimationType.Moving, false, true)
         if (this.geometry.x > this.player.geometry.x) {
             this.velocity.x = -1;
         } else {

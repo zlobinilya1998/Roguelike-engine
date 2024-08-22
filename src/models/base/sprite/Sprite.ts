@@ -43,7 +43,7 @@ export class Sprite {
     };
   }
 
-  get state(){
+  get state() {
     return {
       moves: this.velocity.x !== 0,
       falling: this.velocity.y !== 0,
@@ -94,9 +94,9 @@ export class Sprite {
   }
 
   updateAnimations() {
-    if (this.state.moves) this.animation.play(SpriteAnimationType.Moving)
+    if (this.state.moves) this.animation.play(SpriteAnimationType.Moving, false, false)
     else {
-      this.animation.play(SpriteAnimationType.Idle)
+      this.animation.play(SpriteAnimationType.Idle, false, false)
     }
   }
 
@@ -160,11 +160,17 @@ export class Sprite {
       if (!animation) return;
       this.animation.lock = true;
 
+
+      if (animation.type === SpriteAnimationType.Attack) {
+        console.log(animation);
+
+      }
+
       return new Promise((res) => {
         this.animation.resolve = () => {
           res(animation);
           this.animation.lock = false;
-          if (once){
+          if (once) {
             this.frames = null;
             this.image.src = null;
           }
