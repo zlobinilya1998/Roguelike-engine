@@ -15,14 +15,6 @@ export class GameObjectSize {
     }
 }
 
-export class GameObjectAnimation {
-    imageSrc: string;
-    maxFrames: number;
-    constructor(imageSrc: string, maxFrames: number){
-        this.imageSrc = imageSrc;
-        this.maxFrames = maxFrames;
-    }
-}
 
 export class GameObjectFrames {
     active: boolean = true;
@@ -30,20 +22,25 @@ export class GameObjectFrames {
     elapsed: number = 0;
     max: number = 1;
     hold: number = 1;
-    loop: boolean = true;
-
+    currentRow: number = 0;
+    rows = 1;
+    slice = 0;
     constructor(
+        currentRow = 0,
+        rows: number = 1,
         current: number = 0,
         max: number,
         hold: number,
         active: boolean = true,
-        loop: boolean = true,
+        slice: number = 0
     ) {
+        this.currentRow = currentRow
+        this.rows = rows;
         this.current = current;
         this.max = max;
         this.hold = hold
         this.active = active
-        this.loop = loop;
+        this.slice = slice
     }
 }
 

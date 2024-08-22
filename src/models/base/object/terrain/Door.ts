@@ -1,34 +1,22 @@
-import { GameObjectAnimation, GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
+import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
+import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 import { GameObject } from "../GameObject";
-
 import DoorIdle from 'assets/gameObject/Door/Idle.png';
 import DoorOpening from 'assets/gameObject/Door/Opening.png';
 import DoorClosing from 'assets/gameObject/Door/Closing.png';
+
+const DoorIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle, DoorIdle, 1);
+const DoorOpeningAnimation = new GameObjectAnimation(GameObjectAnimationType.Interactable, DoorOpening, 5);
+const DoorClosingAnimation = new GameObjectAnimation(GameObjectAnimationType.LeaveInteractable, DoorClosing, 3);
 
 export class Door extends GameObject {
     constructor() {
         const position = new GameObjectPosition(300, 330);
         const size = new GameObjectSize(46, 56);
-        const frames = new GameObjectFrames(0, 1, 5, true, false);
-        super(position, size, "Door", 1, frames, DoorIdle);
-    }
+        super(position, size);
 
-    animations = {
-        DoorIdle: new GameObjectAnimation(DoorIdle, 1),
-        DoorOpening: new GameObjectAnimation(DoorOpening, 5),
-        DoorClosing: new GameObjectAnimation(DoorClosing, 3),
-    };
+        this.animations.addList([DoorIdleAnimation, DoorOpeningAnimation, DoorClosingAnimation])
 
-    update(ts: EpochTimeStamp): void {
-        super.update(ts);
-        this.updateAnimation();
-    }
-
-    updateAnimation() {
-        if (this.isCanInteract) {
-            this.animation.apply(this.animations.DoorOpening)
-        } else if (this.image.src === DoorOpening) {
-            this.animation.apply(this.animations.DoorClosing)
-        } 
+        this.animation.play(GameObjectAnimationType.Idle)
     }
 }

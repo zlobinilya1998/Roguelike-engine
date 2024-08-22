@@ -1,81 +1,52 @@
 import { GameUtils } from "@/utils";
-import { GameObjectAnimation, GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize, GameObjectTitle } from "@/models/types/object/GameObject";
+import { GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 import { Player } from "models/player/Player";
 import { InteractionRadius } from "models/types/Geometry";
+import { Game } from "@/index";
+import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 
 export class GameObject {
-    constructor(position: GameObjectPosition, size: GameObjectSize, title: GameObjectTitle, scale = 1, frames: GameObjectFrames, imageSrc: string) {
+    constructor(position: GameObjectPosition, size: GameObjectSize) {
         this.position = position;
         this.size = size;
-        this.title = title;
-        this.scale = scale;
-        this.frames = frames;
-        this.image = new Image();
-        this.image.src = imageSrc;
+        this.scale = 1;
+
+        this.animation.play(GameObjectAnimationType.Idle);
     }
 
     position: GameObjectPosition;
     size: GameObjectSize;
-    title: GameObjectTitle;
     frames: GameObjectFrames;
     scale: number;
     image: HTMLImageElement;
 
-    animations = {};
+    animations = new GameObjectAnimations();
     interactionRadius = InteractionRadius.Medium;
 
-
-
     draw() {
-        if (this.frames) {
-            this.game.ctx.drawImage(
-                this.image,
-                this.frames.current * (this.image.width / this.frames.max),
-                0,
-                this.image.width / this.frames.max,
-                this.image.height,
-                this.position.x,
-                this.position.y,
-                (this.image.width / this.frames.max) * this.scale,
-                this.image.height * this.scale,
-            )
-        } else {
-            this.game.ctx.drawImage(
-                this.image,
-                0,
-                0,
-                this.image.width,
-                this.image.height,
-                this.position.x,
-                this.position.y,
-                this.image.width * this.scale,
-                this.image.height * this.scale,
-            )
-        }
+        if (!this.frames) return;
+        this.game.ctx.drawImage(
+            this.image,
+            this.frames.current * (this.image.width / this.frames.max),
+            0,
+            this.image.width / this.frames.max,
+            this.image.height,
+            this.position.x,
+            this.position.y,
+            (this.image.width / this.frames.max) * this.scale,
+            this.image.height * this.scale,
+        )
     }
 
     drawBorder() {
-        // this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
+        this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
     }
 
     update(ts: EpochTimeStamp) {
         this.drawBorder()
         this.draw();
         if (this.frames) this.updateFrames();
-    }
-
-    updateFrames() {
-        if (!this.frames.active) return;
-        this.frames.elapsed++;
-        if (this.frames.elapsed % this.frames.hold === 0) {
-            if (this.frames.current < this.frames.max - 1) {
-                this.frames.current++;
-            } else {
-                if (this.frames.loop) {
-                    this.frames.current = 0;
-                }
-            }
-        }
+        this.updateAnimation();
     }
 
     removeMe() {
@@ -83,7 +54,7 @@ export class GameObject {
     }
 
 
-    get game() {
+    get game(): typeof Game {
         return window.Game;
     }
 
@@ -106,14 +77,57 @@ export class GameObject {
     }
 
 
-
     animation = {
-        apply: (animation:GameObjectAnimation) => {
-            if (this.image.src !== animation.imageSrc) {
+        animation: null as GameObjectAnimation,
+        lock: false,
+        resolve: null as (value?: unknown) => void,
+        play: (type: GameObjectAnimationType, force = false) => {
+            if (force) this.animation.lock = false;
+
+            if (this.animation.animation?.type === type) return;
+
+            if (!type || this.animation.lock) return;
+            const animation = this.animations.get(type);
+            if (!animation) return;
+            this.animation.lock = true;
+            this.animation.animation = animation;
+            return new Promise((res) => {
+                const image = new Image();
+                image.src = animation.imageSrc;
+                this.image = image;
+                this.frames = animation;
                 this.frames.current = 0;
+                this.animation.resolve = () => {
+                    res(animation);
+                    this.animation.lock = false;
+                };
+            });
+        },
+    }
+
+    updateFrames() {
+        if (!this.frames.active) return;
+        this.frames.elapsed++;
+        if (this.frames.elapsed % this.frames.hold === 0) {
+            if (this.frames.current < this.frames.max - 1) {
+                this.frames.current++;
+            } else {
+                if (this.animation.animation.loop) {
+                    this.frames.current = 0;
+                }
+                this.animation.resolve?.();
+                console.log('Resolve');
+
             }
-            this.image.src = animation.imageSrc;
-            this.frames.max = animation.maxFrames;
+        }
+    }
+
+    updateAnimation() {
+        if (this.isCanInteract) {
+            this.animation.play(GameObjectAnimationType.Interactable)
+        }
+        else {
+            this.animation.play(GameObjectAnimationType.LeaveInteractable);
         }
     }
 }

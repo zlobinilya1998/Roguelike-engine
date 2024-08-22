@@ -1,5 +1,5 @@
 import { Damage, DamageType } from "@/core/damage/Damage";
-import { GameObjectPosition, GameObjectSize, GameObjectFrames } from "@/models/types/object/GameObject";
+import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 
 import Saw from 'assets/Trap/Saw.png'
 import { GameEvent } from "@/core/events/GameEvent";
@@ -11,11 +11,10 @@ export class SawTrap extends MovingTrap {
     constructor() {
         const damage = new Damage(1, DamageType.Physic);
         const position = new GameObjectPosition(500, 365)
-        const size = new GameObjectSize(38,38);
-        const frames = new GameObjectFrames(0, 8, 1);
-        const motionRange = new TrapMotionRange(200,50)
+        const size = new GameObjectSize(38, 38);
+        const motionRange = new TrapMotionRange(200, 50)
 
-        super(motionRange, damage, position, size, frames, Saw);
+        super(motionRange, damage, position, size);
         this.velocity.x = -1;
     }
 

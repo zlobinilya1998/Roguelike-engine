@@ -11,15 +11,16 @@ export type ChestLoot = Item[];
 
 export class Chest extends GameObject {
   loot: ChestLoot;
-  isOpen: boolean;
+  isOpen: boolean = false;
+  title: string;
 
   constructor(title: string = 'Chest', loot: ChestLoot = []) {
     const position = new GameObjectPosition(150, 250);
     const size = new GameObjectSize(28, 24);
-    super(position, size, title, 1, null, ChestPng);
+    super(position, size);
     this.loot = loot
-    this.isOpen = false;
-    this.interactionRadius = InteractionRadius.Near
+    this.title = title;
+    this.interactionRadius = InteractionRadius.Near;
   }
 
   get isEmpty() {
@@ -58,8 +59,8 @@ export class Chest extends GameObject {
     applyActiveStyle: () => {
       window.Game.ctx.strokeStyle = "green";
       const { x, y, height, width } = this.geometry;
-      window.Game.ctx.rect(x, y, width, height);
-      window.Game.ctx.stroke();
+      this.game.ctx.rect(x, y, width, height);
+      this.game.ctx.stroke();
     },
   };
 }

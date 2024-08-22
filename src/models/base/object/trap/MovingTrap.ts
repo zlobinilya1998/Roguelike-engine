@@ -1,12 +1,12 @@
 import { Damage } from "@/core/damage/Damage";
 import { Trap } from "./Trap";
-import { GameObjectFrames, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
+import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 import { TrapMotion, TrapMotionRange } from "@/models/types/object/trap/MovingTrap";
 
 
 export class MovingTrap extends Trap {
-    constructor(motionRange: TrapMotionRange ,damage: Damage, position: GameObjectPosition, size: GameObjectSize, frames: GameObjectFrames, imageSrc: string) {
-        super(damage, position, size, frames, imageSrc);
+    constructor(motionRange: TrapMotionRange ,damage: Damage, position: GameObjectPosition, size: GameObjectSize) {
+        super(damage, position, size);
         this.motion.setup(motionRange);
     }
 
