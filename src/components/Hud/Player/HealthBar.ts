@@ -1,38 +1,42 @@
-import { Player } from "@/models/player/Player";
+import { UIComponent } from "@/components/ui/UIComponent";
+import { Events } from "@/core/events/Events";
+import { GameEvent } from "@/core/events/GameEvent";
+
 import Heart from 'assets/shared/heart.png';
 
-export class HealthBar {
+export class HealthBar extends UIComponent {
+    constructor() {
+        super();
+        this.heart.src = Heart;
+        GameEvent.subscribe(Events.player.combat.takeDamage, this, () => {
+            this.heart.classList.toggle('blinked')
+            setTimeout(() => {
+                this.heart.classList.toggle('blinked')
+            }, 500)
+        })
+    }
+
     bar = window.healthBar;
     text = window.healthBarText
     bg = window.healthBarBg
     heart = window.healthBarHeart
-    constructor(){
-        this.heart.src = Heart;
-    }
-
-
-    get c() {
-        return window.Game.ctx;
-    }
-
-    get player(): Player {
-        return window.Game.player;
-    }
+   
 
     get playerHealth() {
         return this.player.stats.health;
     }
 
-    draw() {
-        this.text.innerHTML = `${this.playerHealth.currentHealth}/${this.playerHealth.maxHealth}`
-        this.bg.style.maxWidth = `${this.playerHealth.percent}%`;
-
-        if (this.playerHealth.isLowHealth){
-            this.bar.classList.add('lowHealth')
+    get classList() {
+        return {
+            'died': this.player.isDead,
+            'lowHealth': this.playerHealth.isLowHealth,
         }
     }
 
-    update() {
-        this.draw();
+    draw() {
+        const classes = this.toCssClassString(this.classList);
+        this.bar.classList.add(...classes)
+        this.text.innerHTML = this.player.isDead ? 'You died' : `${this.playerHealth.currentHealth}/${this.playerHealth.maxHealth}`
+        this.bg.style.maxWidth = `${this.playerHealth.percent}%`;
     }
 }

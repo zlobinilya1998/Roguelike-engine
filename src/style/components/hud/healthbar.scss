@@ -9,12 +9,11 @@
     width: 200px;
     height: 25px;
     border: 3px solid white;
+    background-color: black;
     border-radius: 5px;
-    box-shadow: 1px 1px 2px 2px;
-
-    &.lowHealth {
-        border-color: red;
-        box-shadow: unset;
+    box-shadow: 1px 1px 1px 1px;
+    border-color: rgba(255, 0, 0, 0.5);
+    &.lowHealth:not(.died) {
         animation: low-health .3s infinite;
         #healthBarHeart {
             filter: drop-shadow(0 0.2mm 1mm red);
@@ -43,6 +42,10 @@
     position: absolute;
     right: -20px;
     transition: 0.3s;
+
+    &.blinked {
+        animation: blink 0.5s;
+    }
 }
 
 
@@ -51,4 +54,10 @@
     33% { transform: translate(-1px, 6px); }
     66% { transform: translate(1px, 6px); }
     100% { transform: translate(1px, 4px); }
+}
+
+@keyframes blink {
+    0% { opacity: 1; } 
+	50% { opacity: .3; } 
+	100% { opacity: 1; }
   }
