@@ -55,7 +55,7 @@ export class GameObject {
     }
 
     drawBorder() {
-        this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
+        // this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
     }
 
     update(ts: EpochTimeStamp) {

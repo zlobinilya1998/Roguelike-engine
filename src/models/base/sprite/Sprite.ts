@@ -50,10 +50,6 @@ export class Sprite {
     }
   }
 
-  drawBorder() {
-    this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
-  }
-
   draw() {
     if (this.frames) {
       if (this.frames.rows > 1) {
@@ -149,7 +145,7 @@ export class Sprite {
       width: this.hitboxOffset.width,
       height: this.hitboxOffset.height,
     };
-    this.game.ctx.strokeRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height)
+    // this.game.ctx.strokeRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height)
   }
 
   animation = {

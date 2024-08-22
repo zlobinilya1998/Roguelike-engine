@@ -7,9 +7,14 @@
 
 
 html {
-    font-size: 10px;
+    font-size: 10px
 }
 
 body {
     font-family: 'Ugly';
+    background-color: #3F3851;
+}
+
+canvas {
+    margin: 60px auto;
 }
