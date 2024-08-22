@@ -5,8 +5,15 @@ import { Enemy } from "models/base/enemy/Enemy";
 
 export class AggressiveEnemy extends Enemy {
     equipment: AggressiveEnemyEquipment = new AggressiveEnemyEquipment();
-    
+
     canAttack = true;
+
+    get isCanAttackPlayer() {
+        if (this.geometry.x < this.player.geometry.x) {
+            return (this.geometry.x + this.geometry.width) > this.player.geometry.x;
+        }
+        return Math.abs(this.geometry.x - this.player.geometry.x) < this.player.geometry.width;
+    }
 
     tryAttack() {
         const weapon = this.equipment.weapon;
@@ -34,12 +41,10 @@ export class AggressiveEnemy extends Enemy {
         this.chasePlayer();
     }
 
-    get isCanAttack(){
-        return Math.abs(this.geometry.x - this.player.geometry.x) < this.player.geometry.width;
-    }
+
 
     chasePlayer() {
-        if (this.isCanAttack){
+        if (this.isCanAttackPlayer) {
             this.velocity.x = 0;
             return;
         }

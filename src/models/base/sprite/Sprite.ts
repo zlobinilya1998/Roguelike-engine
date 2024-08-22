@@ -94,10 +94,17 @@ export class Sprite {
   }
 
   updateAnimations() {
-    if (this.state.moves) this.animation.play(SpriteAnimationType.Moving, false, false)
+    if (this.state.moves) this.onMoveAnimation();
     else {
-      this.animation.play(SpriteAnimationType.Idle, false, false)
+      this.onIdleAnimation();
     }
+  }
+
+  onMoveAnimation() {
+    this.animation.play(SpriteAnimationType.Moving)
+  }
+  onIdleAnimation() {
+    this.animation.play(SpriteAnimationType.Idle)
   }
 
   updateFrames() {
@@ -127,13 +134,9 @@ export class Sprite {
 
   updatePosition() {
     this.position.x += this.velocity.x;
-
-
     this.updateHitbox();
-
     this.collision.horizontal();
     this.updateGravity();
-
     this.updateHitbox()
     this.collision.vertical();
   }
@@ -159,12 +162,6 @@ export class Sprite {
       const animation = this.animations.get(type);
       if (!animation) return;
       this.animation.lock = true;
-
-
-      if (animation.type === SpriteAnimationType.Attack) {
-        console.log(animation);
-
-      }
 
       return new Promise((res) => {
         this.animation.resolve = () => {
