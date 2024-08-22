@@ -13,6 +13,8 @@ import PlayerImage from 'assets/Player/Player.png';
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
 const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
+const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 2, 8, 0, 6, 5, true, 0)
+
 
 export class Player extends Sprite {
   constructor() {
@@ -22,12 +24,14 @@ export class Player extends Sprite {
     const hitbox = { x: 30, y: 25, width: 30, height: 40 };
     super(position, size, scale, hitbox);
 
-    this.animations.addList([IdleAnimation, MovingAnimation])
+    this.animations.addList([IdleAnimation, MovingAnimation, AttackAnimation])
   }
   inventory = new Inventory();
   equipment = new Equipment();
   stats = new PlayerStats();
   effects = new PlayerEffects();
+
+  isAttacking = false;
 
 
   get isDead() {
@@ -36,6 +40,11 @@ export class Player extends Sprite {
 
   damage = {
     immune: false,
+    cause: () => {
+      this.isAttacking = true;
+      this.animation.play(SpriteAnimationType.Attack, true, true);
+      GameEvent.dispatch.player.combat.attack();
+    },
     take: (damage: Damage, from: Enemy = null) => {
       if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, from, this)

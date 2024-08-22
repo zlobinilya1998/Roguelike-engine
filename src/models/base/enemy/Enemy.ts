@@ -5,10 +5,19 @@ import { Player } from "models/player/Player";
 import { Damage, DamageSystem, DamageType } from "@/core/damage/Damage";
 import { Equipment } from "models/game/Equipment";
 import { EnemySpell } from "@/core/spells/EnemySpell";
+import { GameEvent } from "@/core/events/GameEvent";
+import { Events } from "@/core/events/Events";
 
 export class Enemy extends Sprite {
     constructor(position: SpritePosition, size: SpriteSize, hitbox: SpriteGeometry) {
         super(position, size, 1, hitbox);
+
+        GameEvent.customSubscribe(Events.player.combat.attack, this, () => {
+            console.log("event from player fired", this)
+            if (!this.isNearPlayer) return;
+            console.log('TAKE DAMAGE');
+            
+        })
     }
 
     equipment = new Equipment();
@@ -20,7 +29,7 @@ export class Enemy extends Sprite {
         if (!this.spells.length) return;
         this.spellQueue = setInterval(() => {
             const usableSpells = this.spells.filter(spell => spell.isCanUse);
-            if (usableSpells.length){
+            if (usableSpells.length) {
                 const randomSpell = usableSpells[GameUtils.number.randomInteger(0, usableSpells.length - 1)];
                 randomSpell.use();
             };
@@ -50,6 +59,10 @@ export class Enemy extends Sprite {
     update() {
         super.update();
         this.createSpellQueue();
+
+        if (this.isNearPlayer && this.player.isAttacking) {
+            console.log('Take damage from player')
+        }
     }
 
     jump() {

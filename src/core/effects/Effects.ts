@@ -60,8 +60,6 @@ export class PlayerEffects {
 
     applyEffect(effect: Effect) {
         const isEffectApplied = this.effects.includes(effect);
-        console.log(effect);
-        console.log(isEffectApplied);
         if (isEffectApplied) {
             effect.resetDuration();
         } else {

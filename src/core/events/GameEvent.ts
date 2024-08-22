@@ -10,6 +10,13 @@ export const createEvent = (name: string, data?: unknown) => {
   const event = new CustomEvent(name, { detail: data });
   window.dispatchEvent(event);
 };
+
+export const createCustomEvent = (event: Events, data?: unknown) => {
+  const listeners: { subscriber: unknown, callBack: () => void }[] = GameEvent.list.get(event);
+  listeners.forEach(listener => listener.callBack())
+
+};
+
 export class GameEvent {
   static dispatch = {
     animation: {
@@ -34,6 +41,7 @@ export class GameEvent {
         up: () => createEvent(Events.player.level.up),
       },
       combat: {
+        attack: () => createCustomEvent(Events.player.combat.attack),
         takeDamage: (damage: Damage) =>
           createEvent(Events.player.combat.takeDamage, damage),
       },
@@ -72,6 +80,18 @@ export class GameEvent {
     this.create.keyboardListeners();
   }
 
+  static list = new Map();
+
+  static customSubscribe(event: Events, subscriber: unknown, callBack: () => void) {
+    let listeners = this.list.get(event);
+    if (!listeners) {
+      listeners = [];
+      console.log('Create empty listeners');
+      this.list.set(event, listeners)
+    };
+    listeners.push({ subscriber, callBack })
+  }
+
   static create = {
     baseListeners: () => {
       GameEvent.subscribe(Events.animation.spawn, (event) => {
@@ -94,6 +114,10 @@ export class GameEvent {
 
       GameEvent.subscribe(Events.player.level.up, () => {
         this.player.stats.level += 1;
+      });
+
+      GameEvent.subscribe(Events.player.combat.attack, (e) => {
+        this.player.damage.cause();
       });
 
       GameEvent.subscribe(Events.player.combat.takeDamage, (e) => {
@@ -157,6 +181,11 @@ export class GameEvent {
             break;
         }
       });
+
+      window.addEventListener("click", (e) => {
+        GameEvent.dispatch.player.combat.attack();
+      });
+
 
       window.addEventListener("keyup", (e) => {
         switch (e.key) {
