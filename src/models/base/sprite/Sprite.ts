@@ -2,7 +2,7 @@ import { GameUtils } from '@/utils';
 import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType, SpriteAnimation } from '@/models/types/base/sprite'
 
 export class Sprite {
-  constructor(position: SpritePosition, size: SpriteSize, scale = 1, hitboxOffset: SpriteGeometry) {
+  constructor(position: SpritePosition, size: SpriteSize, scale = 1, hitBoxOffset: SpriteGeometry) {
     this.position = position;
     this.size = size;
     this.sizes = new SpriteSizes(this);
@@ -10,7 +10,7 @@ export class Sprite {
     this.scale = scale;
     this.velocity = new SpriteVelocity(0, 1)
     this.gravity = 1;
-    this.hitboxOffset = hitboxOffset
+    this.hitBoxOffset = hitBoxOffset
 
     this.applyListeners();
   }
@@ -22,13 +22,13 @@ export class Sprite {
   image: HTMLImageElement;
   scale: number;
   gravity: number;
-  hitbox: SpriteGeometry = {
+  hitBox: SpriteGeometry = {
     x: 0,
     y: 0,
     height: 0,
     width: 0,
   };
-  hitboxOffset: SpriteGeometry;
+  hitBoxOffset: SpriteGeometry;
   animations = new SpriteAnimations();
 
 
@@ -38,10 +38,10 @@ export class Sprite {
 
   get geometry(): SpriteGeometry {
     return {
-      x: this.hitbox.x,
-      y: this.hitbox.y,
-      width: this.hitbox.width,
-      height: this.hitbox.height,
+      x: this.hitBox.x,
+      y: this.hitBox.y,
+      width: this.hitBox.width,
+      height: this.hitBox.height,
     };
   }
 
@@ -132,22 +132,22 @@ export class Sprite {
 
   updatePosition() {
     this.position.x += this.velocity.x;
-    this.updateHitbox();
+    this.updateHitBox();
     this.collision.horizontal();
     this.updateGravity();
-    this.updateHitbox()
+    this.updateHitBox()
     this.collision.vertical();
   }
 
 
-  updateHitbox() {
-    this.hitbox = {
-      x: this.position.x + this.hitboxOffset.x,
-      y: this.position.y + this.hitboxOffset.y,
-      width: this.hitboxOffset.width,
-      height: this.hitboxOffset.height,
+  updateHitBox() {
+    this.hitBox = {
+      x: this.position.x + this.hitBoxOffset.x,
+      y: this.position.y + this.hitBoxOffset.y,
+      width: this.hitBoxOffset.width,
+      height: this.hitBoxOffset.height,
     };
-    this.game.ctx.strokeRect(this.hitbox.x, this.hitbox.y, this.hitbox.width, this.hitbox.height)
+    this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
   }
 
   animation = {
@@ -181,16 +181,16 @@ export class Sprite {
       const collisions = this.game.collisions;
       for (let i = 0; i < collisions.length; i++) {
         const block = collisions[i];
-        const isCollide = GameUtils.gameObject.isCollide(block, this.hitbox);
+        const isCollide = GameUtils.gameObject.isCollide(block, this.hitBox);
         if (isCollide) {
           if (this.velocity.y < 0) {
             this.velocity.y = 0;
-            const offset = this.hitbox.y - this.position.y;
+            const offset = this.hitBox.y - this.position.y;
             this.position.y = block.y + block.height - offset + 0.01;
             break;
           } else if (this.velocity.y > 0) {
             this.velocity.y = 0;
-            const offset = this.hitbox.y - this.position.y + this.hitbox.height;
+            const offset = this.hitBox.y - this.position.y + this.hitBox.height;
             this.position.y = block.y - offset - 0.01;
             break;
           }
@@ -202,14 +202,14 @@ export class Sprite {
       const collisions = this.game.collisions;
       for (let i = 0; i < collisions.length; i++) {
         const block = collisions[i];
-        const isCollide = GameUtils.gameObject.isCollide(block, this.hitbox);
+        const isCollide = GameUtils.gameObject.isCollide(block, this.hitBox);
         if (isCollide) {
           if (this.velocity.x < 0) {
-            const offset = this.hitbox.x - this.position.x
+            const offset = this.hitBox.x - this.position.x
             this.position.x = block.x + block.width - offset + 0.01;
             break;
           } else if (this.velocity.x > 0) {
-            const offset = this.hitbox.x - this.position.x + this.hitbox.width;
+            const offset = this.hitBox.x - this.position.x + this.hitBox.width;
             this.position.x = block.x - offset - 0.01;
             break;
           }

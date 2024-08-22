@@ -2,7 +2,7 @@ import { Equipment } from "game/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem } from "@/core/damage/Damage";
-import { SpriteAnimation, SpriteAnimationType, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
+import { SpriteAnimation, SpriteAnimationType, SpriteHitBox, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
 import { Inventory } from "models/player/Inventory";
 import { Effect, PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
@@ -21,8 +21,8 @@ export class Player extends Sprite {
     const position = new SpritePosition(220, 220);
     const size = new SpriteSize(192, 192);
     const scale = 0.5;
-    const hitbox = { x: 30, y: 25, width: 30, height: 40 };
-    super(position, size, scale, hitbox);
+    const hitBox = new SpriteHitBox(30, 25, 30, 40);
+    super(position, size, scale, hitBox);
 
     this.animations.addList([IdleAnimation, MovingAnimation, AttackAnimation]);
   }

@@ -1,4 +1,4 @@
-import { SpritePosition, SpriteSize, SpriteHitbox, SpriteAnimation, SpriteAnimationType } from "@/models/types/base/sprite";
+import { SpritePosition, SpriteSize, SpriteHitBox, SpriteAnimation, SpriteAnimationType } from "@/models/types/base/sprite";
 import { AggressiveEnemy } from "models/base/enemy/AggressiveEnemy";
 
 import Goblin from 'assets/Enemy/Goblin.png';
@@ -13,8 +13,8 @@ export class TorchGoblin extends AggressiveEnemy {
     constructor() {
         const position = new SpritePosition(300, 300)
         const size = new SpriteSize(192, 192);
-        const hitbox = new SpriteHitbox(50, 50, 80, 80)
-        super(position, size, hitbox);
+        const hitBox = new SpriteHitBox(50, 50, 80, 80)
+        super(position, size, hitBox);
         this.animations.addList([IdleAnimation, AttackAnimation,MovingAnimation]);
     }
 

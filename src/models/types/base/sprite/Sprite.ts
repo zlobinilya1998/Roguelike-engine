@@ -78,7 +78,7 @@ export class SpriteFrames {
 
 
 
-export class SpriteHitbox {
+export class SpriteHitBox {
     x: number;
     y: number;
     width: number;
