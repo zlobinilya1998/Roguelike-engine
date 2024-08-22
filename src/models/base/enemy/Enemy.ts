@@ -1,14 +1,14 @@
 import { GameUtils } from "@/utils";
 import { Sprite } from "@/models/base/sprite/Sprite";
-import { SpriteFrames, SpriteGeometry, SpritePosition, SpriteSize } from "models/types/Sprite";
+import { SpriteFrames, SpriteGeometry, SpritePosition, SpriteSize } from "@/models/types/base/sprite/Sprite";
 import { Player } from "models/player/Player";
 import { Damage, DamageSystem, DamageType } from "@/core/damage/Damage";
 import { Equipment } from "models/game/Equipment";
 import { EnemySpell } from "@/core/spells/EnemySpell";
 
 export class Enemy extends Sprite {
-    constructor(position: SpritePosition, size: SpriteSize, imageSrc: string, frames: SpriteFrames, hitbox: SpriteGeometry) {
-        super(position, size, imageSrc, frames, 1, hitbox);
+    constructor(position: SpritePosition, size: SpriteSize, hitbox: SpriteGeometry) {
+        super(position, size, 1, hitbox);
     }
 
     equipment = new Equipment();

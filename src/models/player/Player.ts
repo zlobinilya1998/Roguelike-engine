@@ -2,7 +2,7 @@ import { Equipment } from "game/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem } from "@/core/damage/Damage";
-import { SpriteAnimationType, SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
+import { SpriteAnimation, SpriteAnimationType, SpriteFrames, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
 import { Inventory } from "models/player/Inventory";
 import { PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
@@ -12,13 +12,19 @@ import { GameEvent } from "@/core/events/GameEvent";
 import Idle from 'assets/Player/Idle.png';
 import Hit from 'assets/Player/Hit.png';
 import Run from 'assets/Player/Run.png';
+const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, Idle, 0, 1, 0, 11, 8, true, 0)
+const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Run, 0, 1, 0, 12, 8, true, 0)
+const TakeDamageAnimation = new SpriteAnimation(SpriteAnimationType.TakeDamage, Hit, 0, 1, 0, 7, 5, true, 0)
 
 export class Player extends Sprite {
   constructor() {
     const position = new SpritePosition(220, 220);
     const size = new SpriteSize(30, 30);
-    const frames = new SpriteFrames(0, 1, 0, 11, 8);
-    super(position, size, Idle, frames, 1, { x: 0, y: 0, width: size.width, height: size.height });
+    const scale = 1;
+    const hitbox = { x: 0, y: 0, width: size.width, height: size.height };
+    super(position, size, scale, hitbox);
+
+    this.animations.addList([IdleAnimation, MovingAnimation, TakeDamageAnimation])
   }
   inventory = new Inventory();
   equipment = new Equipment();
@@ -36,10 +42,10 @@ export class Player extends Sprite {
       if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
-      this.animation.play(SpriteAnimationType.TakeDamage, () => {
-        const bubble = new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
-        GameEvent.dispatch.animation.spawn(bubble);
-      })
+
+      const bubble = new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
+      GameEvent.dispatch.animation.spawn(bubble);
+      this.animation.play(SpriteAnimationType.TakeDamage, true, true);
     },
     restore: (count: number) => {
       this.stats.health.heal(count);

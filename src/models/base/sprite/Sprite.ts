@@ -1,14 +1,12 @@
 import { GameUtils } from '@/utils';
-import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimation, SpriteAnimationType } from 'models/types/Sprite'
+import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType, SpriteAnimation } from '@/models/types/base/sprite'
 
 export class Sprite {
-  constructor(position: SpritePosition, size: SpriteSize, imageSrc: string, frames: SpriteFrames, scale = 1, hitboxOffset: SpriteGeometry) {
+  constructor(position: SpritePosition, size: SpriteSize, scale = 1, hitboxOffset: SpriteGeometry) {
     this.position = position;
     this.size = size;
     this.sizes = new SpriteSizes(this);
-    this.frames = frames;
     this.image = new Image();
-    this.image.src = imageSrc;
     this.scale = scale;
     this.velocity = new SpriteVelocity(0, 1)
     this.gravity = 1;
@@ -45,12 +43,11 @@ export class Sprite {
     };
   }
 
-  get isMoves() {
-    return this.velocity.x !== 0;
-  }
-
-  get isFalling() {
-    return this.velocity.y !== 0;
+  get state(){
+    return {
+      moves: this.velocity.x !== 0,
+      falling: this.velocity.y !== 0,
+    }
   }
 
   drawBorder() {
@@ -97,7 +94,7 @@ export class Sprite {
   }
 
   updateAnimations() {
-    if (this.isMoves) this.animation.play(SpriteAnimationType.Moving)
+    if (this.state.moves) this.animation.play(SpriteAnimationType.Moving)
     else {
       this.animation.play(SpriteAnimationType.Idle)
     }
@@ -110,8 +107,8 @@ export class Sprite {
       if (this.frames.current < this.frames.max - 1) {
         this.frames.current++;
       } else {
-        this.animation.resolve?.();
         this.frames.current = 0;
+        this.animation.resolve?.();
       }
     }
   }
@@ -153,15 +150,25 @@ export class Sprite {
   }
 
   animation = {
+    lock: false,
     resolve: null as (value?: unknown) => void,
-    play: (type: SpriteAnimationType, onStart?: () => void) => {
-      if (!type) return;
-      onStart?.();
+    play: (type: SpriteAnimationType, once = false, force = false) => {
+      if (force) this.animation.lock = false;
+
+      if (!type || this.animation.lock) return;
       const animation = this.animations.get(type);
       if (!animation) return;
+      this.animation.lock = true;
 
       return new Promise((res) => {
-        this.animation.resolve = res;
+        this.animation.resolve = () => {
+          res(animation);
+          this.animation.lock = false;
+          if (once){
+            this.frames = null;
+            this.image.src = null;
+          }
+        };
         this.frames = animation;
         this.image.src = animation.imageSrc;
       });
