@@ -6,6 +6,8 @@ import { Enemy } from "models/base/enemy/Enemy";
 export class AggressiveEnemy extends Enemy {
     equipment: AggressiveEnemyEquipment = new AggressiveEnemyEquipment();
     canAttack = true;
+    aggroRadius = 200;
+
 
     get isCanAttackPlayer() {
         if (this.geometry.x < this.player.geometry.x) {
@@ -36,7 +38,7 @@ export class AggressiveEnemy extends Enemy {
     }
 
     chasePlayer() {
-        if (this.isCanAttackPlayer) {
+        if (this.isCanAttackPlayer || this.isPlayerInAggroRadius) {
             this.velocity.x = 0;
             return;
         }
@@ -46,6 +48,11 @@ export class AggressiveEnemy extends Enemy {
         } else {
             this.velocity.x = 1;
         }
+    }
+
+    get isPlayerInAggroRadius(){
+        return Math.abs(this.geometry.x - this.player.geometry.x) > this.aggroRadius;
+
     }
 }
 

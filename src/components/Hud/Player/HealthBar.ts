@@ -1,9 +1,14 @@
 import { Player } from "@/models/player/Player";
+import Heart from 'assets/shared/heart.png';
 
 export class HealthBar {
     bar = window.healthBar;
     text = window.healthBarText
     bg = window.healthBarBg
+    heart = window.healthBarHeart
+    constructor(){
+        this.heart.src = Heart;
+    }
 
 
     get c() {

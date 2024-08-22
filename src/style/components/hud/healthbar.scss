@@ -4,7 +4,7 @@
     z-index: 10;
     justify-content: center;
     align-items: center;
-    top: 40px;
+    top: 45px;
     left: 20px;
     width: 200px;
     height: 25px;
@@ -15,6 +15,10 @@
     &.lowHealth {
         border-color: red;
         box-shadow: unset;
+        animation: low-health .3s infinite;
+        #healthBarHeart {
+            filter: drop-shadow(0 0.2mm 1mm red);
+        }
     }
 }
 
@@ -32,3 +36,19 @@
     text-align: center;
     color: white;
 }
+
+#healthBarHeart {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: -20px;
+    transition: 0.3s;
+}
+
+
+@keyframes low-health {
+    0% { transform: translate(-1px, 4px); }
+    33% { transform: translate(-1px, 6px); }
+    66% { transform: translate(1px, 6px); }
+    100% { transform: translate(1px, 4px); }
+  }

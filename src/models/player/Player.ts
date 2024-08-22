@@ -31,9 +31,6 @@ export class Player extends Sprite {
   stats = new PlayerStats();
   effects = new PlayerEffects();
 
-  isAttacking = false;
-
-
   get isDead() {
     return this.stats.health.isDead;
   }
@@ -41,9 +38,7 @@ export class Player extends Sprite {
   damage = {
     immune: false,
     cause: () => {
-      this.isAttacking = true;
       this.animation.play(SpriteAnimationType.Attack, true, true);
-      GameEvent.dispatch.player.combat.attack();
     },
     take: (damage: Damage, from: Enemy = null) => {
       if (this.damage.immune) return;
@@ -79,6 +74,9 @@ export class Player extends Sprite {
   applyListeners(): void {
     super.applyListeners();
     GameEvent.subscribe(Events.player.level.up, this, () => this.stats.level += 1);
+    GameEvent.subscribe(Events.player.combat.attack, this, () => {
+      this.damage.cause();
+    });
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
     GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => this.effects.applyEffect(effect));
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());
