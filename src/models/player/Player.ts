@@ -2,7 +2,7 @@ import { Equipment } from "game/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem } from "@/core/damage/Damage";
-import { SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
+import { SpriteAnimationType, SpriteFrames, SpritePosition, SpriteSize } from "models/types/Sprite";
 import { Inventory } from "models/player/Inventory";
 import { PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
@@ -36,7 +36,7 @@ export class Player extends Sprite {
       if (this.damage.immune) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
-      this.animation.use.hit(() => {
+      this.animation.play(SpriteAnimationType.TakeDamage, () => {
         const bubble = new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
         GameEvent.dispatch.animation.spawn(bubble);
       })

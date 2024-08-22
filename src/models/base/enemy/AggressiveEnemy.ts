@@ -1,3 +1,4 @@
+import { SpriteAnimationType } from "@/models/types/Sprite";
 import { GameEvent } from "core/events/GameEvent";
 import { AggressiveEnemyEquipment } from "game/Equipment";
 import { Enemy } from "models/base/enemy/Enemy";
@@ -22,8 +23,8 @@ export class AggressiveEnemy extends Enemy {
             this.isCanAttack = true;
         }, weapon.swingTime);
 
-        await this.animation.use.attack();
-        this.animation.use.idle();
+        await this.animation.play(SpriteAnimationType.Attack);
+        this.animation.play(SpriteAnimationType.Idle);
     }
 
     update() {

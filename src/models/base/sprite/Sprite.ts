@@ -1,5 +1,5 @@
 import { GameUtils } from '@/utils';
-import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes } from 'models/types/Sprite'
+import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimation, SpriteAnimationType } from 'models/types/Sprite'
 
 export class Sprite {
   constructor(position: SpritePosition, size: SpriteSize, imageSrc: string, frames: SpriteFrames, scale = 1, hitboxOffset: SpriteGeometry) {
@@ -29,12 +29,7 @@ export class Sprite {
     width: 0,
   };
   hitboxOffset: SpriteGeometry;
-  animations = {
-    idle: null as SpriteFrames,
-    attack: null as SpriteFrames,
-    moving: null as SpriteFrames,
-    hit: null as SpriteFrames,
-  }
+  animations = new SpriteAnimations();
 
 
   get game() {
@@ -101,11 +96,10 @@ export class Sprite {
     if (this.frames) this.updateFrames();
   }
 
-  updateAnimations(){
-    if (this.isMoves) {
-      this.animation.use.moving()
-    } else {
-      this.animation.use.idle()
+  updateAnimations() {
+    if (this.isMoves) this.animation.play(SpriteAnimationType.Moving)
+    else {
+      this.animation.play(SpriteAnimationType.Idle)
     }
   }
 
@@ -160,20 +154,18 @@ export class Sprite {
 
   animation = {
     resolve: null as (value?: unknown) => void,
-    play: (frames: SpriteFrames, onStart?: () => void) => {
-      if (!frames) return;
+    play: (type: SpriteAnimationType, onStart?: () => void) => {
+      if (!type) return;
       onStart?.();
+      const animation = this.animations.get(type);
+      if (!animation) return;
+
       return new Promise((res) => {
         this.animation.resolve = res;
-        this.frames = frames;
+        this.frames = animation;
+        this.image.src = animation.imageSrc;
       });
     },
-    use: {
-      attack: (onStart?: () => void) => this.animation.play(this.animations.attack, onStart),
-      moving: (onStart?: () => void) => this.animation.play(this.animations.moving, onStart),
-      idle: (onStart?: () => void) => this.animation.play(this.animations.idle, onStart),
-      hit: (onStart?: () => void) => this.animation.play(this.animations.hit, onStart),
-    }
   }
 
   collision = {
