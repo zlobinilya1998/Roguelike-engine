@@ -12,7 +12,7 @@ export class Enemy extends Sprite {
     constructor(position: SpritePosition, size: SpriteSize, hitbox: SpriteGeometry) {
         super(position, size, 1, hitbox);
 
-        GameEvent.customSubscribe(Events.player.combat.attack, this, () => {
+        GameEvent.subscribe(Events.player.combat.attack, this, () => {
             console.log("event from player fired", this)
             if (!this.isNearPlayer) return;
             console.log('TAKE DAMAGE');

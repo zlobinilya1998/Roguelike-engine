@@ -11,6 +11,8 @@ export class Sprite {
     this.velocity = new SpriteVelocity(0, 1)
     this.gravity = 1;
     this.hitboxOffset = hitboxOffset
+
+    this.applyListeners();
   }
   position: SpritePosition;
   size: SpriteSize;
@@ -215,6 +217,11 @@ export class Sprite {
 
       }
     }
+  }
+
+
+  applyListeners(){
+
   }
 }
 

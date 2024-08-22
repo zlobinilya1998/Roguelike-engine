@@ -6,14 +6,15 @@ import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
 
-export const createEvent = (name: string, data?: unknown) => {
-  const event = new CustomEvent(name, { detail: data });
-  window.dispatchEvent(event);
-};
+export type GameEventListener = {
+  source: unknown;
+  callBack: (data?: unknown) => void;
+}
 
-export const createCustomEvent = (event: Events, data?: unknown) => {
-  const listeners: { subscriber: unknown, callBack: () => void }[] = GameEvent.list.get(event);
-  listeners.forEach(listener => listener.callBack())
+export const createEvent = (event: Events, data?: unknown) => {
+  const listeners = GameEvent.list.get(event);
+  if (!listeners) return;
+  listeners.forEach(listener => listener.callBack(data))
 
 };
 
@@ -41,7 +42,7 @@ export class GameEvent {
         up: () => createEvent(Events.player.level.up),
       },
       combat: {
-        attack: () => createCustomEvent(Events.player.combat.attack),
+        attack: () => createEvent(Events.player.combat.attack),
         takeDamage: (damage: Damage) =>
           createEvent(Events.player.combat.takeDamage, damage),
       },
@@ -62,7 +63,6 @@ export class GameEvent {
     },
   };
 
-
   static get player(): Player {
     return window.Game.player;
   }
@@ -71,96 +71,35 @@ export class GameEvent {
     return window.Game;
   }
 
-  static subscribe(event: string, callback: (event: CustomEvent) => void) {
-    window.addEventListener(event, callback);
-  }
-
   static createListeners() {
     this.create.baseListeners();
     this.create.keyboardListeners();
   }
 
-  static list = new Map();
+  static list = new Map<Events,GameEventListener[]>();
 
-  static customSubscribe(event: Events, subscriber: unknown, callBack: () => void) {
+  static subscribe(event: Events, source: unknown, callBack: (data: unknown) => void) {
     let listeners = this.list.get(event);
     if (!listeners) {
       listeners = [];
-      console.log('Create empty listeners');
       this.list.set(event, listeners)
     };
-    listeners.push({ subscriber, callBack })
+    listeners.push({ source, callBack })
+  }
+
+  static unsubscribe(event: Events, source: unknown) {
+    const listeners = this.list.get(event);
+    if (!listeners) return;
+    const subscriptionIndex = listeners.findIndex(listener => listener.source === source);
+    if (subscriptionIndex === -1) return;
+    listeners.splice(subscriptionIndex,1);
   }
 
   static create = {
     baseListeners: () => {
-      GameEvent.subscribe(Events.animation.spawn, (event) => {
-        GameAnimation.spawn(event.detail);
-      });
-
-      GameEvent.subscribe(Events.chest.dialog.open, (event) => {
-        this.game.dialog.chest.open(event.detail);
-      });
-
-      GameEvent.subscribe(Events.chest.dialog.close, () => {
-        this.game.dialog.chest.close();
-      });
-      GameEvent.subscribe(Events.player.item.take, (e) => {
-        this.player.inventory.takeItem(e.detail);
-      });
-      GameEvent.subscribe(Events.player.item.equip, (e) => {
-        this.player.equipment.equipItem(e.detail);
-      });
-
-      GameEvent.subscribe(Events.player.level.up, () => {
-        this.player.stats.level += 1;
-      });
-
-      GameEvent.subscribe(Events.player.combat.attack, (e) => {
-        this.player.damage.cause();
-      });
-
-      GameEvent.subscribe(Events.player.combat.takeDamage, (e) => {
-        this.player.damage.take(e.detail);
-      });
-
-      GameEvent.subscribe(Events.player.effect.apply, (e) => {
-        this.player.effects.applyEffect(e.detail);
-      });
-
-      GameEvent.subscribe(Events.player.move.left, () => {
-        this.player.move.left();
-      });
-
-      GameEvent.subscribe(Events.player.move.right, () => {
-        this.player.move.right();
-      });
-
-      GameEvent.subscribe(Events.player.move.top, () => {
-        this.player.move.top();
-      });
-
-      GameEvent.subscribe(Events.player.move.down, () => {
-        this.player.move.down();
-      });
-
-      GameEvent.subscribe(Events.player.move.stop.x, () => {
-        this.player.move.stop.x();
-      });
-
-      GameEvent.subscribe(Events.player.move.stop.y, () => {
-        this.player.move.stop.y();
-      });
-
-      GameEvent.subscribe(Events.inventory.open, () =>
-        this.game.inventory.open()
-      );
-      GameEvent.subscribe(Events.inventory.close, () =>
-        this.game.inventory.close()
-      );
-      GameEvent.subscribe(Events.inventory.toggle, () =>
-        this.game.inventory.toggle()
-      );
+      // GameEvent.subscribe(Events.animation.spawn, (event) => {
+      //   GameAnimation.spawn(event.detail);
+      // });
     },
     keyboardListeners: () => {
       window.addEventListener("keydown", (e) => {
@@ -181,12 +120,9 @@ export class GameEvent {
             break;
         }
       });
-
       window.addEventListener("click", (e) => {
         GameEvent.dispatch.player.combat.attack();
       });
-
-
       window.addEventListener("keyup", (e) => {
         switch (e.key) {
           case "a":
