@@ -3,6 +3,7 @@ import { GameEvent } from "@/core/events/GameEvent";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
 import { IceGolem } from "@/models/base/enemy/boss/IceGolem/IceGolem";
 import { Enemy } from "@/models/base/enemy/Enemy";
+import { TorchGoblin } from "@/models/base/enemy/goblin/Goblin";
 import collisionBlocks from "@/models/base/levels/collisions";
 import { Door } from "@/models/base/object/door/Door";
 import { GameObject } from "@/models/base/object/GameObject";
@@ -24,7 +25,7 @@ export class World {
       }
     }
     creature = {
-      list: [new IceGolem()] as Enemy[],
+      list: [new IceGolem(), new TorchGoblin()] as Enemy[],
       remove: (creature: Enemy) => {
         const list = this.creature.list
         const index = list.indexOf(creature);

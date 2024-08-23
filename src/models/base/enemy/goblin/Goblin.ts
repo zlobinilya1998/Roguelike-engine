@@ -5,9 +5,9 @@ import Goblin from 'assets/Enemy/Goblin.png';
 import { GameEvent } from "@/core/events/GameEvent";
 import { EffectList } from "@/core/effects/EffectList";
 
-const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, Goblin, 3, 5, 0, 6, 6, true, 1);
+const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, Goblin, 3, 5, 0, 7, 6, true, 1);
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, Goblin, 0, 5, 0, 7, 7, true,0);
-const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Goblin, 1, 5, 1, 6, 6, true,1);
+const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Goblin, 1, 5, 1, 7, 6, true,1);
 
 export class TorchGoblin extends AggressiveEnemy {
     constructor() {

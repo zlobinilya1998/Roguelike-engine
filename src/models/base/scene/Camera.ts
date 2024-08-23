@@ -29,11 +29,21 @@ export class GameCamera {
         this.game.ctx.drawImage(this.map, 0, 0)
     }
 
+
+
+
+
     update() {
         this.draw();
         // if (Math.abs(this.x - this.player.position.x) > 500 && this.player.state.moves){
         //     this.x ++
         // }
-        // this.game.ctx.drawImage(this.map, this.x, this.y, this.gameWidth, this.gameHeight, 0, 0, this.gameWidth, this.gameHeight)
+
+
+        // if (this.x < this.player.geometry.x) {
+        //     this.x++
+        // }
+
+        this.game.ctx.drawImage(this.map, this.x, this.y, this.gameWidth, this.gameHeight, 0, 0, this.gameWidth, this.gameHeight)
     }
 }

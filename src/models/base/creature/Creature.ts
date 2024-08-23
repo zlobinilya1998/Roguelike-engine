@@ -1,11 +1,8 @@
-import { Equipment } from "@/models/base/combat/Equipment";
 import { GameUtils } from "@/utils";
 import { Sprite } from "models/base/sprite/Sprite";
 
 
 export class Creature extends Sprite {
-    equipment = new Equipment();
-
     get isNearPlayer() {
         return GameUtils.gameObject.isCollide(this.player.geometry, this.geometry);
     }

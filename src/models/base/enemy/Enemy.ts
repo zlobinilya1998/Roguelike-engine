@@ -6,18 +6,23 @@ import { Health } from "../player/Health";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
-import { Damage } from "@/core/damage/Damage";
+import { Damage, DamageType } from "@/core/damage/Damage";
+import { Equipment } from "../combat/Equipment";
+import { CreatureEffects, Effect, EffectType } from "@/core/effects/Effects";
+import { EffectList } from "@/core/effects/EffectList";
+import { EffectIcons } from "@/core/effects/EffectIcons";
+import { Player } from "../player/Player";
 
 export class Enemy extends Creature {
     constructor(position: SpritePosition, size: SpriteSize, hitBox: SpriteGeometry) {
         super(position, size, 1, hitBox);
         this.health = new Health(this);
     }
-
+    equipment = new Equipment();
+    effects = new CreatureEffects(this);
     health: Health
     spellQueue: NodeJS.Timeout = null;
     spells: EnemySpell[] = []
-
     createSpellQueue() {
         if (this.spellQueue) return;
         if (!this.spells.length) return;
@@ -41,7 +46,6 @@ export class Enemy extends Creature {
         super.updatePosition();
     }
 
-
     applyListeners(): void {
         super.applyListeners();
         GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
@@ -54,6 +58,12 @@ export class Enemy extends Creature {
             await this.animation.play(SpriteAnimationType.Death, true, true);
             this.game.world.creature.remove(this)
         })
+
+        GameEvent.subscribe(Events.creature.effect.apply, this, (effect: Effect) => {
+            this.effects.applyEffect(effect)
+            console.log('Creature apply effect', this);
+        });
+
     }
 
     removeListeners(): void {

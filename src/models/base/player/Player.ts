@@ -1,7 +1,7 @@
 import { Equipment } from "@/models/base/combat/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
-import { Damage, DamageSystem } from "@/core/damage/Damage";
+import { Damage, DamageSystem, DamageType } from "@/core/damage/Damage";
 import { SpriteAnimation, SpriteAnimationType, SpriteHitBox, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
 import { Inventory } from "@/models/base/player/Inventory";
 import { Effect, PlayerEffects } from "core/effects/Effects";
@@ -28,7 +28,7 @@ export class Player extends Sprite {
   inventory = new Inventory();
   equipment = new Equipment();
   stats = new PlayerStats(this);
-  effects = new PlayerEffects();
+  effects = new PlayerEffects(this);
 
   get isDead() {
     return this.stats.health.isDead;

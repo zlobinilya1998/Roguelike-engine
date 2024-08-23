@@ -67,7 +67,6 @@ export class GameEvent {
         up: () => createEvent(Events.player.level.up),
       },
       combat: {
-
         attack: {
           start: () => createEvent(Events.player.combat.attack.start),
           land: (damage: Damage) => createEvent(Events.player.combat.attack.land, damage),
@@ -85,6 +84,9 @@ export class GameEvent {
     creature: {
       status: {
         dead: (creature: Creature) => createEvent(Events.creature.status.dead, creature),
+      },
+      effect: {
+        apply: (effect: Effect, creature: Creature) => createEvent(Events.player.effect.apply, effect)
       },
     },
     inventory: {

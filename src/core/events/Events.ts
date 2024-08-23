@@ -36,6 +36,9 @@ export class Events {
     }
 
     static creature = {
+        effect: {
+            apply: 'creature:effect:apply',
+        },
         status: {
             dead: 'creature:status:dead',
         }

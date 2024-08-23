@@ -1,4 +1,6 @@
 import { Game } from "@/index";
+import { Creature } from "@/models/base/creature/Creature";
+import { Player } from "@/models/base/player/Player";
 
 export enum EffectType {
     Positive = 1,
@@ -40,10 +42,13 @@ export class Effect {
     }
 }
 
-export class PlayerEffects {
-    bar = window.playerEffects;
-    effects: Effect[] = [];
+export class CreatureEffects {
+    creature: Creature | Player;
+    constructor(creature: Creature | Player){
+        this.creature = creature;
+    }
 
+    effects: Effect[] = [];
     applyEffectInterval: any = null;
 
     get game(): typeof Game {
@@ -80,7 +85,7 @@ export class PlayerEffects {
     }
 
     createEffectQueue() {
-        this.drawEffects();
+        this.onDrawEffects();
         if (this.applyEffectInterval) return
         this.applyEffectInterval = setInterval(() => {
             if (this.isEmpty || this.game.player.isDead) return this.clearQueue();
@@ -93,7 +98,7 @@ export class PlayerEffects {
                 effect.onApply()
                 effect.duration -= 1_000;
             })
-            this.drawEffects();
+            this.onDrawEffects();
         }, 1_000)
     }
 
@@ -101,10 +106,21 @@ export class PlayerEffects {
         clearInterval(this.applyEffectInterval);
         this.effects = [];
         this.applyEffectInterval = null;
-        this.drawEffects();
+        this.onDrawEffects();
     }
 
-    drawEffects() {
+    onDrawEffects() { }
+
+    get isEmpty() {
+        return this.effects.length === 0;
+    }
+}
+
+export class PlayerEffects extends CreatureEffects {
+    bar = window.playerEffects;
+
+    onDrawEffects(): void {
+        super.onDrawEffects();
         this.bar.innerHTML = '';
         this.effects.forEach(effect => {
             const element = document.createElement('div');
@@ -134,9 +150,5 @@ export class PlayerEffects {
             element.appendChild(duration)
             this.bar.appendChild(element);
         })
-    }
-
-    get isEmpty() {
-        return this.effects.length === 0;
     }
 }
