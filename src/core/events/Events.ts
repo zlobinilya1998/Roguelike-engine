@@ -31,6 +31,12 @@ export class Events {
             dead: 'player:status:dead',
         }
     }
+
+    static creature = {
+        status: {
+            dead: 'creature:status:dead',
+        }
+    }
     static inventory = {
         open: 'inventory:open',
         close: 'inventory:close',

@@ -38,12 +38,10 @@ export class Game {
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
-
   static setup() {
     window.Game = Game;
     GameEvent.createListeners();
   }
-
   public static pause() {
     this.state.paused = true;
   }

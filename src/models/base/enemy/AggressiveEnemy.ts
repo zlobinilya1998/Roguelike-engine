@@ -17,7 +17,7 @@ export class AggressiveEnemy extends Enemy {
     }
 
     tryAttack() {
-        if (this.player.isDead) return;
+        if (this.player.isDead || this.health.isDead) return;
         const weapon = this.equipment.weapon;
         if (!weapon || !this.canAttack) return;
         this.onAttack();

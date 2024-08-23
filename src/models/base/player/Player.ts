@@ -23,12 +23,11 @@ export class Player extends Sprite {
     const scale = 0.5;
     const hitBox = new SpriteHitBox(30, 25, 30, 40);
     super(position, size, scale, hitBox);
-
     this.animations.addList([IdleAnimation, MovingAnimation, AttackAnimation]);
   }
   inventory = new Inventory();
   equipment = new Equipment();
-  stats = new PlayerStats();
+  stats = new PlayerStats(this);
   effects = new PlayerEffects();
 
   get isDead() {

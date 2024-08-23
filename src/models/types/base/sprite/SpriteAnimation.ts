@@ -5,6 +5,7 @@ export enum SpriteAnimationType {
     Attack,
     Moving,
     TakeDamage,
+    Death,
 }
 
 export class SpriteAnimation extends SpriteFrames {

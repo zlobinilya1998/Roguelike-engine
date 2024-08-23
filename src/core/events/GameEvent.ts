@@ -6,6 +6,7 @@ import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
 import { Game } from "@/index";
+import { Creature } from "@/models/base/creature/Creature";
 
 export type GameEventListener = {
   source: unknown;
@@ -75,6 +76,11 @@ export class GameEvent {
       },
       status: {
         dead: () => createEvent(Events.player.status.dead),
+      },
+    },
+    creature: {
+      status: {
+        dead: (creature: Creature) => createEvent(Events.creature.status.dead, creature),
       },
     },
     inventory: {

@@ -61,17 +61,20 @@ export class Sprite {
   draw() {
     if (this.frames) {
       if (this.frames.rows > 1) {
-        const slice = this.image.width / this.frames.max * this.frames.slice;
+
+        const oneFrameWidth = this.image.width / this.frames.max;
+        const oneFrameHeight = this.image.height / this.frames.rows;
+
         this.game.ctx.drawImage(
           this.image,
-          this.frames.current * (((this.image.width - slice) / this.frames.max)),
-          this.frames.currentRow * (this.image.height / this.frames.rows),
-          this.image.width / this.frames.max,
-          this.image.height / this.frames.rows,
+          this.frames.current * oneFrameWidth,
+          this.frames.currentRow * oneFrameHeight,
+          oneFrameWidth,
+          oneFrameHeight,
           this.position.x,
           this.position.y,
-          (this.image.width / this.frames.max) * this.scale,
-          (this.image.height / this.frames.rows) * this.scale,
+          oneFrameWidth * this.scale,
+          oneFrameHeight * this.scale,
         )
       } else {
         this.game.ctx.drawImage(
@@ -115,7 +118,7 @@ export class Sprite {
     if (!this.frames.active) return;
     this.frames.elapsed++;
     if (this.frames.elapsed % this.frames.hold === 0) {
-      if (this.frames.current < this.frames.max - 1) {
+      if (this.frames.current < (this.frames.max - this.frames.slice - 1)) {
         this.frames.current++;
       } else {
         this.frames.current = 0;
@@ -161,12 +164,10 @@ export class Sprite {
     resolve: null as (value?: unknown) => void,
     play: (type: SpriteAnimationType, once = false, force = false) => {
       if (force) this.animation.lock = false;
-
       if (!type || this.animation.lock) return;
       const animation = this.animations.get(type);
       if (!animation) return;
       this.animation.lock = true;
-
       return new Promise((res) => {
         this.animation.resolve = () => {
           res(animation);

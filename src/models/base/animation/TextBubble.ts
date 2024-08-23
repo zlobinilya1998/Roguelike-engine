@@ -25,6 +25,7 @@ export class TextBubble extends GameAnimation {
         this.position.y -= 2;
         this.game.ctx.font = '14px Ugly'
         this.game.ctx.fillStyle = this.color;
-        this.game.ctx.fillText(`${this.text}`, this.position.x + 5, this.position.y - 10)
+        this.game.ctx.textAlign = 'center'
+        this.game.ctx.fillText(`${this.text}`, this.position.x, this.position.y)
     }
 }
