@@ -1,8 +1,7 @@
 import { Events } from "@/core/events/Events";
 import { GameEvent } from "@/core/events/GameEvent";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
-import { Creature } from "@/models/base/creature/Creature";
-import { IceGolem } from "@/models/base/enemy/boss/Boss";
+import { IceGolem } from "@/models/base/enemy/boss/IceGolem";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import collisionBlocks from "@/models/base/levels/collisions";
 import { Door } from "@/models/base/object/door/Door";
