@@ -1,5 +1,5 @@
 import { GameUtils } from '@/utils';
-import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType } from '@/models/types/base/sprite'
+import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType, SpriteAnimation } from '@/models/types/base/sprite'
 import { Game } from '@/index';
 import { Player } from '@/models/base/player/Player';
 
@@ -160,9 +160,16 @@ export class Sprite {
   }
 
   animation = {
+    current: null as SpriteAnimation,
     lock: false,
     resolve: null as (value?: unknown) => void,
     play: (type: SpriteAnimationType, once = false, force = false) => {
+      if (this.animation.current?.type === SpriteAnimationType.Death) {
+        console.log('Death playing');
+        
+      };
+
+
       if (force) this.animation.lock = false;
       if (!type || this.animation.lock) return;
       const animation = this.animations.get(type);
@@ -228,5 +235,9 @@ export class Sprite {
 
 
   applyListeners() { }
+
+  removeListeners() {
+    
+  }
 }
 

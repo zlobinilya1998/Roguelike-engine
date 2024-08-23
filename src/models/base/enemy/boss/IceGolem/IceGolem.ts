@@ -1,5 +1,5 @@
 import { SpritePosition, SpriteSize, SpriteHitBox, SpriteAnimation, SpriteAnimationType } from "@/models/types/base/sprite";
-import { Boss } from "./Boss";
+import { Boss } from "../Boss";
 import IceGolemImage from 'assets/Enemy/Boss/IceGolem/IceGolem.png';
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, IceGolemImage, 0, 5, 0, 16, 8, true, 10);
@@ -15,5 +15,7 @@ export class IceGolem extends Boss {
         const hitBox = new SpriteHitBox(50, 10, 90, 100)
         super(position, size, hitBox);
         this.animations.addList([IdleAnimation, AttackAnimation, MovingAnimation, TakeDamageAnimation, DeathAnimation]);
+
+        this.spells = []
     }
 }

@@ -40,12 +40,13 @@ export class Enemy extends Creature {
         super.updatePosition();
     }
 
+
     applyListeners(): void {
         super.applyListeners();
         GameEvent.subscribe(Events.player.combat.attack, this, () => {
             if (!this.isNearPlayer) return;
             this.health.takeDamage(25);
-            // this.animation.play(SpriteAnimationType.TakeDamage, true, true);
+            if (!this.health.isDead) this.animation.play(SpriteAnimationType.TakeDamage, true, true);
         })
         GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
             await this.animation.play(SpriteAnimationType.Death, true, true);

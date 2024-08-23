@@ -1,6 +1,4 @@
 import { Game } from "@/index";
-import { GameEvent } from "../events/GameEvent";
-import { Events } from "../events/Events";
 
 export enum EffectType {
     Positive = 1,

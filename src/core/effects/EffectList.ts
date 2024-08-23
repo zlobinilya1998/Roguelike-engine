@@ -41,5 +41,8 @@ export const EffectList = {
     trap: {
         fire: fireTrap,
         saw: sawTrapBleed, 
+    },
+    boss: {
+        iceGolem: {},
     }
 }
