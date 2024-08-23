@@ -60,6 +60,7 @@ export class Player extends Sprite {
     left: () => this.velocity.x = -3,
     right: () => this.velocity.x = 3,
     top: () => {
+      if (this.state.falling) return;
       this.velocity.y = -15;
       this.gravity = 1;
     },
@@ -70,13 +71,24 @@ export class Player extends Sprite {
     }
   }
 
+  update(): void {
+    console.log(this.velocity.y);
+    
+    if (this.isDead) {
+      this.onDeath();
+      return;
+    };
+    super.update();
+  }
+
+  onDeath(){
+    this.effects.clearQueue();
+  }
 
   applyListeners(): void {
     super.applyListeners();
     GameEvent.subscribe(Events.player.level.up, this, () => this.stats.level += 1);
-    GameEvent.subscribe(Events.player.combat.attack, this, () => {
-      this.damage.cause();
-    });
+    GameEvent.subscribe(Events.player.combat.attack, this, () => this.damage.cause());
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
     GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => this.effects.applyEffect(effect));
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());

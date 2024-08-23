@@ -12,17 +12,20 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 import { ChestDialog } from '@/components/dialogs/ChestDialog';
 import { GameObject } from 'models/base/object/GameObject';
 
-import Background from 'assets/Background/level1.png'
 import collisionBlocks from './models/base/levels/collisions';
 import { Door } from './models/base/object/door/Door';
 import { TorchGoblin } from './models/base/enemy/goblin/Goblin';
 import { UIComponent } from './components/ui/UIComponent';
 import { GameMenu } from './components/ui/GameMenu';
+import { GameCamera } from './models/base/scene/Camera';
+import Background from 'assets/Background/level1.png'
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-
+canvas.width = 64 * 16;
+canvas.height = 64 * 9;
 export class Game {
+
   public static paused = false;
   static collisions = collisionBlocks;
   static objects: GameObject[] = [new Door()];
@@ -33,6 +36,7 @@ export class Game {
   }
   static hud: UIComponent[] = [new HealthBar(), new ExperienceBar()];
   static ui: UIComponent[] = [new GameMenu()]
+  static camera: GameCamera = new GameCamera(Background, canvas.width, canvas.height)
   static inventory = new PlayerInventory();
   static player = new Player();
   static ctx = c;
@@ -52,28 +56,21 @@ export class Game {
   }
 
   static get entities() {
-    return [...this.hud, ...this.ui, ...this.objects, this.player, ...this.enemies, ...this.animations];
+    return [this.camera, ...this.hud, ...this.ui, ...this.objects, this.player, ...this.enemies, ...this.animations];
   }
 
   static start() {
-    console.log("Game started");
     this.entities.forEach((obj) => obj.draw());
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
   static update(timestamp: EpochTimeStamp) {
     if (this.paused) return;
-
-    const image = new Image();
-    image.src = Background;
-    this.ctx.drawImage(image, 0, 0)
     collisionBlocks.forEach(block => block.draw())
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
 
   static setup() {
-    canvas.width = 64 * 16;
-    canvas.height = 64 * 9;
     window.Game = Game;
     GameEvent.createListeners();
   }

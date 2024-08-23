@@ -54,7 +54,7 @@ export class Sprite {
   get state() {
     return {
       moves: this.velocity.x !== 0,
-      falling: this.velocity.y !== 0,
+      falling: this.velocity.y > 1,
     }
   }
 

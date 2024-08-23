@@ -1,10 +1,11 @@
 import { Item } from "models/item/Item";
 import { Chest } from "@/models/base/object/chest/Chest";
 import { Player } from "@/models/base/player/Player";
-import { Events } from "core/events/Events.js";
+import { Events } from "core/events/Events";
 import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
+import { Game } from "@/index";
 
 export type GameEventListener = {
   source: unknown;
@@ -15,10 +16,33 @@ export const createEvent = (event: Events, data?: unknown) => {
   const listeners = GameEvent.list.get(event);
   if (!listeners) return;
   listeners.forEach(listener => listener.callBack(data))
-
 };
 
 export class GameEvent {
+  static list = new Map<Events,GameEventListener[]>();
+
+
+  static get game(): typeof Game {
+    return window.Game;
+  }
+
+  static get player() {
+    return this.game.player;
+  }
+
+
+
+
+  static subscribe(event: Events, source: unknown, callBack: (data: unknown) => void) {
+    let listeners = this.list.get(event);
+    if (!listeners) {
+      listeners = [];
+      this.list.set(event, listeners)
+    };
+    listeners.push({ source, callBack });
+    return () => this.unsubscribe(event, source);
+  }
+
   static dispatch = {
     animation: {
       spawn: (animation: GameAnimation) => createEvent(Events.animation.spawn, animation)
@@ -63,36 +87,17 @@ export class GameEvent {
     },
   };
 
-  static get player(): Player {
-    return window.Game.player;
-  }
-
-  static get game() {
-    return window.Game;
-  }
-
-  static createListeners() {
-    this.create.baseListeners();
-    this.create.keyboardListeners();
-  }
-
-  static list = new Map<Events,GameEventListener[]>();
-
-  static subscribe(event: Events, source: unknown, callBack: (data: unknown) => void) {
-    let listeners = this.list.get(event);
-    if (!listeners) {
-      listeners = [];
-      this.list.set(event, listeners)
-    };
-    listeners.push({ source, callBack })
-  }
-
   static unsubscribe(event: Events, source: unknown) {
     const listeners = this.list.get(event);
     if (!listeners) return;
     const subscriptionIndex = listeners.findIndex(listener => listener.source === source);
     if (subscriptionIndex === -1) return;
     listeners.splice(subscriptionIndex,1);
+  }
+
+  static createListeners() {
+    this.create.baseListeners();
+    this.create.keyboardListeners();
   }
 
   static create = {

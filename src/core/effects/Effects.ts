@@ -1,3 +1,5 @@
+import { Game } from "@/index";
+
 export enum EffectType {
     Positive = 1,
     Negative,
@@ -29,16 +31,14 @@ export class Effect {
         return this.type === EffectType.Positive
     }
 
-    resetDuration(){
+    resetDuration() {
         this.duration = this.baseDuration;
     }
 
-    get durationText(){
-        return `${this.duration/1000}s`;
+    get durationText() {
+        return `${this.duration / 1000}s`;
     }
 }
-
-
 
 export class PlayerEffects {
     bar = window.playerEffects;
@@ -46,7 +46,7 @@ export class PlayerEffects {
 
     applyEffectInterval: any = null;
 
-    get game() {
+    get game(): typeof Game {
         return window.Game;
     }
 
@@ -100,6 +100,7 @@ export class PlayerEffects {
 
     clearQueue() {
         clearInterval(this.applyEffectInterval);
+        this.effects = [];
         this.applyEffectInterval = null;
         this.drawEffects();
     }
