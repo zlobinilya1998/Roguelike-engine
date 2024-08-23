@@ -22,6 +22,10 @@ export class GameObjectAnimation extends GameObjectFrames {
         this.type = type;
         this.imageSrc = imageSrc
     }
+
+    get isComplete(){
+        return this.current === (this.max - 1)
+    }
 }
 
 export class GameObjectAnimations {

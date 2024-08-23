@@ -10,8 +10,7 @@ export class GameObject {
         this.position = position;
         this.size = size;
         this.scale = 1;
-
-        this.animation.play(GameObjectAnimationType.Idle);
+        this.image = new Image();
     }
 
     position: GameObjectPosition;
@@ -25,16 +24,20 @@ export class GameObject {
 
     draw() {
         if (!this.frames) return;
+
+        const oneFrameWidth = this.image.width / this.frames.max
+        const oneFrameHeight = this.image.height
+
         this.game.ctx.drawImage(
             this.image,
-            this.frames.current * (this.image.width / this.frames.max),
+            this.frames.current * oneFrameWidth,
             0,
-            this.image.width / this.frames.max,
-            this.image.height,
+            oneFrameWidth,
+            oneFrameHeight,
             this.position.x,
             this.position.y,
-            (this.image.width / this.frames.max) * this.scale,
-            this.image.height * this.scale,
+            oneFrameWidth * this.scale,
+            oneFrameHeight * this.scale,
         )
     }
 
@@ -121,11 +124,6 @@ export class GameObject {
     }
 
     updateAnimation() {
-        if (this.isCanInteract) {
-            this.animation.play(GameObjectAnimationType.Interactable)
-        }
-        else {
-            this.animation.play(GameObjectAnimationType.LeaveInteractable);
-        }
+        this.animation.play(GameObjectAnimationType.Idle);
     }
 }
