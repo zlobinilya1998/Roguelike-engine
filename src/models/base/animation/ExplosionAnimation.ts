@@ -8,8 +8,8 @@ import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/obj
 import { GameEvent } from "@/core/events/GameEvent";
 import { GameAnimation } from "./GameAnimation";
 
-
-const ExplosionIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle,Explosion, 4);
+const DynamiteIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle,Dynamite, 6, 5, true)
+const ExplosionIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle,Explosion, 9);
 
 export class ExplosionAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
@@ -23,6 +23,7 @@ export class DynamiteAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(64, 64);
         super(position, size, 5_000);
+        this.animations.add(DynamiteIdleAnimation)
     }
 
     onDestroy(): void {
@@ -31,8 +32,7 @@ export class DynamiteAnimation extends GameAnimation {
     }
 
     detonate() {
-        const explosion = new ExplosionAnimation({ x: this.position.x - 30, y: this.position.y - 30 })
-        // ExplosionAnimation.spawn(explosion)
+        new ExplosionAnimation({ x: this.position.x - 30, y: this.position.y - 30 })
         if (!this.isCanInteract) return;
         const playerVelocity = this.position.x > this.player.position.x ? -10 : 10;
         const damage = new PhysicDamage(50);

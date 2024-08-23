@@ -6,6 +6,7 @@ export enum SpriteAnimationType {
     Moving,
     TakeDamage,
     Death,
+    CastSpell,
 }
 
 export class SpriteAnimation extends SpriteFrames {
@@ -32,8 +33,20 @@ export class SpriteAnimation extends SpriteFrames {
         return (this.max - 1) - this.slice === this.current;
     }
 
+    get isDead(){
+        return this.type === SpriteAnimationType.Death
+    }
+
     get isAttacking(){
         return !this.isComplete && this.type === SpriteAnimationType.Attack
+    }
+
+    get isCasting(){
+        return !this.isComplete && this.type === SpriteAnimationType.CastSpell
+    }
+
+    get isBlocking(){
+        return this.isAttacking || this.isCasting;
     }
 }
 

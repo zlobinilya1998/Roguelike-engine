@@ -6,12 +6,9 @@ import { Health } from "../player/Health";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
-import { Damage, DamageType } from "@/core/damage/Damage";
+import { Damage } from "@/core/damage/Damage";
 import { Equipment } from "../combat/Equipment";
-import { CreatureEffects, Effect, EffectType } from "@/core/effects/Effects";
-import { EffectList } from "@/core/effects/EffectList";
-import { EffectIcons } from "@/core/effects/EffectIcons";
-import { Player } from "../player/Player";
+import { CreatureEffects, Effect } from "@/core/effects/Effects";
 
 export class Enemy extends Creature {
     constructor(position: SpritePosition, size: SpriteSize, hitBox: SpriteGeometry) {
@@ -31,6 +28,7 @@ export class Enemy extends Creature {
             if (usableSpells.length) {
                 const randomSpell = usableSpells[GameUtils.number.randomInteger(0, usableSpells.length - 1)];
                 randomSpell.use();
+                this.animation.play(SpriteAnimationType.CastSpell, true, true)
             };
             this.spells.forEach(spell => spell.updateCd());
         }, 1_000)
@@ -61,7 +59,6 @@ export class Enemy extends Creature {
 
         GameEvent.subscribe(Events.creature.effect.apply, this, (effect: Effect) => {
             this.effects.applyEffect(effect)
-            console.log('Creature apply effect', this);
         });
 
     }

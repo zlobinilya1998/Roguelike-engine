@@ -89,7 +89,6 @@ export class Sprite {
           this.image.height * this.scale,
         )
       }
-
     }
   }
 
@@ -164,15 +163,8 @@ export class Sprite {
     lock: false,
     resolve: null as (value?: unknown) => void,
     play: (type: SpriteAnimationType, once = false, force = false) => {
-      if (this.animation.current?.type === SpriteAnimationType.Death) {
-        return
-      };
-
-      if (this.animation.current?.isAttacking) {
-        return
-      }
-
-
+      if (this.animation.current?.isDead) return
+      if (this.animation.current?.isBlocking) return;
 
       if (force) this.animation.lock = false;
       if (!type || this.animation.lock) return;

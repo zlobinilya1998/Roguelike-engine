@@ -4,6 +4,7 @@ import { GameObjectSize, GameObjectPosition } from "@/models/types/object/GameOb
 export class GameAnimation extends GameObject {
     constructor(position: GameObjectPosition, size: GameObjectSize, removeTimer = 400) {
         super(position, size);
+        this.game.world.animation.spawn(this);
         this.destroy(removeTimer);
     }
 
