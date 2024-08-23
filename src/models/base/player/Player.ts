@@ -1,9 +1,9 @@
-import { Equipment } from "game/Equipment";
+import { Equipment } from "@/models/base/combat/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem } from "@/core/damage/Damage";
 import { SpriteAnimation, SpriteAnimationType, SpriteHitBox, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
-import { Inventory } from "models/player/Inventory";
+import { Inventory } from "@/models/base/player/Inventory";
 import { Effect, PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import { TextBubble } from "@/models/base/animation/TextBubble";

@@ -1,7 +1,7 @@
 import { GameUtils } from "@/utils";
 import { GameObjectFrames, GameObjectGeometry, GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
-import { Player } from "models/player/Player";
-import { InteractionRadius } from "models/types/Geometry";
+import { Player } from "@/models/base/player/Player";
+import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { Game } from "@/index";
 import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 
@@ -116,8 +116,6 @@ export class GameObject {
                     this.frames.current = 0;
                 }
                 this.animation.resolve?.();
-                console.log('Resolve');
-
             }
         }
     }

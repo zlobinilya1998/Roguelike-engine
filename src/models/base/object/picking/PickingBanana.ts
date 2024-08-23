@@ -1,8 +1,8 @@
 import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
-import { PickingObject } from "models/base/object/PickingObject";
+import { PickingObject } from "@/models/base/object/picking/PickingObject";
 
 import Banana from 'assets/Picking/Bananas.png';
-import { InteractionRadius } from "@/models/types/Geometry";
+import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { GameEvent } from "@/core/events/GameEvent";
 import { EffectList } from "@/core/effects/EffectList";
 

@@ -1,5 +1,5 @@
 import { GameObjectGeometry } from "@/models/types/object/GameObject";
-import { InteractionRadius } from "@/models/types/Geometry";
+import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { SpriteGeometry } from "@/models/types/base/sprite/Sprite";
 
 type GameEntityGeometry = SpriteGeometry | GameObjectGeometry;

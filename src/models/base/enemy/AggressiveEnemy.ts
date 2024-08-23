@@ -1,6 +1,6 @@
 import { SpriteAnimationType } from "@/models/types/base/sprite";
 import { GameEvent } from "core/events/GameEvent";
-import { AggressiveEnemyEquipment } from "game/Equipment";
+import { AggressiveEnemyEquipment } from "@/models/base/combat/Equipment";
 import { Enemy } from "models/base/enemy/Enemy";
 
 export class AggressiveEnemy extends Enemy {

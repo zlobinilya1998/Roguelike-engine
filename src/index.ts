@@ -2,7 +2,7 @@ import './style/index.css';
 import './style/variables/variables.scss';
 import './style/components/components.scss'
 
-import { Player } from "@/models/player/Player";
+import { Player } from "@/models/base/player/Player";
 
 import { HealthBar } from "components/Hud/Player/HealthBar";
 import { ExperienceBar } from "components/Hud/Player/ExperienceBar";
@@ -14,7 +14,7 @@ import { GameObject } from 'models/base/object/GameObject';
 
 import Background from 'assets/Background/level1.png'
 import collisionBlocks from './core/levels/collisions';
-import { Door } from './models/base/object/terrain/Door';
+import { Door } from './models/base/object/door/Door';
 import { TorchGoblin } from './models/base/enemy/goblin/Goblin';
 import { UIComponent } from './components/ui/UIComponent';
 import { GameMenu } from './components/ui/GameMenu';

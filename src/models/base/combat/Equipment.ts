@@ -1,4 +1,4 @@
-import { weapons } from "models/entities/weapons";
+import { weapons } from "@/models/entities/items/weapons";
 import { Weapon } from "models/item/Weapon";
 import { Armour } from "models/item/Armour";
 import { Item } from "models/item/Item";

@@ -1,4 +1,4 @@
-import { Player } from "models/player/Player";
+import { Player } from "@/models/base/player/Player";
 import { Enemy } from "@/models/base/enemy/Enemy";
 
 export enum DamageType {

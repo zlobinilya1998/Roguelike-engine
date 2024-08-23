@@ -1,6 +1,6 @@
 import { Item } from "models/item/Item";
-import { Chest } from "models/gameObject/chest/Chest";
-import { Player } from "models/player/Player";
+import { Chest } from "@/models/base/object/chest/Chest";
+import { Player } from "@/models/base/player/Player";
 import { Events } from "core/events/Events.js";
 import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";

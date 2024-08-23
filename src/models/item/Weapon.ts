@@ -1,6 +1,5 @@
 import { PhysicDamage } from "core/damage/Damage";
 import { ItemType, Item } from "models/item/Item";
-import WeaponPng from 'assets/Weapon/pistol.png'
 
 export class WeaponDamage {
   min: number;
@@ -16,7 +15,7 @@ export class Weapon extends Item {
   maxDmg: number;
   speed: number;
   constructor(title: string, damage: WeaponDamage, speed: number) {
-    super(title, ItemType.weapon, WeaponPng);
+    super(title, ItemType.weapon, "");
     this.minDmg = damage.min;
     this.maxDmg = damage.max;
     this.speed = speed;

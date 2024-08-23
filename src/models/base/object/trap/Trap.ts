@@ -1,7 +1,7 @@
 import { Damage } from "@/core/damage/Damage";
 import { GameObject } from "@/models/base/object/GameObject";
 import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
-import { InteractionRadius } from "@/models/types/Geometry";
+import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { GameEvent } from "@/core/events/GameEvent";
 
 export class Trap extends GameObject {

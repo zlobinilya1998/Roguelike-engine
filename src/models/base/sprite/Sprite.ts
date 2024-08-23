@@ -1,6 +1,7 @@
 import { GameUtils } from '@/utils';
 import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType } from '@/models/types/base/sprite'
 import { Game } from '@/index';
+import { Player } from '@/models/base/player/Player';
 
 export class Sprite {
   constructor(position: SpritePosition, size: SpriteSize, scale = 1, hitBoxOffset: SpriteGeometry) {
@@ -35,6 +36,10 @@ export class Sprite {
 
   get game(): typeof Game {
     return window.Game;
+  }
+
+  get player(): Player {
+    return window.Game.player;
   }
 
   get geometry(): SpriteGeometry {
@@ -221,6 +226,6 @@ export class Sprite {
   }
 
 
-  applyListeners(){}
+  applyListeners() { }
 }
 

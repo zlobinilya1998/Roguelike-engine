@@ -49,3 +49,4 @@ export class MovingTrap extends Trap {
         this.motion.update();
     }
 }
+
