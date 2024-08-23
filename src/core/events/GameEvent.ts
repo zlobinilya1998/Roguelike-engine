@@ -72,7 +72,10 @@ export class GameEvent {
       },
       effect: {
         apply: (effect: Effect) => createEvent(Events.player.effect.apply, effect)
-      }
+      },
+      status: {
+        dead: () => createEvent(Events.player.status.dead),
+      },
     },
     inventory: {
       open: () => createEvent(Events.inventory.open),

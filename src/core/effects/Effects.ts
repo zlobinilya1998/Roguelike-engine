@@ -1,4 +1,6 @@
 import { Game } from "@/index";
+import { GameEvent } from "../events/GameEvent";
+import { Events } from "../events/Events";
 
 export enum EffectType {
     Positive = 1,
@@ -81,21 +83,20 @@ export class PlayerEffects {
 
     createEffectQueue() {
         this.drawEffects();
-        if (!this.applyEffectInterval) {
-            this.applyEffectInterval = setInterval(() => {
-                if (this.isEmpty) return this.clearQueue();
-                this.effects.forEach(effect => {
-                    if (effect.duration <= 0) {
-                        this.removeEffect(effect)
-                        effect.onEnd?.();
-                        return;
-                    }
-                    effect.onApply()
-                    effect.duration -= 1_000;
-                })
-                this.drawEffects();
-            }, 1_000)
-        }
+        if (this.applyEffectInterval) return
+        this.applyEffectInterval = setInterval(() => {
+            if (this.isEmpty || this.game.player.isDead) return this.clearQueue();
+            this.effects.forEach(effect => {
+                if (effect.duration <= 0) {
+                    this.removeEffect(effect)
+                    effect.onEnd?.();
+                    return;
+                }
+                effect.onApply()
+                effect.duration -= 1_000;
+            })
+            this.drawEffects();
+        }, 1_000)
     }
 
     clearQueue() {

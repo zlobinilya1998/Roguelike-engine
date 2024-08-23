@@ -26,6 +26,9 @@ export class Events {
         },
         effect: {
             apply: 'player:effect:apply',
+        },
+        status: {
+            dead: 'player:status:dead',
         }
     }
     static inventory = {
