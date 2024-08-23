@@ -14,4 +14,8 @@ export class Creature extends Sprite {
         this.velocity.y = -10;
         this.gravity = 1;
     }
+
+    itsMe(creature: Creature){
+        return creature === this;
+    }
 }

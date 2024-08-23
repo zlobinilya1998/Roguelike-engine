@@ -5,7 +5,7 @@ import { Creature } from "../creature/Creature";
 
 export class Health {
   creature: Player | Enemy;
-  constructor(creature: Player | Enemy){
+  constructor(creature: Player | Enemy) {
     this.creature = creature;
   }
   _baseHealth = 100;
@@ -56,7 +56,15 @@ export class Health {
   takeDamage(damage: number) {
     const restHealth = this.health - damage;
     this.health = restHealth > 0 ? restHealth : 0;
-    if (this.isDead) GameEvent.dispatch.creature.status.dead(this.creature as Creature);
+    if (this.isDead) {
+      const isPlayer = this.creature instanceof Player;
+
+      if (isPlayer) {
+        GameEvent.dispatch.player.status.dead();
+      } else {
+        GameEvent.dispatch.creature.status.dead(this.creature as Creature)
+      }
+    }
   }
 
   heal(points: number) {

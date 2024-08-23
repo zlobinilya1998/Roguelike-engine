@@ -2,6 +2,7 @@ import { weapons } from "@/models/entities/items/weapons";
 import { Weapon } from "models/item/Weapon";
 import { Armour } from "models/item/Armour";
 import { Item } from "models/item/Item";
+import { Damage, DamageType } from "@/core/damage/Damage";
 
 export class EquipmentItems {
   weapon: Weapon = null
@@ -13,18 +14,18 @@ export class Equipment {
 
   equipItem(item: Item) {
     if (!item) return;
-    if (item.isWeapon){
+    if (item.isWeapon) {
       this.equipWeapon(item as Weapon);
     } else {
       this.equipArmour(item as Armour);
     }
   }
 
-  equipWeapon(item: Weapon){
+  equipWeapon(item: Weapon) {
     this.items.weapon = item;
   }
 
-  equipArmour(item: Armour){
+  equipArmour(item: Armour) {
     this.items.armour = item;
   }
 
@@ -36,8 +37,15 @@ export class Equipment {
     return this.items.armour;
   }
 
+  get attackDamage(): Damage {
+    if (!this.weapon) {
+      return { damageCount: 1, damageType: DamageType.Physic }
+    }
+    return this.weapon.damage
+  }
+
   get armourValue() {
-    if (this.armour){
+    if (this.armour) {
       return this.armour.defense;
     }
     return 0;

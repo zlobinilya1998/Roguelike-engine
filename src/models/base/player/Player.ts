@@ -35,18 +35,16 @@ export class Player extends Sprite {
   }
 
   damage = {
+    lock: false,
     immune: false,
     cause: () => {
+      GameEvent.dispatch.player.combat.attack.land(this.equipment.attackDamage);
       this.animation.play(SpriteAnimationType.Attack, true, true);
     },
     take: (damage: Damage, from: Enemy = null) => {
       if (this.damage.immune || this.isDead) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
-
-      
-      if (this.isDead) GameEvent.dispatch.player.status.dead();
-      
       const bubble = new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
       GameEvent.dispatch.animation.spawn(bubble);
       this.animation.play(SpriteAnimationType.TakeDamage, true, true);
@@ -88,7 +86,7 @@ export class Player extends Sprite {
       this.onDeath();
     });
     GameEvent.subscribe(Events.player.level.up, this, () => this.stats.level += 1);
-    GameEvent.subscribe(Events.player.combat.attack, this, () => this.damage.cause());
+    GameEvent.subscribe(Events.player.combat.attack.start, this, () => this.damage.cause());
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
     GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => this.effects.applyEffect(effect));
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());

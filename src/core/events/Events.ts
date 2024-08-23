@@ -21,7 +21,10 @@ export class Events {
             up: 'player:level:up',
         },
         combat: {
-            attack: 'player:combat:attack',
+            attack: {
+                start: 'player:combat:attack:start',
+                land: 'player:combat:attack:land',
+            },
             takeDamage: 'player:combat:takeDamage',
         },
         effect: {

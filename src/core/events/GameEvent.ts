@@ -67,7 +67,11 @@ export class GameEvent {
         up: () => createEvent(Events.player.level.up),
       },
       combat: {
-        attack: () => createEvent(Events.player.combat.attack),
+
+        attack: {
+          start: () => createEvent(Events.player.combat.attack.start),
+          land: (damage: Damage) => createEvent(Events.player.combat.attack.land, damage),
+        },
         takeDamage: (damage: Damage) =>
           createEvent(Events.player.combat.takeDamage, damage),
       },
@@ -131,7 +135,7 @@ export class GameEvent {
         }
       });
       window.addEventListener("click", (e) => {
-        GameEvent.dispatch.player.combat.attack();
+        GameEvent.dispatch.player.combat.attack.start();
       });
       window.addEventListener("keyup", (e) => {
         switch (e.key) {

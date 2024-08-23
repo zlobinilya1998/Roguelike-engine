@@ -1,12 +1,14 @@
-import { PhysicDamage } from "core/damage/Damage";
+import { DamageType, PhysicDamage } from "core/damage/Damage";
 import { ItemType, Item } from "models/item/Item";
 
 export class WeaponDamage {
   min: number;
   max: number;
-  constructor(min: number, max: number) {
+  type: DamageType
+  constructor(min: number, max: number, type: DamageType) {
     this.min = min;
     this.max = max;
+    this.type = type;
   }
 }
 
@@ -28,8 +30,7 @@ export class Weapon extends Item {
     return this.speed * 1_000;
   }
 
-  createDamage() {
-    const weaponDamage = this.averageDamage;
-    return new PhysicDamage(weaponDamage);
+  get damage() {
+    return new PhysicDamage(this.averageDamage);
   }
 }

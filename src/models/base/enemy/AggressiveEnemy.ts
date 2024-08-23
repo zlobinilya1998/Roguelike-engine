@@ -25,8 +25,7 @@ export class AggressiveEnemy extends Enemy {
 
     onAttack() {
         const weapon = this.equipment.weapon;
-        const damage = weapon.createDamage();
-        GameEvent.dispatch.player.combat.takeDamage(damage);
+        GameEvent.dispatch.player.combat.takeDamage(weapon.damage);
         this.canAttack = false;
         setTimeout(() => this.canAttack = true, weapon.swingTime);
         this.animation.play(SpriteAnimationType.Attack, true, true);

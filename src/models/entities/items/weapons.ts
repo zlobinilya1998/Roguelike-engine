@@ -1,3 +1,4 @@
+import { DamageType } from "@/core/damage/Damage"
 import { Weapon } from "models/item/Weapon"
 const items = [
     {"title": "Sword of zeal", "minDmg": 10, "maxDmg": 25, speed: 1.5},
@@ -5,4 +6,4 @@ const items = [
 ]
 
 
-export const weapons = items.map(({title,minDmg,maxDmg, speed}) => new Weapon(title,{min: minDmg, max: maxDmg}, speed))
+export const weapons = items.map(({title,minDmg,maxDmg, speed}) => new Weapon(title,{min: minDmg, max: maxDmg,type: DamageType.Physic}, speed))

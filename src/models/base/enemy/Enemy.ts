@@ -6,6 +6,7 @@ import { Health } from "../player/Health";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
+import { Damage } from "@/core/damage/Damage";
 
 export class Enemy extends Creature {
     constructor(position: SpritePosition, size: SpriteSize, hitBox: SpriteGeometry) {
@@ -43,13 +44,13 @@ export class Enemy extends Creature {
 
     applyListeners(): void {
         super.applyListeners();
-        GameEvent.subscribe(Events.player.combat.attack, this, () => {
-            console.log('listeners');
+        GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
             if (!this.isNearPlayer) return;
-            this.health.takeDamage(25);
+            this.health.takeDamage(damage.damageCount);
             this.animation.play(SpriteAnimationType.TakeDamage, true, true);
         })
         GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
+            if (!this.itsMe(creature)) return;
             await this.animation.play(SpriteAnimationType.Death, true, true);
             this.game.world.creature.remove(this)
         })
