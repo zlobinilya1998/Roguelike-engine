@@ -9,11 +9,11 @@ import { ExperienceBar } from "components/Hud/Player/ExperienceBar";
 import { PlayerInventory } from "components/Hud/Player/Inventory";
 import { GameEvent } from "core/events/GameEvent";
 import { Enemy } from "@/models/base/enemy/Enemy";
-import { ChestDialog } from 'components/gameObject/chest/ChestDialog';
+import { ChestDialog } from '@/components/dialogs/ChestDialog';
 import { GameObject } from 'models/base/object/GameObject';
 
 import Background from 'assets/Background/level1.png'
-import collisionBlocks from './core/levels/collisions';
+import collisionBlocks from './models/base/levels/collisions';
 import { Door } from './models/base/object/door/Door';
 import { TorchGoblin } from './models/base/enemy/goblin/Goblin';
 import { UIComponent } from './components/ui/UIComponent';
