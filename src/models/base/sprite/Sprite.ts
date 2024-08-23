@@ -184,7 +184,7 @@ export class Sprite {
 
   collision = {
     vertical: () => {
-      const collisions = this.game.collisions;
+      const collisions = this.game.world.collisions;
       for (let i = 0; i < collisions.length; i++) {
         const block = collisions[i];
         const isCollide = GameUtils.gameObject.isCollide(block, this.hitBox);
@@ -205,7 +205,7 @@ export class Sprite {
       }
     },
     horizontal: () => {
-      const collisions = this.game.collisions;
+      const collisions = this.game.world.collisions;
       for (let i = 0; i < collisions.length; i++) {
         const block = collisions[i];
         const isCollide = GameUtils.gameObject.isCollide(block, this.hitBox);

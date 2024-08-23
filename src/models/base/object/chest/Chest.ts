@@ -44,7 +44,7 @@ export class Chest extends GameObject {
     }
 
     if (this.loot.length === 0) {
-      this.game.removeGameObject(this)
+      this.game.world.gameObject.remove(this);
     }
   }
 

@@ -50,7 +50,7 @@ export class GameObject {
     }
 
     removeMe() {
-        this.game.removeGameObject(this);
+        this.game.world.gameObject.remove(this);
     }
 
 

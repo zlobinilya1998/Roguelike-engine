@@ -4,10 +4,14 @@ import { GameObjectSize, GameObjectPosition } from "@/models/types/object/GameOb
 export class GameAnimation extends GameObject {
     constructor(position: GameObjectPosition, size: GameObjectSize, removeTimer = 400) {
         super(position, size);
-        setTimeout(() => { this.game.removeAnimation(this) }, removeTimer)
+        this.destroy(removeTimer);
     }
 
-    static spawn(animation: GameAnimation) {
-        window.Game.animations.push(animation);
+    destroy(timer: number) {
+        setTimeout(() => this.onDestroy(), timer)
+    }
+
+    onDestroy(){
+        this.game.world.animation.remove(this);
     }
 }

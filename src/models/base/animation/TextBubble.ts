@@ -5,12 +5,10 @@ import { GameUtils } from "@/utils";
 export class TextBubble extends GameAnimation {
     constructor(text: string, color: string, position: GameObjectPosition){
         const size = new GameObjectSize(20,20);
-
         const randomX = GameUtils.number.randomInteger(position.x, position.x + 50)
         const randomY = GameUtils.number.randomInteger(position.y, position.y + 50)
         position = new GameObjectPosition(randomX,randomY)
-        
-        super(position, size);
+        super(position, size, 1_000);
         this.text = text;
         this.color = color;
     }

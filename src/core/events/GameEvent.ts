@@ -101,11 +101,7 @@ export class GameEvent {
   }
 
   static create = {
-    baseListeners: () => {
-      // GameEvent.subscribe(Events.animation.spawn, (event) => {
-      //   GameAnimation.spawn(event.detail);
-      // });
-    },
+    baseListeners: () => {},
     keyboardListeners: () => {
       window.addEventListener("keydown", (e) => {
         switch (e.key) {

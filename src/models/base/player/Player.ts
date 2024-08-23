@@ -72,8 +72,6 @@ export class Player extends Sprite {
   }
 
   update(): void {
-    console.log(this.velocity.y);
-    
     if (this.isDead) {
       this.onDeath();
       return;

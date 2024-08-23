@@ -19,53 +19,108 @@ import { UIComponent } from './components/ui/UIComponent';
 import { GameMenu } from './components/ui/GameMenu';
 import { GameCamera } from './models/base/scene/Camera';
 import Background from 'assets/Background/level1.png'
+import { GameAnimation } from './models/base/animation/GameAnimation';
+import { Events } from './core/events/Events';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 canvas.width = 64 * 16;
 canvas.height = 64 * 9;
+
+
+export class World {
+  constructor(){
+    GameEvent.subscribe(Events.animation.spawn, this, (animation: GameAnimation) => {
+      this.animation.spawn(animation)
+    })
+  }
+  collisions = collisionBlocks;
+  gameObject = {
+    list: [new Door()] as GameObject[],
+    remove: (gameObject: GameObject) => {
+      const list = this.gameObject.list
+      const index = list.indexOf(gameObject);
+      if (index === -1) return;
+      list.splice(index, 1)
+    }
+  }
+  creature = {
+    list: [new TorchGoblin()] as Enemy[],
+  }
+
+  animation = {
+    list: [] as GameAnimation[],
+    spawn: (animation: GameAnimation) => {
+      this.animation.list.push(animation);
+    },
+    remove: (animation: GameAnimation) => {
+      const list = this.animation.list
+      const index = list.indexOf(animation);
+      if (index === -1) return;
+      list.splice(index, 1)
+    }
+  }
+
+  get entities() {
+    return [...this.gameObject.list, ...this.creature.list, ...this.animation.list, ...this.collisions];
+  }
+
+  draw() {
+    this.entities.forEach(entity => entity.draw())
+  }
+  update() {
+    this.draw();
+  }
+}
+
+export class UI {
+  menu = new GameMenu();
+
+  dialogs = {
+    list: {
+      chest: ChestDialog,
+    }
+  }
+}
+
+export class HUD {
+  list = [new HealthBar(), new ExperienceBar()]
+  // inventory = new PlayerInventory();
+
+  get entities() {
+    return this.list
+  }
+
+}
+
+export class Scene {
+  camera: GameCamera = new GameCamera(Background, canvas.width, canvas.height)
+
+  get entities() {
+    return [this.camera]
+  }
+}
+
 export class Game {
-
-  public static paused = false;
-  static collisions = collisionBlocks;
-  static objects: GameObject[] = [new Door()];
-  static enemies: Enemy[] = [new TorchGoblin()]
-  static animations: GameObject[] = [];
-  static dialog = {
-    chest: ChestDialog,
+  static state = {
+    paused: false,
   }
-  static hud: UIComponent[] = [new HealthBar(), new ExperienceBar()];
-  static ui: UIComponent[] = [new GameMenu()]
-  static camera: GameCamera = new GameCamera(Background, canvas.width, canvas.height)
-  static inventory = new PlayerInventory();
-  static player = new Player();
   static ctx = c;
-
-  static removeGameObject(gameObject: GameObject) {
-    const index = this.objects.indexOf(gameObject);
-    if (index !== -1) {
-      this.objects.splice(index, 1)
-    }
-  }
-
-  static removeAnimation(animation: GameObject) {
-    const index = this.animations.indexOf(animation);
-    if (index !== -1) {
-      this.animations.splice(index, 1)
-    }
-  }
-
+  static player = new Player();
+  static world = new World();
+  static hud = new HUD();
+  static ui = new UI();
+  static scene = new Scene();
   static get entities() {
-    return [this.camera, ...this.hud, ...this.ui, ...this.objects, this.player, ...this.enemies, ...this.animations];
+    return [...this.scene.entities, ...this.world.entities, ...this.hud.entities, this.player,];
   }
 
   static start() {
-    this.entities.forEach((obj) => obj.draw());
+    this.entities.forEach((entity) => entity.draw());
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
   static update(timestamp: EpochTimeStamp) {
-    if (this.paused) return;
-    collisionBlocks.forEach(block => block.draw())
+    if (this.state.paused) return;
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
@@ -76,10 +131,10 @@ export class Game {
   }
 
   public static pause() {
-    this.paused = true;
+    this.state.paused = true;
   }
   public static unpause() {
-    this.paused = false;
+    this.state.paused = false;
   }
 }
 Game.setup();

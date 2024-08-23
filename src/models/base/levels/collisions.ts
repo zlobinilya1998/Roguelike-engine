@@ -37,6 +37,10 @@ class CollisionBlock {
       // window.Game.ctx.fillStyle = 'rgba(255,0,0,0.5)';
       // window.Game.ctx.fillRect(this.x, this.y, this.width, this.height)
    }
+
+   update() {
+      
+   }
 }
 
 const collisionBlocks: CollisionBlock[] = [];
