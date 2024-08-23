@@ -11,6 +11,7 @@ import { GameEvent } from "@/core/events/GameEvent";
 
 import PlayerImage from 'assets/Player/Player.png';
 import { Events } from "@/core/events/Events";
+import { Ailments } from "./Ailments";
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
 const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
@@ -29,6 +30,7 @@ export class Player extends Sprite {
   equipment = new Equipment();
   stats = new PlayerStats(this);
   effects = new PlayerEffects(this);
+  ailments = new Ailments(this);
 
   get isDead() {
     return this.stats.health.isDead;
@@ -38,6 +40,10 @@ export class Player extends Sprite {
     lock: false,
     immune: false,
     cause: () => {
+      if (!this.ailments.canAttack) {
+        new TextBubble('Stunned', 'black', this.position);
+        return;
+      };
       GameEvent.dispatch.player.combat.attack.land(this.equipment.attackDamage);
       this.animation.play(SpriteAnimationType.Attack, true, true);
     },
@@ -45,8 +51,7 @@ export class Player extends Sprite {
       if (this.damage.immune || this.isDead) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.takeDamage(damageCount);
-      const bubble = new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
-      GameEvent.dispatch.animation.spawn(bubble);
+      new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
       this.animation.play(SpriteAnimationType.TakeDamage, true, true);
     },
     restore: (count: number) => {

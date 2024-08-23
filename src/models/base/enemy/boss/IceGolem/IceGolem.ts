@@ -15,7 +15,5 @@ export class IceGolem extends Boss {
         const hitBox = new SpriteHitBox(50, 10, 90, 100)
         super(position, size, hitBox);
         this.animations.addList([IdleAnimation, AttackAnimation, MovingAnimation, TakeDamageAnimation, DeathAnimation]);
-
-        this.spells = []
     }
 }
