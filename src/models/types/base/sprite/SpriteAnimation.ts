@@ -26,6 +26,15 @@ export class SpriteAnimation extends SpriteFrames {
         this.type = type;
         this.imageSrc = imageSrc
     }
+
+
+    get isComplete(){
+        return (this.max - 1) - this.slice === this.current;
+    }
+
+    get isAttacking(){
+        return !this.isComplete && this.type === SpriteAnimationType.Attack
+    }
 }
 
 export class SpriteAnimations {

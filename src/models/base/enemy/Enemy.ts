@@ -44,14 +44,19 @@ export class Enemy extends Creature {
     applyListeners(): void {
         super.applyListeners();
         GameEvent.subscribe(Events.player.combat.attack, this, () => {
+            console.log('listeners');
             if (!this.isNearPlayer) return;
             this.health.takeDamage(25);
-            if (!this.health.isDead) this.animation.play(SpriteAnimationType.TakeDamage, true, true);
+            this.animation.play(SpriteAnimationType.TakeDamage, true, true);
         })
         GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
             await this.animation.play(SpriteAnimationType.Death, true, true);
             this.game.world.creature.remove(this)
         })
+    }
+
+    removeListeners(): void {
+        this.removeListeners();
     }
 
 }

@@ -108,10 +108,10 @@ export class Sprite {
   }
 
   onMoveAnimation() {
-    this.animation.play(SpriteAnimationType.Moving)
+    this.animation.play(SpriteAnimationType.Moving, false, true)
   }
   onIdleAnimation() {
-    this.animation.play(SpriteAnimationType.Idle)
+    this.animation.play(SpriteAnimationType.Idle, false, true)
   }
 
   updateFrames() {
@@ -165,16 +165,22 @@ export class Sprite {
     resolve: null as (value?: unknown) => void,
     play: (type: SpriteAnimationType, once = false, force = false) => {
       if (this.animation.current?.type === SpriteAnimationType.Death) {
-        console.log('Death playing');
-        
+        return
       };
+
+      if (this.animation.current?.isAttacking) {
+        return
+      }
+
 
 
       if (force) this.animation.lock = false;
       if (!type || this.animation.lock) return;
       const animation = this.animations.get(type);
       if (!animation) return;
+      this.animation.current = animation;
       this.animation.lock = true;
+
       return new Promise((res) => {
         this.animation.resolve = () => {
           res(animation);
@@ -186,6 +192,7 @@ export class Sprite {
         };
         this.frames = animation;
         this.image.src = animation.imageSrc;
+        if (animation.isComplete) this.animation.current.current = 0
       });
     },
   }
