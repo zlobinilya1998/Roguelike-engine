@@ -21,10 +21,4 @@ export class UIComponent {
         .filter(([_,isExists]) => isExists)
         .map(([className]) => className);
     }
-
-    draw() {}
-
-    update() {
-        this.draw();
-    }
 }

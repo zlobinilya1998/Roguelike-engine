@@ -7,6 +7,7 @@ import { Effect } from "core/effects/Effects";
 import { GameAnimation } from "@/models/base/animation/GameAnimation";
 import { Game } from "@/index";
 import { Creature } from "@/models/base/creature/Creature";
+import { Spell } from "../spells/Spell";
 
 export type GameEventListener = {
   source: unknown;
@@ -80,6 +81,9 @@ export class GameEvent {
       status: {
         dead: () => createEvent(Events.player.status.dead),
       },
+      spell: {
+        use: (spell: Spell) => createEvent(Events.player.spell.use, spell),
+      },
     },
     creature: {
       status: {
@@ -100,6 +104,13 @@ export class GameEvent {
         close: () => createEvent(Events.chest.dialog.close)
       },
     },
+    hud: {
+      update: {
+        player: {
+          skills: () => createEvent(Events.hud.update.player.skills),
+        }
+      }
+    }
   };
 
   static unsubscribe(event: Events, source: unknown) {

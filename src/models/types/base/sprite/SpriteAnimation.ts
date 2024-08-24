@@ -1,3 +1,4 @@
+import { GameUtils } from "@/utils";
 import { SpriteFrames } from "models/types/base/sprite/Sprite";
 
 export enum SpriteAnimationType {
@@ -29,37 +30,39 @@ export class SpriteAnimation extends SpriteFrames {
     }
 
 
-    get isComplete(){
+    get isComplete() {
         return (this.max - 1) - this.slice === this.current;
     }
 
-    get isDead(){
+    get isDead() {
         return this.type === SpriteAnimationType.Death
     }
 
-    get isAttacking(){
+    get isAttacking() {
         return !this.isComplete && this.type === SpriteAnimationType.Attack
     }
 
-    get isCasting(){
+    get isCasting() {
         return !this.isComplete && this.type === SpriteAnimationType.CastSpell
     }
 
-    get isBlocking(){
+    get isBlocking() {
         return this.isAttacking || this.isCasting;
     }
 }
 
 export class SpriteAnimations {
-    list: Map<SpriteAnimationType, SpriteAnimation> = new Map();
+    list: SpriteAnimation[] = [];
 
     add(animation: SpriteAnimation) {
-        this.list.set(animation.type, animation);
+        this.list.push(animation);
         return this.list
     }
 
     remove(type: SpriteAnimationType) {
-        this.list.delete(type);
+        const index = this.list.findIndex(item => item.type === type);
+        if (index === -1) return;
+        this.list.splice(index, 1)
     }
 
     addList(list: SpriteAnimation[]) {
@@ -67,6 +70,12 @@ export class SpriteAnimations {
     }
 
     get(type: SpriteAnimationType) {
-        return this.list.get(type);
+        const animationsWithType = this.list.filter(item => item.type === type);
+        if (animationsWithType.length > 1) {
+            const randomIndex = GameUtils.number.randomInteger(0, animationsWithType.length - 1)
+            const randomAnimation = animationsWithType[randomIndex];
+            return randomAnimation
+        }
+        return animationsWithType[0]
     }
 }

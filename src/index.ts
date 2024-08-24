@@ -26,7 +26,7 @@ export class Game {
   static ui = new UI();
   static scene = new Scene(canvas.width,canvas.height);
   static get entities() {
-    return [...this.scene.entities, ...this.world.entities, ...this.hud.entities, this.player,];
+    return [...this.scene.entities, ...this.world.entities, this.player];
   }
 
   static start() {

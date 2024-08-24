@@ -19,8 +19,4 @@ export class ExperienceBar extends UIComponent {
         this.level.innerHTML = this.playerExp.level.toString();
         this.bg.style.maxWidth = `${this.playerExp.percent}%`;
     }
-
-    update() {
-        this.draw();
-    }
 }

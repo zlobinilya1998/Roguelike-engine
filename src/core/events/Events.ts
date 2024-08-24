@@ -32,7 +32,10 @@ export class Events {
         },
         status: {
             dead: 'player:status:dead',
-        }
+        },
+        spell: {
+            use: 'player:spell:use',
+        },
     }
 
     static creature = {
@@ -53,6 +56,14 @@ export class Events {
         dialog: {
             open: 'chest:dialog:open',
             close: 'chest:dialog:close',
+        }
+    }
+
+    static hud = {
+        update: {
+            player: {
+                skills: "hud:update:player:skills"
+            }
         }
     }
 }

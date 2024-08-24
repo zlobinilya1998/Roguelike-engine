@@ -1,0 +1,39 @@
+#playerSkills {
+    position: absolute;
+    bottom: 200px;
+    left: 23%;
+    display: flex;
+    gap: 20px;
+}
+
+.player-skill {
+    flex: 0 0 45px;
+    border-radius: 10px;
+    height: 45px;
+    border-radius: 3px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: .3s;
+}
+
+.player-skill-usable {
+    .player-skill-hotkey {
+        box-shadow: 1px 1px 1px 1px greenyellow;
+    }
+}
+
+.player-skill-hotkey {
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    box-shadow: 1px 1px 1px 1px currentColor;
+    transition: .3s;
+    position: absolute;
+    top: 50px;
+    font-size: 1.3rem;
+}
+

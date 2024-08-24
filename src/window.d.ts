@@ -10,6 +10,7 @@ declare global {
     experienceBarLevel: HTMLDivElement;
     experienceBarBg: HTMLDivElement;
     playerEffects: HTMLDivElement;
+    playerSkills: HTMLDivElement;
     chestDialog: HTMLDialogElement;
     inventoryDialog: HTMLDialogElement;
     gameMenu: HTMLDivElement;

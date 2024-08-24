@@ -12,10 +12,16 @@ import { GameEvent } from "@/core/events/GameEvent";
 import PlayerImage from 'assets/Player/Player.png';
 import { Events } from "@/core/events/Events";
 import { Ailments } from "./Ailments";
+import { Spells } from "@/core/spells/Spells";
+import { PlayerSpells } from "@/core/spells/PlayerSpells";
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
 const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
 const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 2, 8, 0, 6, 5, true, 0)
+const AttackAnimation1 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 3, 8, 0, 6, 5, true, 0)
+const AttackAnimation2 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 4, 8, 0, 6, 5, true, 0)
+const AttackAnimation3 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 5, 8, 0, 6, 5, true, 0)
+const AttackAnimation4 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 6, 8, 0, 6, 5, true, 0)
 
 export class Player extends Sprite {
   constructor() {
@@ -24,13 +30,14 @@ export class Player extends Sprite {
     const scale = 0.5;
     const hitBox = new SpriteHitBox(30, 25, 30, 40);
     super(position, size, scale, hitBox);
-    this.animations.addList([IdleAnimation, MovingAnimation, AttackAnimation]);
+    this.animations.addList([IdleAnimation, MovingAnimation, AttackAnimation,AttackAnimation1,AttackAnimation2,AttackAnimation3,AttackAnimation4]);
   }
   inventory = new Inventory();
   equipment = new Equipment();
   stats = new PlayerStats(this);
   effects = new PlayerEffects(this);
   ailments = new Ailments(this);
+  spells = new PlayerSpells(this);
 
   get isDead() {
     return this.stats.health.isDead;

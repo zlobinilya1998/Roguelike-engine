@@ -1,17 +1,10 @@
 import { SpriteAnimationType } from "@/models/types/base/sprite";
 import { GameUtils } from "@/utils";
-import { EnemySpell } from "./EnemySpell";
-import { Creature } from "@/models/base/creature/Creature";
+import { Spells } from "@/core/spells/Spells";
 
 
-export class EnemySpells {
+export class EnemySpells extends Spells {
     spellQueue: NodeJS.Timeout = null;
-    spells: EnemySpell[];
-    creature: Creature;
-    constructor(creature: Creature, spells: EnemySpell[] = []) {
-        this.spells = spells;
-        this.creature = creature;
-    }
 
     createSpellQueue() {
         if (this.spellQueue) return;
