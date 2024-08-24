@@ -2,10 +2,12 @@ import { Creature } from "@/models/base/creature/Creature";
 import { Spell } from "@/core/spells/Spell";
 import { Player } from "@/models/base/player/Player";
 import { Game } from "@/index";
+import { GameUtils } from "@/utils";
 
 export class Spells {
     spells: Spell[];
     creature: Creature | Player;
+    updateCdIntervalId: NodeJS.Timeout = null;
 
     constructor(creature: Creature | Player, spells: Spell[] = []) {
         this.spells = spells;
@@ -16,11 +18,39 @@ export class Spells {
         return window.Game
     }
 
-    get usedSpells(){
+    get usedSpells() {
         return this.spells.filter(spell => !spell.isCanUse)
     }
 
-    updateUsedSpellsCd(){
+    get usableSpells() {
+        return this.spells.filter(spell => spell.isCanUse)
+    }
+
+    updateUsedSpellsCd() {
         this.usedSpells.forEach(spell => spell.updateCd());
+        this.onUpdateSpellsCd();
+    }
+
+    onSpellUse(spell: Spell) { }
+    onUpdateSpellsCd() {}
+    useSpell(spell: Spell) {
+        spell = this.spells[0];
+        if (!spell.isCanUse) return;
+        spell.use();
+        if (this.updateCdIntervalId) return;
+        this.updateCdIntervalId = setInterval(() => {
+            if (!this.usedSpells.length) {
+                clearInterval(this.updateCdIntervalId)
+                this.updateCdIntervalId = null;
+                return;
+            };
+            this.updateUsedSpellsCd();
+        }, 1_000);
+        this.onSpellUse(spell);
+    }
+
+
+    getRandomUsableSpell(){
+        return this.usableSpells[GameUtils.number.randomInteger(0, this.usableSpells.length - 1)];
     }
 }

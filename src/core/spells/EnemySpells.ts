@@ -1,6 +1,6 @@
 import { SpriteAnimationType } from "@/models/types/base/sprite";
-import { GameUtils } from "@/utils";
 import { Spells } from "@/core/spells/Spells";
+import { Spell } from "./Spell";
 
 
 export class EnemySpells extends Spells {
@@ -10,13 +10,17 @@ export class EnemySpells extends Spells {
         if (this.spellQueue) return;
         if (!this.spells.length) return;
         this.spellQueue = setInterval(() => {
-            const usableSpells = this.spells.filter(spell => spell.isCanUse);
-            if (usableSpells.length) {
-                const randomSpell = usableSpells[GameUtils.number.randomInteger(0, usableSpells.length - 1)];
+            if (this.usableSpells.length) {
+                const randomSpell = this.getRandomUsableSpell();
+                if (!randomSpell) return;
                 randomSpell.use();
                 this.creature.animation.play(SpriteAnimationType.CastSpell, true, true)
             };
             this.spells.forEach(spell => spell.updateCd());
         }, 1_000)
+    }
+
+    addList(spells: Spell[]){
+        this.spells = spells;
     }
 }

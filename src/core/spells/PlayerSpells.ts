@@ -10,24 +10,13 @@ export class PlayerSpells extends Spells {
         this.spells = [new Spell(() => { }, 10), new Spell(() => { }, 10), new Spell(() => { }, 10)]
     }
 
-    
-    updateCdIntervalId: NodeJS.Timeout = null;
-
-    use(index: number){
-        const spell = this.spells[index];
-        if (!spell.isCanUse) return;
-        spell.use();
+    onSpellUse(spell: Spell): void {
+        super.onSpellUse(spell);
         GameEvent.dispatch.player.spell.use(spell);
+    }
 
-        if (this.updateCdIntervalId) return;
-        this.updateCdIntervalId = setInterval(() => {
-            if (!this.usedSpells.length) {
-                clearInterval(this.updateCdIntervalId)
-                this.updateCdIntervalId = null;
-                return;
-            };
-            this.updateUsedSpellsCd();
-            GameEvent.dispatch.hud.update.player.skills();
-        }, 1_000);
+    onUpdateSpellsCd(): void {
+        super.onUpdateSpellsCd();
+        GameEvent.dispatch.hud.update.player.skills();
     }
 }

@@ -1,9 +1,8 @@
 import { SpritePosition, SpriteSize, SpriteHitBox, SpriteAnimation, SpriteAnimationType } from "@/models/types/base/sprite";
 import { AggressiveEnemy } from "models/base/enemy/AggressiveEnemy";
-
-import Goblin from 'assets/Enemy/Goblin.png';
 import { GameEvent } from "@/core/events/GameEvent";
 import { EffectList } from "@/core/effects/EffectList";
+import Goblin from 'assets/Enemy/Goblin.png';
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, Goblin, 0, 5, 0, 7, 7, true, 0);
 const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, Goblin, 1, 5, 1, 7, 6, true, 1);
