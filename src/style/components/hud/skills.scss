@@ -10,19 +10,26 @@
     flex: 0 0 45px;
     border-radius: 10px;
     height: 45px;
-    border-radius: 3px;
     border: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     transition: .3s;
+    box-shadow: 0 0 2px 0px black;
+    opacity: 0.5;
 }
 
 .player-skill-usable {
+    opacity: 1;
     .player-skill-hotkey {
         box-shadow: 1px 1px 1px 1px greenyellow;
     }
+}
+
+.player-skill-icon {
+    object-fit: cover;
+    border-radius: 10px;
 }
 
 .player-skill-hotkey {

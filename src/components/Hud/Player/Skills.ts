@@ -3,6 +3,10 @@ import { Events } from "@/core/events/Events";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Game } from "@/index";
 
+import Frost from 'assets/Effect/frost.jpg'
+
+
+
 enum Hotkeys {
     Q,
     W,
@@ -35,12 +39,17 @@ export class Skills extends UIComponent {
         this.bar.innerHTML = '';
         this.player.spells.spells.forEach((spell, index) => {
             const skill = document.createElement('div');
-            skill.classList.add('player-skill', spell.isCanUse ? 'player-skill-usable' : '123')
-            skill.innerText = spell.isCanUse ? '' : `${spell.cd}`
+            skill.classList.add('player-skill')
+            if (spell.isCanUse) skill.classList.add('player-skill-usable')
+            const image = document.createElement('img');
+            image.src = Frost;
+            image.classList.add('player-skill-icon');
+
             const hotkey = document.createElement('div');
             hotkey.classList.add('player-skill-hotkey')
-            hotkey.innerText = Hotkeys[index];
+            hotkey.innerText = spell.isCanUse ? Hotkeys[index] : `${spell.cd}`;
             skill.appendChild(hotkey)
+            skill.appendChild(image)
             this.bar.appendChild(skill)
         })
     }
