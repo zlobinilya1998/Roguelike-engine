@@ -86,29 +86,34 @@ export class GameObject {
         resolve: null as (value?: unknown) => void,
         play: (type: GameObjectAnimationType, force = false) => {
             if (force) this.animation.lock = false;
-
             if (this.animation.animation?.type === type) return;
-
             if (!type || this.animation.lock) return;
             const animation = this.animations.get(type);
             if (!animation) return;
+
             this.animation.lock = true;
             this.animation.animation = animation;
+
+            const image = new Image();
+            image.src = animation.imageSrc;
+            this.image = image;
+            this.frames = animation;
+            this.frames.current = 0;
+
             return new Promise((res) => {
-                const image = new Image();
-                image.src = animation.imageSrc;
-                this.image = image;
-                this.frames = animation;
-                this.frames.current = 0;
-                this.animation.resolve = () => {
+                const resolve = () => {
                     res(animation);
                     this.animation.lock = false;
-                };
+                    this.onAnimationEnd();
+                }
+                this.animation.resolve = resolve;
             });
         },
     }
 
     updateFrames() {
+        console.log(this.frames);
+
         if (!this.frames.active) return;
         this.frames.elapsed++;
         if (this.frames.elapsed % this.frames.hold === 0) {
@@ -125,5 +130,10 @@ export class GameObject {
 
     updateAnimation() {
         this.animation.play(GameObjectAnimationType.Idle);
+    }
+
+    onAnimationEnd() {
+        console.log("ENDED");
+
     }
 }

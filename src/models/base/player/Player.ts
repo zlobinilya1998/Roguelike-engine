@@ -14,6 +14,7 @@ import { Events } from "@/core/events/Events";
 import { Ailments } from "./Ailments";
 import { Spells } from "@/core/spells/Spells";
 import { PlayerSpells } from "@/core/spells/PlayerSpells";
+import { Spell } from "@/core/spells/Spell";
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
 const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
@@ -71,7 +72,7 @@ export class Player extends Sprite {
   move = {
     left: () => this.velocity.x = -3,
     right: () => this.velocity.x = 3,
-    top: () => {
+    jump: () => {
       if (this.state.falling) return;
       this.velocity.y = -15;
       this.gravity = 1;
@@ -99,11 +100,18 @@ export class Player extends Sprite {
     });
     GameEvent.subscribe(Events.player.level.up, this, () => this.stats.level += 1);
     GameEvent.subscribe(Events.player.combat.attack.start, this, () => this.damage.cause());
+    GameEvent.subscribe(Events.player.spell.use, this, (spell: Spell) => {
+      console.log(`SPELL CASTED ${spell}`);
+    });
+    GameEvent.subscribe(Events.player.spell.useByIndex, this, (index: number) => {
+      console.log(`SPELL BY INDEX CASTED ${index}`);
+      this.player.spells.useSpell(this.spells.list[index])
+    });
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
     GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => this.effects.applyEffect(effect));
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());
     GameEvent.subscribe(Events.player.move.right, this, () => this.move.right());
-    GameEvent.subscribe(Events.player.move.top, this, () => this.move.top());
+    GameEvent.subscribe(Events.player.move.jump, this, () => this.move.jump());
     GameEvent.subscribe(Events.player.move.down, this, () => this.move.down());
     GameEvent.subscribe(Events.player.move.stop.x, this, () => this.move.stop.x());
     GameEvent.subscribe(Events.player.move.stop.y, this, () => this.move.stop.y());

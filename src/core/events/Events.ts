@@ -10,7 +10,7 @@ export class Events {
         move: {
             left: 'player:move:left',
             right: 'player:move:right',
-            top: 'player:move:top',
+            jump: 'player:move:jump',
             down: 'player:move:down',
             stop: {
                 x: 'player:move:stop:x',
@@ -35,6 +35,7 @@ export class Events {
         },
         spell: {
             use: 'player:spell:use',
+            useByIndex: 'player:spell:use:by:index',
         },
     }
 

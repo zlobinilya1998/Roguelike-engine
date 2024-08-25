@@ -9,7 +9,7 @@ const ExplosionIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.I
 export class ExplosionAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(192, 192);
-        super(position, size, 300);
+        super(position, size);
         this.animations.add(ExplosionIdleAnimation);
     }
 }

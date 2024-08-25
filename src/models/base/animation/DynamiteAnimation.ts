@@ -11,12 +11,11 @@ const DynamiteIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Id
 export class DynamiteAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(64, 64);
-        super(position, size, 5_000);
+        super(position, size);
         this.animations.add(DynamiteIdleAnimation)
     }
 
-    onDestroy(): void {
-        super.onDestroy();
+    onAnimationEnd(): void {
         this.detonate();
     }
 

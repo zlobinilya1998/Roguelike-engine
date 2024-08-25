@@ -1,6 +1,5 @@
 import { Item } from "models/item/Item";
 import { Chest } from "@/models/base/object/chest/Chest";
-import { Player } from "@/models/base/player/Player";
 import { Events } from "core/events/Events";
 import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
@@ -8,6 +7,7 @@ import { GameAnimation } from "@/models/base/animation/GameAnimation";
 import { Game } from "@/index";
 import { Creature } from "@/models/base/creature/Creature";
 import { Spell } from "../spells/Spell";
+import { Bindings } from "@/models/keyboard/Bindings";
 
 export type GameEventListener = {
   source: unknown;
@@ -21,7 +21,7 @@ export const createEvent = (event: Events, data?: unknown) => {
 };
 
 export class GameEvent {
-  static list = new Map<Events,GameEventListener[]>();
+  static list = new Map<Events, GameEventListener[]>();
 
 
   static get game(): typeof Game {
@@ -57,7 +57,7 @@ export class GameEvent {
       move: {
         left: () => createEvent(Events.player.move.left),
         right: () => createEvent(Events.player.move.right),
-        top: () => createEvent(Events.player.move.top),
+        jump: () => createEvent(Events.player.move.jump),
         down: () => createEvent(Events.player.move.down),
         stop: {
           x: () => createEvent(Events.player.move.stop.x),
@@ -82,6 +82,7 @@ export class GameEvent {
         dead: () => createEvent(Events.player.status.dead),
       },
       spell: {
+        useByIndex: (index: number) => createEvent(Events.player.spell.useByIndex, index),
         use: (spell: Spell) => createEvent(Events.player.spell.use, spell),
       },
     },
@@ -118,7 +119,7 @@ export class GameEvent {
     if (!listeners) return;
     const subscriptionIndex = listeners.findIndex(listener => listener.source === source);
     if (subscriptionIndex === -1) return;
-    listeners.splice(subscriptionIndex,1);
+    listeners.splice(subscriptionIndex, 1);
   }
 
   static createListeners() {
@@ -127,10 +128,22 @@ export class GameEvent {
   }
 
   static create = {
-    baseListeners: () => {},
+    baseListeners: () => { },
     keyboardListeners: () => {
       window.addEventListener("keydown", (e) => {
         switch (e.key) {
+          case Bindings.player.spells[0]:
+            GameEvent.dispatch.player.spell.useByIndex(0);
+            break;
+          case Bindings.player.spells[1]:
+            GameEvent.dispatch.player.spell.useByIndex(1);
+            break;
+          case Bindings.player.spells[2]:
+            GameEvent.dispatch.player.spell.useByIndex(2);
+            break;
+          case Bindings.player.spells[3]:
+            GameEvent.dispatch.player.spell.useByIndex(3);
+            break;
           case "i":
             GameEvent.dispatch.inventory.toggle();
           case "a":
@@ -139,11 +152,8 @@ export class GameEvent {
           case "d":
             GameEvent.dispatch.player.move.right();
             break;
-          case "w":
-            GameEvent.dispatch.player.move.top();
-            break;
-          case "s":
-            GameEvent.dispatch.player.move.down();
+          case Bindings.player.jump:
+            GameEvent.dispatch.player.move.jump();
             break;
         }
       });

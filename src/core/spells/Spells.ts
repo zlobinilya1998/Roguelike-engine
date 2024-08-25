@@ -5,12 +5,12 @@ import { Game } from "@/index";
 import { GameUtils } from "@/utils";
 
 export class Spells {
-    spells: Spell[];
+    list: Spell[];
     creature: Creature | Player;
     updateCdIntervalId: NodeJS.Timeout = null;
 
     constructor(creature: Creature | Player, spells: Spell[] = []) {
-        this.spells = spells;
+        this.list = spells;
         this.creature = creature;
     }
 
@@ -19,11 +19,11 @@ export class Spells {
     }
 
     get usedSpells() {
-        return this.spells.filter(spell => !spell.isCanUse)
+        return this.list.filter(spell => !spell.isCanUse)
     }
 
     get usableSpells() {
-        return this.spells.filter(spell => spell.isCanUse)
+        return this.list.filter(spell => spell.isCanUse)
     }
 
     updateUsedSpellsCd() {
@@ -34,8 +34,8 @@ export class Spells {
     onSpellUse(spell: Spell) { }
     onUpdateSpellsCd() {}
     useSpell(spell: Spell) {
-        spell = this.spells[0];
-        if (!spell.isCanUse) return;
+        // spell = this.list[0];
+        if (!spell?.isCanUse) return;
         spell.use();
         if (this.updateCdIntervalId) return;
         this.updateCdIntervalId = setInterval(() => {
@@ -51,6 +51,7 @@ export class Spells {
 
 
     getRandomUsableSpell(){
-        return this.usableSpells[GameUtils.number.randomInteger(0, this.usableSpells.length - 1)];
+        const index = GameUtils.number.randomInteger(0, this.usableSpells.length - 1)
+        return this.usableSpells[index];
     }
 }

@@ -1,13 +1,20 @@
 import { Spells } from "@/core/spells/Spells";
+import { Spell, SpellId } from "@/core/spells/Spell";
 import { Player } from "@/models/base/player/Player";
-import { Spell } from "./Spell";
-import { GameEvent } from "../events/GameEvent";
+import { GameEvent } from "@/core/events/GameEvent";
+import { IceCastAnimation } from "@/models/base/animation/IceCastAnimation";
 
 export class PlayerSpells extends Spells {
     constructor(player: Player) {
         super(player)
 
-        this.spells = [new Spell(() => { }, 10), new Spell(() => { }, 10), new Spell(() => { }, 10)]
+        this.list = [
+            new Spell({
+                onUse: () => {
+                    new IceCastAnimation(this.creature.position)
+                }, baseCd: 10, id: SpellId.FrostShock
+            })
+        ]
     }
 
     onSpellUse(spell: Spell): void {
