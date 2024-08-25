@@ -26,22 +26,23 @@ export interface GameObjectFramesProps {
 }
 
 export class GameObjectFrames {
+    currentRow: number;
+    maxRows: number;
+    currentFrame: number;
+    maxFrames: number;
     active: boolean;
-    current: number = 0;
-    elapsed: number = 0;
-    max: number = 1;
-    hold: number = 1;
-    currentRow: number = 0;
-    rows = 1;
-    slice = 0;
+    hold: number;
+    slice: number;
+    elapsed: number;
     constructor({ currentRow, maxRows, currentFrame, maxFrames, hold, active, slice }: GameObjectFramesProps) {
-        this.currentRow = currentRow
-        this.rows = maxRows;
-        this.current = currentFrame || 0;
-        this.max = maxFrames;
+        this.currentRow = currentRow || 0
+        this.maxRows = maxRows || 1;
+        this.currentFrame = currentFrame || 0;
+        this.maxFrames = maxFrames || 1;
         this.hold = hold || 5;
-        this.active = active || true
-        this.slice = slice || 0
+        this.active = active || true;
+        this.slice = slice || 0;
+        this.elapsed = 0;
     }
 }
 

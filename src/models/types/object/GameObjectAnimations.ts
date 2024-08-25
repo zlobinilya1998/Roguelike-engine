@@ -27,7 +27,7 @@ export class GameObjectAnimation extends GameObjectFrames {
     }
 
     get isComplete() {
-        return this.current === (this.max - 1)
+        return this.currentFrame === (this.maxFrames - 1)
     }
 }
 

@@ -25,7 +25,7 @@ export class SpriteAnimation extends SpriteFrames {
     }
 
     get isComplete() {
-        return (this.max - 1) - this.slice === this.current;
+        return (this.maxFrames - 1) - this.slice === this.currentFrame;
     }
 
     get isDead() {

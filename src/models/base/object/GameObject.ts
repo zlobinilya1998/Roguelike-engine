@@ -11,7 +11,7 @@ export type GameObjectProps = {
 }
 
 export class GameObject {
-    constructor({position,size}: GameObjectProps) {
+    constructor({ position, size }: GameObjectProps) {
         this.position = position;
         this.size = size;
         this.scale = 1;
@@ -32,12 +32,12 @@ export class GameObject {
     draw() {
         if (!this.frames) return;
 
-        const oneFrameWidth = this.image.width / this.frames.max
+        const oneFrameWidth = this.image.width / this.frames.maxFrames
         const oneFrameHeight = this.image.height
 
         this.game.ctx.drawImage(
             this.image,
-            this.frames.current * oneFrameWidth,
+            this.frames.currentFrame * oneFrameWidth,
             0,
             oneFrameWidth,
             oneFrameHeight,
@@ -114,7 +114,7 @@ export class GameObject {
             image.src = animation.imageSrc;
             this.image = image;
             this.frames = animation;
-            this.frames.current = 0;
+            this.frames.currentFrame = 0;
 
             return new Promise((res) => {
                 const resolve = () => {
@@ -130,16 +130,15 @@ export class GameObject {
     updateFrames() {
         if (!this.frames.active) return;
         this.frames.elapsed++;
-        if (this.frames.elapsed % this.frames.hold === 0) {
-            if (this.frames.current < this.frames.max - 1) {
-                this.frames.current++;
-            } else {
-                if (this.animation.animation.loop) {
-                    this.frames.current = 0;
-                }
-                this.animation.resolve?.();
-            }
-        }
+
+        const isHoldFramesPassed = this.frames.elapsed % this.frames.hold === 0
+        if (!isHoldFramesPassed) return;
+
+        const isNotLastFrame = this.frames.currentFrame < this.frames.maxFrames - 1;
+        if (isNotLastFrame) return this.frames.currentFrame++;
+
+        if (this.animation.animation.loop) this.frames.currentFrame = 0;
+        this.animation.resolve?.();
     }
 
     updateAnimation() {

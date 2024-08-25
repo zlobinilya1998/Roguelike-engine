@@ -61,22 +61,23 @@ export interface SpriteFramesProps {
 }
 
 export class SpriteFrames {
-    active: boolean = true;
-    current: number = 0;
-    elapsed: number = 0;
-    max: number = 1;
-    hold: number = 1;
-    currentRow: number = 0;
-    rows = 1;
-    slice = 0;
+    active: boolean;
+    currentFrame: number;
+    maxFrames: number;
+    currentRow: number;
+    maxRows: number;
+    elapsed: number;
+    hold: number;
+    slice: number;
     constructor({ currentRow, maxRows, currentFrame, maxFrames, hold, active, slice }: SpriteFramesProps) {
         this.currentRow = currentRow || 0
-        this.rows = maxRows || 1;
-        this.current = currentFrame || 0;
-        this.max = maxFrames;
-        this.hold = hold
-        this.active = active || true
-        this.slice = slice || 0
+        this.maxRows = maxRows || 1;
+        this.currentFrame = currentFrame || 0;
+        this.maxFrames = maxFrames || 1;
+        this.hold = hold || 1;
+        this.active = active || true;
+        this.slice = slice || 0;
+        this.elapsed = 0;
     }
 }
 

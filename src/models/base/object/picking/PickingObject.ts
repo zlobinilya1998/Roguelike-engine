@@ -11,7 +11,7 @@ export class PickingObject extends GameObject {
 
     onPickedUp() {
         this.image.src = PickedPng;
-        this.frames.max = 6;
+        this.frames.maxFrames = 6;
 
         setTimeout(() => {
             this.removeMe();

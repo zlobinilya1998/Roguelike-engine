@@ -74,37 +74,28 @@ export class Sprite {
   }
 
   draw() {
-    if (this.frames) {
-      if (this.frames.rows > 1) {
+    if (!this.frames) return;
 
-        const oneFrameWidth = this.image.width / this.frames.max;
-        const oneFrameHeight = this.image.height / this.frames.rows;
+    const isHaveRows = this.frames.maxRows > 1
+    const oneFrameWidth = this.image.width / this.frames.maxFrames;
+    const oneFrameHeight = this.image.height / this.frames.maxRows;
 
-        this.game.ctx.drawImage(
-          this.image,
-          this.frames.current * oneFrameWidth,
-          this.frames.currentRow * oneFrameHeight,
-          oneFrameWidth,
-          oneFrameHeight,
-          this.position.x,
-          this.position.y,
-          oneFrameWidth * this.scale,
-          oneFrameHeight * this.scale,
-        )
-      } else {
-        this.game.ctx.drawImage(
-          this.image,
-          this.frames.current * (this.image.width / this.frames.max),
-          0,
-          this.image.width / this.frames.max,
-          this.image.height,
-          this.position.x,
-          this.position.y,
-          (this.image.width / this.frames.max) * this.scale,
-          this.image.height * this.scale,
-        )
-      }
-    }
+    const sourceXOffset = this.frames.currentFrame * oneFrameWidth;
+    const sourceYOffset = isHaveRows ? this.frames.currentRow * oneFrameHeight : 0;
+
+    const destinationHeight = isHaveRows ? oneFrameHeight : this.image.height;
+
+    this.game.ctx.drawImage(
+      this.image,
+      sourceXOffset,
+      sourceYOffset,
+      oneFrameWidth,
+      destinationHeight,
+      this.position.x,
+      this.position.y,
+      oneFrameWidth * this.scale,
+      destinationHeight * this.scale,
+    )
   }
 
   update() {
@@ -132,10 +123,10 @@ export class Sprite {
     if (!this.frames.active) return;
     this.frames.elapsed++;
     if (this.frames.elapsed % this.frames.hold === 0) {
-      if (this.frames.current < (this.frames.max - this.frames.slice - 1)) {
-        this.frames.current++;
+      if (this.frames.currentFrame < (this.frames.maxFrames - this.frames.slice - 1)) {
+        this.frames.currentFrame++;
       } else {
-        this.frames.current = 0;
+        this.frames.currentFrame = 0;
         this.animation.resolve?.();
       }
     }
@@ -199,7 +190,7 @@ export class Sprite {
         };
         this.frames = animation;
         this.image.src = animation.imageSrc;
-        if (animation.isComplete) this.animation.current.current = 0
+        if (animation.isComplete) this.animation.current.currentFrame = 0
       });
     },
   }
