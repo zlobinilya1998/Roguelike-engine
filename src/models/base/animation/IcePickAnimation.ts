@@ -5,7 +5,7 @@ import { CollidableAnimation } from "./CollidableAnimation";
 import IceCast from 'assets/Animation/IcePick.png';
 import { IceCastAnimation } from "./IceCastAnimation";
 
-const IcePickIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle, IceCast, 30, 2);
+const IcePickIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: IceCast, maxFrames: 30, hold: 2 });
 
 export class IcePickAnimation extends CollidableAnimation {
     constructor(position: GameObjectPosition) {

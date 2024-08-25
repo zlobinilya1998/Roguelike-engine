@@ -4,7 +4,7 @@ import { GameAnimation } from "./GameAnimation";
 import IceCast from 'assets/Animation/IceCast.png';
 import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 
-const IceCastIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle, IceCast, 28, 1);
+const IceCastIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: IceCast, maxFrames: 28, hold: 1 });
 
 export class IceCastAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {

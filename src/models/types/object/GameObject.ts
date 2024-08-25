@@ -15,8 +15,18 @@ export class GameObjectSize {
     }
 }
 
+export interface GameObjectFramesProps {
+    currentRow: number,
+    maxRows: number,
+    currentFrame: number,
+    maxFrames: number,
+    hold: number,
+    active?: boolean,
+    slice?: number,
+}
+
 export class GameObjectFrames {
-    active: boolean = true;
+    active: boolean;
     current: number = 0;
     elapsed: number = 0;
     max: number = 1;
@@ -24,22 +34,14 @@ export class GameObjectFrames {
     currentRow: number = 0;
     rows = 1;
     slice = 0;
-    constructor(
-        currentRow = 0,
-        rows: number = 1,
-        current: number = 0,
-        max: number,
-        hold: number,
-        active: boolean = true,
-        slice: number = 0
-    ) {
+    constructor({ currentRow, maxRows, currentFrame, maxFrames, hold, active, slice }: GameObjectFramesProps) {
         this.currentRow = currentRow
-        this.rows = rows;
-        this.current = current;
-        this.max = max;
-        this.hold = hold
-        this.active = active
-        this.slice = slice
+        this.rows = maxRows;
+        this.current = currentFrame || 0;
+        this.max = maxFrames;
+        this.hold = hold || 5;
+        this.active = active || true
+        this.slice = slice || 0
     }
 }
 

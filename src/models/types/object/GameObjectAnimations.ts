@@ -1,4 +1,4 @@
-import { GameObjectFrames } from "./GameObject";
+import { GameObjectFrames, GameObjectFramesProps } from "./GameObject";
 
 export enum GameObjectAnimationType {
     Idle = 1,
@@ -7,24 +7,26 @@ export enum GameObjectAnimationType {
     TakeHit,
 }
 
+export interface GameAnimationProps {
+    type: GameObjectAnimationType,
+    imageSrc: string,
+    maxFrames: number,
+    loop?: boolean,
+    hold?: number,
+}
+
 export class GameObjectAnimation extends GameObjectFrames {
     imageSrc: string
     type: GameObjectAnimationType
     loop: boolean
-    constructor(
-        type: GameObjectAnimationType,
-        imageSrc: string,
-        max: number,
-        hold: number = 5,
-        loop: boolean = false,
-    ) {
-        super(0, 0, 0, max, hold, true, 0)
-        this.loop = loop
+    constructor({ maxFrames, hold, loop, type, imageSrc }: GameAnimationProps) {
+        super({ currentRow: 0, maxRows: 0, currentFrame: 0, maxFrames, hold: hold || 5 })
+        this.loop = loop || false;
         this.type = type;
-        this.imageSrc = imageSrc
+        this.imageSrc = imageSrc;
     }
 
-    get isComplete(){
+    get isComplete() {
         return this.current === (this.max - 1)
     }
 }

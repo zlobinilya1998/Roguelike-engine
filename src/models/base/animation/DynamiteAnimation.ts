@@ -6,7 +6,7 @@ import { GameAnimation } from "./GameAnimation";
 import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 
 import Dynamite from 'assets/Animation/Dynamite.png';
-const DynamiteIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle, Dynamite, 6, 5, true)
+const DynamiteIdleAnimation = new GameObjectAnimation({type:GameObjectAnimationType.Idle, imageSrc: Dynamite, maxFrames: 6, hold: 5})
 
 export class DynamiteAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
