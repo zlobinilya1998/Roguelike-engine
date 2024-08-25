@@ -17,4 +17,10 @@ export class Door extends InteractableObject {
 
         this.animations.addList([DoorIdleAnimation, DoorOpeningAnimation, DoorClosingAnimation])
     }
+
+    onInteract(): void {
+        super.onInteract();
+        console.log("Door interacted");
+        
+    }
 }

@@ -16,7 +16,7 @@ export class World {
     }
     collisions = collisionBlocks;
     gameObject = {
-      list: [] as GameObject[],
+      list: [new Door()] as GameObject[],
       remove: (gameObject: GameObject) => {
         const list = this.gameObject.list
         const index = list.indexOf(gameObject);

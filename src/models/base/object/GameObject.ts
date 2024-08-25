@@ -11,6 +11,8 @@ export class GameObject {
         this.size = size;
         this.scale = 1;
         this.image = new Image();
+
+        this.applyListeners();
     }
 
     position: GameObjectPosition;
@@ -131,7 +133,12 @@ export class GameObject {
     }
 
     onAnimationEnd() {
-        console.log("ENDED");
+    }
+
+
+    applyListeners() { }
+
+    removeListeners() {
 
     }
 }

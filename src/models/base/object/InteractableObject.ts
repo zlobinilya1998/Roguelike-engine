@@ -1,5 +1,7 @@
 import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 import { GameObject } from "./GameObject";
+import { GameEvent } from "@/core/events/GameEvent";
+import { Events } from "@/core/events/Events";
 
 export class InteractableObject extends GameObject {
     isInteracted = false;
@@ -23,4 +25,14 @@ export class InteractableObject extends GameObject {
         super.updateAnimation();
     }
 
+    applyListeners(): void {
+        super.applyListeners();
+        GameEvent.subscribe(Events.player.interact, this, () => {
+            if (!this.isCanInteract) return;
+            this.onInteract();
+        })
+    }
+
+    onInteract() {
+    }
 }

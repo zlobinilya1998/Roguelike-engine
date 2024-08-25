@@ -37,6 +37,7 @@ export class Events {
             use: 'player:spell:use',
             useByIndex: 'player:spell:use:by:index',
         },
+        interact: 'player:interact',
     }
 
     static creature = {

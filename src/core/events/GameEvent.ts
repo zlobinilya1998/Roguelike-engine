@@ -85,6 +85,7 @@ export class GameEvent {
         useByIndex: (index: number) => createEvent(Events.player.spell.useByIndex, index),
         use: (spell: Spell) => createEvent(Events.player.spell.use, spell),
       },
+      interact: () => createEvent(Events.player.interact),
     },
     creature: {
       status: {
@@ -149,6 +150,9 @@ export class GameEvent {
             break;
           case Bindings.player.spells[3]:
             GameEvent.dispatch.player.spell.useByIndex(3);
+            break;
+          case Bindings.player.interact:
+            GameEvent.dispatch.player.interact();
             break;
           case "i":
             GameEvent.dispatch.inventory.toggle();
