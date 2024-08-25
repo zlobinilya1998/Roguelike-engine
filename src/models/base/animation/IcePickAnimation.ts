@@ -10,7 +10,7 @@ const IcePickIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimation
 export class IcePickAnimation extends CollidableAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(64, 64);
-        super({ position, size });
+        super({ position, size, hitBox: { x: 0, y: 0, width: 64, height: 64 } });
         this.animations.add(IcePickIdleAnimation);
     }
 

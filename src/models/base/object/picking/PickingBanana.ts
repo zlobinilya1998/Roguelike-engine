@@ -10,7 +10,7 @@ export class PickingBanana extends PickingObject {
     constructor() {
         const position = new GameObjectPosition(300, 300);
         const size = new GameObjectSize(32, 32);
-        super({ position, size });
+        super({ position, size, hitBox: {x:0,y:0,width: 32,height:32} });
         this.interactionRadius = InteractionRadius.Inside
     }
 

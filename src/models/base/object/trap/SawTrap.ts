@@ -14,7 +14,7 @@ export class SawTrap extends MovingTrap {
         const size = new GameObjectSize(38, 38);
         const motionRange = new TrapMotionRange(200, 50)
 
-        super({ motionRange, damage, position, size });
+        super({ motionRange, damage, position, size, hitBox: { x: 0, y: 0, width: 38, height: 38 } });
         this.velocity.x = -1;
     }
 

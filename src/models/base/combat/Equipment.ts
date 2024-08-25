@@ -52,6 +52,14 @@ export class Equipment {
   }
 }
 
+export class PlayerEquipment extends Equipment {
+  constructor() {
+    super();
+    this.equipWeapon(weapons[0]) 
+  }
+
+}
+
 export class AggressiveEnemyEquipment extends Equipment {
   constructor() {
     super();

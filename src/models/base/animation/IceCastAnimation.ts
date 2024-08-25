@@ -9,7 +9,12 @@ const IceCastIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimation
 export class IceCastAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(96, 96);
-        super({ position, size });
+        super({ position, size, hitBox: {
+            x: 0,
+            y: 0,
+            width: 96,
+            height: 96,
+        }});
         this.animations.add(IceCastIdleAnimation);
     }
 }

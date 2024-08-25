@@ -10,8 +10,15 @@ const BoxTakeHitAnimation = new GameObjectAnimation({ type: GameObjectAnimationT
 export class Box extends AttackableObject {
     constructor() {
         const props = {
-            position: { x: 200, y: 300 },
-            size: { height: 22, width: 16 }
+            position: { x: 400, y: 355 },
+            size: { height: 22, width: 16 },
+            hitBox: {
+                x: 0,
+                y: 0,
+                width: 20,
+                height: 15,
+            },
+            scale: 2,
         }
         super(props)
         this.animations.addList([BoxIdleAnimation, BoxTakeHitAnimation])

@@ -21,7 +21,12 @@ export class Chest extends GameObject {
   constructor({ title, loot }: ChestProps) {
     const position = new GameObjectPosition(150, 250);
     const size = new GameObjectSize(28, 24);
-    super({ position, size });
+    super({ position, size, hitBox: {
+      x: 0,
+      y: 0,
+      width: 28,
+      height: 24,
+    } });
     this.loot = loot || []
     this.title = title || 'Chest'; 
     this.interactionRadius = InteractionRadius.Near;

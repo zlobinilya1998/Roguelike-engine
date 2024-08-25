@@ -8,7 +8,12 @@ export class TextBubble extends GameAnimation {
         const randomX = GameUtils.number.randomInteger(position.x, position.x + 50)
         const randomY = GameUtils.number.randomInteger(position.y, position.y + 50)
         position = new GameObjectPosition(randomX, randomY)
-        super({ position, size });
+        super({ position, size, hitBox: {
+            x: 0,
+            y: 0,
+            width: 20,
+            height: 20,
+        } });
         this.text = text;
         this.color = color;
     }

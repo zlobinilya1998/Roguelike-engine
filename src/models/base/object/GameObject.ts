@@ -8,14 +8,17 @@ import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } fr
 export type GameObjectProps = {
     position: GameObjectPosition;
     size: GameObjectSize;
+    hitBox: GameObjectGeometry;
+    scale?: number
 }
 
 export class GameObject {
-    constructor({ position, size }: GameObjectProps) {
+    constructor({ position, size, scale, hitBox }: GameObjectProps) {
         this.position = position;
         this.size = size;
-        this.scale = 1;
+        this.scale = scale || 1;
         this.image = new Image();
+        this.hitBoxOffset = hitBox
 
         this.onCreate();
     }
@@ -24,6 +27,13 @@ export class GameObject {
     size: GameObjectSize;
     frames: GameObjectFrames;
     scale: number;
+    hitBox: GameObjectGeometry = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+    };
+    hitBoxOffset: GameObjectGeometry;
     image: HTMLImageElement;
 
     animations = new GameObjectAnimations();
@@ -32,19 +42,25 @@ export class GameObject {
     draw() {
         if (!this.frames) return;
 
-        const oneFrameWidth = this.image.width / this.frames.maxFrames
-        const oneFrameHeight = this.image.height
+        const isHaveRows = this.frames.maxRows > 1
+        const oneFrameWidth = this.image.width / this.frames.maxFrames;
+        const oneFrameHeight = this.image.height / this.frames.maxRows;
+
+        const sourceXOffset = this.frames.currentFrame * oneFrameWidth;
+        const sourceYOffset = isHaveRows ? this.frames.currentRow * oneFrameHeight : 0;
+
+        const destinationHeight = isHaveRows ? oneFrameHeight : this.image.height;
 
         this.game.ctx.drawImage(
             this.image,
-            this.frames.currentFrame * oneFrameWidth,
-            0,
+            sourceXOffset,
+            sourceYOffset,
             oneFrameWidth,
-            oneFrameHeight,
+            destinationHeight,
             this.position.x,
             this.position.y,
             oneFrameWidth * this.scale,
-            oneFrameHeight * this.scale,
+            destinationHeight * this.scale,
         )
     }
 
@@ -57,6 +73,16 @@ export class GameObject {
         this.draw();
         if (this.frames) this.updateFrames();
         this.updateAnimation();
+        this.updateHitBox()
+    }
+
+    updateHitBox() {
+        this.hitBox = {
+            x: this.position.x + this.hitBoxOffset.x,
+            y: this.position.y + this.hitBoxOffset.y,
+            width: this.hitBoxOffset.width,
+            height: this.hitBoxOffset.height,
+        };
     }
 
     removeMe() {
@@ -88,10 +114,10 @@ export class GameObject {
 
     get geometry(): GameObjectGeometry {
         return {
-            x: this.position.x,
-            y: this.position.y,
-            width: this.size.width * this.scale,
-            height: this.size.height * this.scale,
+            x: this.hitBox.x,
+            y: this.hitBox.y,
+            width: this.hitBox.width * this.scale,
+            height: this.hitBox.height * this.scale,
         }
     }
 
