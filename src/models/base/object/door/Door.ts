@@ -20,7 +20,5 @@ export class Door extends InteractableObject {
 
     onInteract(): void {
         super.onInteract();
-        console.log("Door interacted");
-        
     }
 }

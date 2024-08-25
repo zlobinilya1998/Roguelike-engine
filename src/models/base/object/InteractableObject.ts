@@ -10,7 +10,17 @@ export class InteractableObject extends GameObject {
     update(ts: EpochTimeStamp): void {
         super.update(ts);
 
-        if (this.isCanInteract) this.isInteracted = true;
+        if (this.isCanInteract) this.drawInteractionTip();
+    }
+
+    drawInteractionTip() {
+        this.game.ctx.save();
+        this.game.ctx.font = '10px Ugly'
+        this.game.ctx.textAlign = 'center'
+        this.game.ctx.fillStyle = 'black'
+        this.game.ctx.fillText('Press F', this.position.x + this.size.width - 20, this.position.y - 10)
+        this.game.ctx.restore();
+        this.isInteracted = true
     }
 
     async updateAnimation() {

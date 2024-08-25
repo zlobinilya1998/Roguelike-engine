@@ -21,25 +21,25 @@ const parse2D = (collisions: number[]) => {
 
 
 
-class CollisionBlock {
+export class CollisionBlock {
    x: number;
    y: number;
    width: number;
    height: number;
-   constructor(x:number,y:number) {
+   constructor(x:number,y:number, width = 64, height = 64) {
       this.x = x;
       this.y = y;
-      this.width = 64;
-      this.height = 64;
+      this.width = width;
+      this.height = height;
    }
 
    draw() {
-      // window.Game.ctx.fillStyle = 'rgba(255,0,0,0.5)';
-      // window.Game.ctx.fillRect(this.x, this.y, this.width, this.height)
+      window.Game.ctx.fillStyle = 'rgba(255,0,0,0.5)';
+      window.Game.ctx.fillRect(this.x, this.y, this.width, this.height)
    }
 
    update() {
-      
+      this.draw()
    }
 }
 
