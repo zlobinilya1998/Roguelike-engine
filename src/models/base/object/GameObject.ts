@@ -55,6 +55,10 @@ export class GameObject {
     }
 
     removeMe() {
+       this.onRemove();
+    }
+
+    onRemove() {
         this.game.world.gameObject.remove(this);
     }
 

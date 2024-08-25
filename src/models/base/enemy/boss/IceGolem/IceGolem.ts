@@ -13,7 +13,7 @@ export class IceGolem extends Boss {
         const position = new SpritePosition(600, 300)
         const size = new SpriteSize(192, 128);
         const hitBox = new SpriteHitBox(50, 10, 90, 100)
-        super(position, size, hitBox);
+        super("Ice Golem", position, size, hitBox);
         this.animations.addList([IdleAnimation, AttackAnimation, MovingAnimation, TakeDamageAnimation, DeathAnimation]);
     }
 }
