@@ -8,6 +8,7 @@ import { Damage } from "@/core/damage/Damage";
 import { Equipment } from "../combat/Equipment";
 import { CreatureEffects, Effect } from "@/core/effects/Effects";
 import { EnemySpells } from "@/core/spells/EnemySpells";
+import { Spell } from "@/core/spells/Spell";
 
 export class Enemy extends Creature {
     constructor(position: SpritePosition, size: SpriteSize, hitBox: SpriteGeometry) {
@@ -43,6 +44,11 @@ export class Enemy extends Creature {
 
         GameEvent.subscribe(Events.creature.effect.apply, this, (effect: Effect) => {
             this.effects.applyEffect(effect)
+        });
+
+        GameEvent.subscribe(Events.creature.spell.damage.take, this, ({spell,creature}: {spell: Spell,creature: Creature}) => {
+            if (!this.itsMe(creature)) return;
+            this.health.takeDamage(spell.damage.damageCount)
         });
 
     }

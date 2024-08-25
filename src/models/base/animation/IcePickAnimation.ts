@@ -1,12 +1,13 @@
 import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
-import { GameAnimation } from "./GameAnimation";
+import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
+import { CollidableAnimation } from "./CollidableAnimation";
 
 import IceCast from 'assets/Animation/IcePick.png';
-import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
+import { IceCastAnimation } from "./IceCastAnimation";
 
 const IcePickIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle,IceCast, 30, 2);
 
-export class IcePickAnimation extends GameAnimation {
+export class IcePickAnimation extends CollidableAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(64,64);
         super(position, size);
@@ -16,5 +17,10 @@ export class IcePickAnimation extends GameAnimation {
     update(ts: EpochTimeStamp): void {
         super.update(ts)
         this.position.x += 12
+    }
+
+    onAnimationEnd(): void {
+        super.onAnimationEnd();     
+        new IceCastAnimation(this.position);
     }
 }

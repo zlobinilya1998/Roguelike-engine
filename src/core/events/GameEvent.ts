@@ -93,6 +93,12 @@ export class GameEvent {
       effect: {
         apply: (effect: Effect, creature: Creature) => createEvent(Events.player.effect.apply, effect)
       },
+      spell: {
+        damage: {
+          land: (spell: Spell, creature: Creature) => createEvent(Events.creature.spell.damage.land, { spell, creature }),
+          take: (spell: Spell, creature: Creature) => createEvent(Events.creature.spell.damage.take, { spell, creature }),
+        }
+      },
     },
     inventory: {
       open: () => createEvent(Events.inventory.open),

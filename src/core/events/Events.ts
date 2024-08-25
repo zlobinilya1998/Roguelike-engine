@@ -45,7 +45,13 @@ export class Events {
         },
         status: {
             dead: 'creature:status:dead',
-        }
+        },
+        spell: {
+            damage: {
+                land: 'creature:spell:damage:land',
+                take: 'creature:spell:damage:take',
+            },
+        },
     }
     static inventory = {
         open: 'inventory:open',

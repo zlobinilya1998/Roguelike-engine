@@ -1,17 +1,22 @@
 import FrostShock from 'assets/Spell/frost.jpg';
+import IcePick from 'assets/Spell/ice_pick.jpg';
+import { Damage } from '../damage/Damage';
 
 export enum SpellId {
     FrostShock = 1,
+    IcePick,
 }
 
 export const SpellImage = {
     [SpellId.FrostShock]: FrostShock,
+    [SpellId.IcePick]: IcePick,
 }
 
 export type SpellProps = {
     onUse: () => void,
     baseCd: number,
-    id: SpellId
+    id: SpellId,
+    damage: Damage,
 }
 
 export class Spell {
@@ -20,11 +25,13 @@ export class Spell {
     onUse: () => void;
     id: SpellId;
     icon: string;
-    constructor({ baseCd, onUse, id }: SpellProps) {
+    damage: Damage;
+    constructor({ baseCd, onUse, id, damage }: SpellProps) {
         this.baseCd = baseCd;
         this.onUse = onUse;
         this.id = id;
         this.icon = SpellImage[id];
+        this.damage = damage;
     }
 
     get isCanUse() {

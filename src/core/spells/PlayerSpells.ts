@@ -5,6 +5,7 @@ import { GameEvent } from "@/core/events/GameEvent";
 import { IceCastAnimation } from "@/models/base/animation/IceCastAnimation";
 import { IcePickAnimation } from "@/models/base/animation/IcePickAnimation";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
+import { DamageType } from "../damage/Damage";
 
 export class PlayerSpells extends Spells {
     constructor(player: Player) {
@@ -14,7 +15,7 @@ export class PlayerSpells extends Spells {
             new Spell({
                 onUse: () => {
                     new IceCastAnimation(this.creature.position)
-                }, baseCd: 10, id: SpellId.FrostShock
+                }, baseCd: 10, id: SpellId.FrostShock, damage: { damageCount: 50, damageType: DamageType.Fire }
             }),
             new Spell({
                 onUse: () => {
@@ -22,7 +23,7 @@ export class PlayerSpells extends Spells {
                         x: this.creature.position.x,
                         y: this.creature.position.y,
                     })
-                }, baseCd: 10, id: SpellId.FrostShock
+                }, baseCd: 10, id: SpellId.IcePick, damage: { damageCount: 50, damageType: DamageType.Fire }
             })
         ]
     }
