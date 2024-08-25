@@ -112,8 +112,6 @@ export class GameObject {
     }
 
     updateFrames() {
-        console.log(this.frames);
-
         if (!this.frames.active) return;
         this.frames.elapsed++;
         if (this.frames.elapsed % this.frames.hold === 0) {

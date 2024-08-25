@@ -3,6 +3,8 @@ import { Spell, SpellId } from "@/core/spells/Spell";
 import { Player } from "@/models/base/player/Player";
 import { GameEvent } from "@/core/events/GameEvent";
 import { IceCastAnimation } from "@/models/base/animation/IceCastAnimation";
+import { IcePickAnimation } from "@/models/base/animation/IcePickAnimation";
+import { SpriteAnimationType } from "@/models/types/base/sprite";
 
 export class PlayerSpells extends Spells {
     constructor(player: Player) {
@@ -13,6 +15,14 @@ export class PlayerSpells extends Spells {
                 onUse: () => {
                     new IceCastAnimation(this.creature.position)
                 }, baseCd: 10, id: SpellId.FrostShock
+            }),
+            new Spell({
+                onUse: () => {
+                    new IcePickAnimation({
+                        x: this.creature.position.x,
+                        y: this.creature.position.y,
+                    })
+                }, baseCd: 10, id: SpellId.FrostShock
             })
         ]
     }
@@ -20,6 +30,7 @@ export class PlayerSpells extends Spells {
     onSpellUse(spell: Spell): void {
         super.onSpellUse(spell);
         GameEvent.dispatch.player.spell.use(spell);
+        this.creature.animation.play(SpriteAnimationType.CastSpell, true, true)
     }
 
     onUpdateSpellsCd(): void {

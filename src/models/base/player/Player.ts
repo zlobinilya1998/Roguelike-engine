@@ -22,7 +22,7 @@ const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, PlayerIm
 const AttackAnimation1 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 3, 8, 0, 6, 5, true, 0)
 const AttackAnimation2 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 4, 8, 0, 6, 5, true, 0)
 const AttackAnimation3 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 5, 8, 0, 6, 5, true, 0)
-const AttackAnimation4 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 6, 8, 0, 6, 5, true, 0)
+const CastSpellAnimation = new SpriteAnimation(SpriteAnimationType.CastSpell, PlayerImage, 6, 8, 0, 6, 5, true, 0)
 
 export class Player extends Sprite {
   constructor() {
@@ -31,7 +31,15 @@ export class Player extends Sprite {
     const scale = 0.5;
     const hitBox = new SpriteHitBox(30, 25, 30, 40);
     super(position, size, scale, hitBox);
-    this.animations.addList([IdleAnimation, MovingAnimation, AttackAnimation,AttackAnimation1,AttackAnimation2,AttackAnimation3,AttackAnimation4]);
+    this.animations.addList([
+      IdleAnimation, 
+      MovingAnimation, 
+      AttackAnimation,
+      AttackAnimation1,
+      AttackAnimation2,
+      AttackAnimation3,
+      CastSpellAnimation
+    ]);
   }
   inventory = new Inventory();
   equipment = new Equipment();

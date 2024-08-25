@@ -15,10 +15,6 @@ export class Skills extends UIComponent {
         GameEvent.subscribe(Events.hud.update.player.skills, this, () => {
             this.draw();
         })
-
-        setTimeout(() => {
-            this.draw()
-        }, 100)
     }
 
     get game(): typeof Game {
