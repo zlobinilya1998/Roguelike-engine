@@ -10,7 +10,7 @@ const BoxTakeHitAnimation = new GameObjectAnimation({ type: GameObjectAnimationT
 export class Box extends AttackableObject {
     constructor() {
         const props = {
-            position: { x: 400, y: 355 },
+            position: { x: 300, y: 355 },
             size: { height: 22, width: 16 },
             hitBox: {
                 x: 0,

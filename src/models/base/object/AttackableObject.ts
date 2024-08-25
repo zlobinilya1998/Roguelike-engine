@@ -1,19 +1,29 @@
 import { GameEvent } from "@/core/events/GameEvent";
-import { GameObject, GameObjectProps } from "./GameObject";
+import { GameObjectProps } from "./GameObject";
 import { Events } from "@/core/events/Events";
 import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
-import { InteractionRadius } from "../geometry/Geometry";
+import { InteractionRadius } from "models/base/geometry/Geometry";
+import { MovingObject } from "./MovingObject";
+import { ExplosionAnimation } from "../animation/ExplosionAnimation";
 
+export interface AttackableObjectProps extends GameObjectProps {
+    durability?: number
+}
 
-export class AttackableObject extends GameObject {
-    constructor(props: GameObjectProps) {
-        super(props)
+export class AttackableObject extends MovingObject {
+    durability: number;
+    constructor(props: AttackableObjectProps) {
+        super(props);
+        this.durability = props.durability || 2;
         this.interactionRadius = InteractionRadius.Large
     }
     async onTakeHit() {
         if (!this.isCanInteract) return;
+        this.durability -= 1;
         await this.animation.play(GameObjectAnimationType.TakeHit, true);
-        this.removeMe();
+        if (this.durability <= 0) {
+            return this.removeMe()
+        };
     }
 
     applyListeners(): void {
