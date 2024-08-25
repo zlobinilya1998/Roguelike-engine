@@ -15,7 +15,6 @@ export class GameObjectSize {
     }
 }
 
-
 export class GameObjectFrames {
     active: boolean = true;
     current: number = 0;

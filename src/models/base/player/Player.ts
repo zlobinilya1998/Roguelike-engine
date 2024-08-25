@@ -16,13 +16,13 @@ import { Spell } from "@/core/spells/Spell";
 
 import PlayerImage from 'assets/Player/Player.png';
 
-const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
-const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
-const AttackAnimation = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 2, 8, 0, 6, 5, true, 0)
-const AttackAnimation1 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 3, 8, 0, 6, 5, true, 0)
-const AttackAnimation2 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 4, 8, 0, 6, 5, true, 0)
-const AttackAnimation3 = new SpriteAnimation(SpriteAnimationType.Attack, PlayerImage, 5, 8, 0, 6, 5, true, 0)
-const CastSpellAnimation = new SpriteAnimation(SpriteAnimationType.CastSpell, PlayerImage, 6, 8, 0, 6, 5, true, 0)
+const IdleAnimation = new SpriteAnimation({ type: SpriteAnimationType.Idle, imageSrc: PlayerImage, currentRow: 0, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 10 })
+const MovingAnimation = new SpriteAnimation({ type: SpriteAnimationType.Moving, imageSrc: PlayerImage, currentRow: 1, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
+const AttackAnimation = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 2, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
+const AttackAnimation1 = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 3, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
+const AttackAnimation2 = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 4, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
+const AttackAnimation3 = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 5, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
+const CastSpellAnimation = new SpriteAnimation({ type: SpriteAnimationType.CastSpell, imageSrc: PlayerImage, currentRow: 6, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
 
 export class Player extends Sprite {
   constructor() {
@@ -30,10 +30,10 @@ export class Player extends Sprite {
     const size = new SpriteSize(192, 192);
     const scale = 0.5;
     const hitBox = new SpriteHitBox(30, 25, 30, 40);
-    super({position, size, scale, hitBox});
+    super({ position, size, scale, hitBox });
     this.animations.addList([
-      IdleAnimation, 
-      MovingAnimation, 
+      IdleAnimation,
+      MovingAnimation,
       AttackAnimation,
       AttackAnimation1,
       AttackAnimation2,
@@ -97,7 +97,7 @@ export class Player extends Sprite {
     super.update();
   }
 
-  onDeath(){
+  onDeath() {
     this.effects.clearQueue();
   }
 

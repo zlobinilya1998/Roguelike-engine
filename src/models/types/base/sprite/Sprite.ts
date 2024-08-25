@@ -43,9 +43,21 @@ export class SpriteVelocity {
     }
 }
 
+
+
 export class SpriteFrame {
     max: number = 1;
     hold: number = 1;
+}
+
+export interface SpriteFramesProps {
+    currentRow: number,
+    maxRows: number,
+    currentFrame: number,
+    maxFrames: number,
+    hold: number,
+    active?: boolean,
+    slice?: number,
 }
 
 export class SpriteFrames {
@@ -57,22 +69,14 @@ export class SpriteFrames {
     currentRow: number = 0;
     rows = 1;
     slice = 0;
-    constructor(
-        currentRow = 0,
-        rows: number = 1,
-        current: number = 0,
-        max: number,
-        hold: number,
-        active: boolean = true,
-        slice: number = 0
-    ) {
-        this.currentRow = currentRow
-        this.rows = rows;
-        this.current = current;
-        this.max = max;
+    constructor({ currentRow, maxRows, currentFrame, maxFrames, hold, active, slice }: SpriteFramesProps) {
+        this.currentRow = currentRow || 0
+        this.rows = maxRows || 1;
+        this.current = currentFrame || 0;
+        this.max = maxFrames;
         this.hold = hold
-        this.active = active
-        this.slice = slice
+        this.active = active || true
+        this.slice = slice || 0
     }
 }
 

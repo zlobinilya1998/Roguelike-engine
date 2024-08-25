@@ -1,5 +1,5 @@
 import { GameUtils } from "@/utils";
-import { SpriteFrames } from "models/types/base/sprite/Sprite";
+import { SpriteFrames, SpriteFramesProps } from "models/types/base/sprite/Sprite";
 
 export enum SpriteAnimationType {
     Idle = 1,
@@ -10,25 +10,19 @@ export enum SpriteAnimationType {
     CastSpell,
 }
 
+export interface SpriteAnimationProps extends SpriteFramesProps {
+    type: SpriteAnimationType,
+    imageSrc: string,
+}
+
 export class SpriteAnimation extends SpriteFrames {
     imageSrc: string
     type: SpriteAnimationType
-    constructor(
-        type: SpriteAnimationType,
-        imageSrc: string,
-        currentRow: number,
-        rows: number,
-        current: number,
-        max: number,
-        hold: number,
-        active: boolean,
-        slice: number
-    ) {
-        super(currentRow, rows, current, max, hold, active, slice)
-        this.type = type;
-        this.imageSrc = imageSrc
+    constructor(props: SpriteAnimationProps) {
+        super(props)
+        this.type = props.type;
+        this.imageSrc = props.imageSrc
     }
-
 
     get isComplete() {
         return (this.max - 1) - this.slice === this.current;
