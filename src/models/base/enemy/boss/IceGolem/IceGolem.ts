@@ -1,5 +1,5 @@
 import { SpritePosition, SpriteSize, SpriteHitBox, SpriteAnimation, SpriteAnimationType } from "@/models/types/base/sprite";
-import { Boss } from "../Boss";
+import { Boss } from "models/base/enemy/boss/Boss";
 import IceGolemImage from 'assets/Enemy/Boss/IceGolem/IceGolem.png';
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, IceGolemImage, 0, 5, 0, 16, 8, true, 10);
@@ -13,7 +13,8 @@ export class IceGolem extends Boss {
         const position = new SpritePosition(600, 300)
         const size = new SpriteSize(192, 128);
         const hitBox = new SpriteHitBox(50, 10, 90, 100)
-        super("Ice Golem", position, size, hitBox);
+        const title = "Ice Golem";
+        super({ title, position, size, hitBox });
         this.animations.addList([IdleAnimation, AttackAnimation, MovingAnimation, TakeDamageAnimation, DeathAnimation]);
     }
 }

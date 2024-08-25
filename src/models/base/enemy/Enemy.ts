@@ -11,9 +11,6 @@ import { EnemySpells } from "@/core/spells/EnemySpells";
 import { Spell } from "@/core/spells/Spell";
 
 export class Enemy extends Creature {
-    constructor(position: SpritePosition, size: SpriteSize, hitBox: SpriteGeometry) {
-        super(position, size, 1, hitBox);
-    }
     equipment = new Equipment();
     effects = new CreatureEffects(this);
     spells = new EnemySpells(this)

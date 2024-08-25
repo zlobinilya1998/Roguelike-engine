@@ -15,7 +15,7 @@ export class TorchGoblin extends AggressiveEnemy {
         const position = new SpritePosition(500, 300)
         const size = new SpriteSize(192, 192);
         const hitBox = new SpriteHitBox(50, 50, 80, 80)
-        super(position, size, hitBox);
+        super({position, size, hitBox});
         this.animations.addList([IdleAnimation, AttackAnimation,AttackAnimation1, MovingAnimation, CastSpellAnimation]);
     }
 

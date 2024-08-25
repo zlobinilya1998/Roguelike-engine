@@ -7,10 +7,10 @@ import { GameEvent } from "@/core/events/GameEvent";
 import { EffectList } from "@/core/effects/EffectList";
 
 export class PickingBanana extends PickingObject {
-    constructor(){
-        const position = new GameObjectPosition(300,300);
-        const size = new GameObjectSize(32,32);
-        super(position,size);
+    constructor() {
+        const position = new GameObjectPosition(300, 300);
+        const size = new GameObjectSize(32, 32);
+        super({ position, size });
         this.interactionRadius = InteractionRadius.Inside
     }
 

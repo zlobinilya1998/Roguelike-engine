@@ -3,18 +3,25 @@ import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocit
 import { Game } from '@/index';
 import { Player } from '@/models/base/player/Player';
 
+export interface SpriteProps {
+  position: SpritePosition;
+  size: SpriteSize;
+  scale?: number;
+  hitBox: SpriteGeometry;
+}
+
 export class Sprite {
-  constructor(position: SpritePosition, size: SpriteSize, scale = 1, hitBoxOffset: SpriteGeometry) {
+  constructor({ position, size, scale, hitBox }: SpriteProps) {
     this.position = position;
     this.size = size;
     this.sizes = new SpriteSizes(this);
     this.image = new Image();
-    this.scale = scale;
+    this.scale = scale || 1;
     this.velocity = new SpriteVelocity(0, 1)
     this.gravity = 1;
-    this.hitBoxOffset = hitBoxOffset
+    this.hitBoxOffset = hitBox
 
-    this.applyListeners();
+    this.onCreated();
   }
   position: SpritePosition;
   size: SpriteSize;
@@ -56,6 +63,14 @@ export class Sprite {
       moves: this.velocity.x !== 0,
       falling: this.velocity.y > 1,
     }
+  }
+
+  onCreated() {
+    this.applyListeners();
+  }
+
+  onDestroy() {
+
   }
 
   draw() {
@@ -236,7 +251,7 @@ export class Sprite {
   applyListeners() { }
 
   removeListeners() {
-    
+
   }
 }
 

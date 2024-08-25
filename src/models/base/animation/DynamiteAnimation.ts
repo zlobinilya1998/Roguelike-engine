@@ -6,12 +6,12 @@ import { GameAnimation } from "./GameAnimation";
 import { GameObjectAnimation, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 
 import Dynamite from 'assets/Animation/Dynamite.png';
-const DynamiteIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle,Dynamite, 6, 5, true)
+const DynamiteIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle, Dynamite, 6, 5, true)
 
 export class DynamiteAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(64, 64);
-        super(position, size);
+        super({ position, size });
         this.animations.add(DynamiteIdleAnimation)
     }
 

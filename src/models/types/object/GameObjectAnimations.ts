@@ -4,6 +4,7 @@ export enum GameObjectAnimationType {
     Idle = 1,
     Interactable,
     LeaveInteractable,
+    TakeHit,
 }
 
 export class GameObjectAnimation extends GameObjectFrames {

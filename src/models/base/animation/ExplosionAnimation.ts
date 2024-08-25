@@ -4,12 +4,12 @@ import { GameAnimation } from "./GameAnimation";
 
 import Explosion from 'assets/Animation/Explosions.png';
 
-const ExplosionIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle,Explosion, 9);
+const ExplosionIdleAnimation = new GameObjectAnimation(GameObjectAnimationType.Idle, Explosion, 9);
 
 export class ExplosionAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(192, 192);
-        super(position, size);
+        super({ position, size });
         this.animations.add(ExplosionIdleAnimation);
     }
 }

@@ -1,9 +1,8 @@
-import { GameObject } from "@/models/base/object/GameObject";
-import { GameObjectSize, GameObjectPosition } from "@/models/types/object/GameObject";
+import { GameObject, GameObjectProps } from "@/models/base/object/GameObject";
 
 export class GameAnimation extends GameObject {
-    constructor(position: GameObjectPosition, size: GameObjectSize) {
-        super(position, size);
+    constructor(props: GameObjectProps) {
+        super(props);
         this.game.world.animation.spawn(this);
     }
 

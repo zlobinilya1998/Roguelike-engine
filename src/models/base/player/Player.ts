@@ -8,13 +8,13 @@ import { Effect, PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import { TextBubble } from "@/models/base/animation/TextBubble";
 import { GameEvent } from "@/core/events/GameEvent";
-
-import PlayerImage from 'assets/Player/Player.png';
 import { Events } from "@/core/events/Events";
 import { Ailments } from "./Ailments";
-import { Spells } from "@/core/spells/Spells";
 import { PlayerSpells } from "@/core/spells/PlayerSpells";
 import { Spell } from "@/core/spells/Spell";
+
+
+import PlayerImage from 'assets/Player/Player.png';
 
 const IdleAnimation = new SpriteAnimation(SpriteAnimationType.Idle, PlayerImage, 0, 8, 0, 6, 10, true, 0)
 const MovingAnimation = new SpriteAnimation(SpriteAnimationType.Moving, PlayerImage, 1, 8, 0, 6, 5, true, 0)
@@ -30,7 +30,7 @@ export class Player extends Sprite {
     const size = new SpriteSize(192, 192);
     const scale = 0.5;
     const hitBox = new SpriteHitBox(30, 25, 30, 40);
-    super(position, size, scale, hitBox);
+    super({position, size, scale, hitBox});
     this.animations.addList([
       IdleAnimation, 
       MovingAnimation, 

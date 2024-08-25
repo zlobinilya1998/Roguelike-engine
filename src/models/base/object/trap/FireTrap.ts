@@ -11,7 +11,7 @@ export class FireTrap extends Trap {
         const damage = new Damage(1, DamageType.Fire);
         const position = new GameObjectPosition(200, 200)
         const size = new GameObjectSize(16, 32);
-        super(damage, position, size);
+        super({ damage, position, size });
     }
 
     onHit(ts: EpochTimeStamp): void {

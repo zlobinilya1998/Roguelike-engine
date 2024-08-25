@@ -1,13 +1,17 @@
 import { Damage } from "@/core/damage/Damage";
 import { Trap } from "./Trap";
-import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 import { TrapMotion, TrapMotionRange } from "@/models/types/object/trap/MovingTrap";
+import { GameObjectProps } from "../GameObject";
 
+export interface MovingTrapProps extends GameObjectProps {
+    motionRange: TrapMotionRange;
+    damage: Damage;
+}
 
 export class MovingTrap extends Trap {
-    constructor(motionRange: TrapMotionRange ,damage: Damage, position: GameObjectPosition, size: GameObjectSize) {
-        super(damage, position, size);
-        this.motion.setup(motionRange);
+    constructor(props: MovingTrapProps) {
+        super(props);
+        this.motion.setup(props.motionRange);
     }
 
     velocity = {

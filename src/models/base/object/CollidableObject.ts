@@ -1,7 +1,6 @@
 import { GameUtils } from "@/utils";
-import { GameObject } from "./GameObject";
+import { GameObject, GameObjectProps } from "./GameObject";
 import { CollisionBlock } from "../levels/collisions";
-import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
 
 
 export class CollidableObject extends GameObject {
@@ -9,8 +8,8 @@ export class CollidableObject extends GameObject {
         return GameUtils.gameObject.isCollide(this.player.geometry, this.geometry)
     }
 
-    constructor(position: GameObjectPosition, size: GameObjectSize) {
-        super(position, size);
+    constructor(props: GameObjectProps) {
+        super(props);
         const collisionBlock = new CollisionBlock(this.geometry.x,this.geometry.y, this.size.width,this.size.height);
     }
 

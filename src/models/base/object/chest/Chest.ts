@@ -8,17 +8,22 @@ import { InteractionRadius } from "@/models/base/geometry/Geometry";
 export type ChestItem = Item;
 export type ChestLoot = Item[];
 
+export interface ChestProps {
+  title: string;
+  loot: ChestLoot;
+}
+
 export class Chest extends GameObject {
   loot: ChestLoot;
   isOpen: boolean = false;
   title: string;
 
-  constructor(title: string = 'Chest', loot: ChestLoot = []) {
+  constructor({ title, loot }: ChestProps) {
     const position = new GameObjectPosition(150, 250);
     const size = new GameObjectSize(28, 24);
-    super(position, size);
-    this.loot = loot
-    this.title = title;
+    super({ position, size });
+    this.loot = loot || []
+    this.title = title || 'Chest'; 
     this.interactionRadius = InteractionRadius.Near;
   }
 

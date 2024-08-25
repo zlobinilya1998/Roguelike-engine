@@ -5,14 +5,19 @@ import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { Game } from "@/index";
 import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 
+export type GameObjectProps = {
+    position: GameObjectPosition;
+    size: GameObjectSize;
+}
+
 export class GameObject {
-    constructor(position: GameObjectPosition, size: GameObjectSize) {
+    constructor({position,size}: GameObjectProps) {
         this.position = position;
         this.size = size;
         this.scale = 1;
         this.image = new Image();
 
-        this.applyListeners();
+        this.onCreate();
     }
 
     position: GameObjectPosition;
@@ -55,11 +60,16 @@ export class GameObject {
     }
 
     removeMe() {
-       this.onRemove();
+        this.onRemove();
+        this.game.world.gameObject.remove(this);
+    }
+
+    onCreate() {
+        this.applyListeners();
     }
 
     onRemove() {
-        this.game.world.gameObject.remove(this);
+
     }
 
 

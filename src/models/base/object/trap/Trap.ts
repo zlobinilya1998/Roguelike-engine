@@ -1,17 +1,20 @@
 import { Damage } from "@/core/damage/Damage";
-import { GameObject } from "@/models/base/object/GameObject";
-import { GameObjectPosition, GameObjectSize } from "@/models/types/object/GameObject";
+import { GameObject, GameObjectProps } from "@/models/base/object/GameObject";
 import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { GameEvent } from "@/core/events/GameEvent";
+
+export interface TrapProps extends GameObjectProps {
+    damage: Damage;
+}
 
 export class Trap extends GameObject {
     damage: Damage;
     attackRate = 10;
     lastAttack: number = null;
 
-    constructor(damage: Damage, position: GameObjectPosition, size: GameObjectSize) {
-        super(position, size)
-        this.damage = damage;
+    constructor(props: TrapProps) {
+        super(props)
+        this.damage = props.damage;
         this.interactionRadius = -InteractionRadius.Near;
     }
 
@@ -32,6 +35,6 @@ export class Trap extends GameObject {
         this.onHit(ts);
     }
 
-    
+
 }
 

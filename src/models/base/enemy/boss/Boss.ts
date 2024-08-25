@@ -1,11 +1,15 @@
-import { SpriteGeometry, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
-import { AggressiveEnemy } from "../AggressiveEnemy";
+import { AggressiveEnemy } from "models/base/enemy/AggressiveEnemy";
+import { SpriteProps } from "@/models/base/sprite/Sprite";
+
+export interface BossProps extends SpriteProps {
+    title: string;
+}
 
 export class Boss extends AggressiveEnemy {
     title: string;
-    constructor(title: string, position: SpritePosition, size: SpriteSize, hitBox: SpriteGeometry) {
-        super(position, size, hitBox)
-        this.title = title;
+    constructor(props: BossProps) {
+        super(props)
+        this.title = props.title;
     }
 
     draw(): void {

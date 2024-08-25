@@ -13,7 +13,7 @@ export class Door extends InteractableObject {
     constructor() {
         const position = new GameObjectPosition(300, 330);
         const size = new GameObjectSize(46, 56);
-        super(position, size);
+        super({ position, size });
 
         this.animations.addList([DoorIdleAnimation, DoorOpeningAnimation, DoorClosingAnimation])
     }
