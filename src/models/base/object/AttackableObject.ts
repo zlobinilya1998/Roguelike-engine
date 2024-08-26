@@ -4,7 +4,6 @@ import { Events } from "@/core/events/Events";
 import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 import { InteractionRadius } from "models/base/geometry/Geometry";
 import { MovingObject } from "./MovingObject";
-import { ExplosionAnimation } from "../animation/ExplosionAnimation";
 
 export interface AttackableObjectProps extends GameObjectProps {
     durability?: number
@@ -21,9 +20,11 @@ export class AttackableObject extends MovingObject {
         if (!this.isCanInteract) return;
         this.durability -= 1;
         await this.animation.play(GameObjectAnimationType.TakeHit, true);
-        if (this.durability <= 0) {
-            return this.removeMe()
-        };
+        if (this.durability <= 0) this.onDurabilityLoss();
+    }
+
+    onDurabilityLoss(){
+        this.removeMe();
     }
 
     applyListeners(): void {
