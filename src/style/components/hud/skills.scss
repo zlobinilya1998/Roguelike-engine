@@ -18,29 +18,26 @@
     transition: .3s;
     box-shadow: 0 0 2px 0px black;
     opacity: 0.5;
-}
-
-.player-skill-usable {
-    opacity: 1;
-    .player-skill-hotkey {
-        box-shadow: 1px 1px 1px 1px greenyellow;
+    &-usable {
+        opacity: 1;
+        .player-skill-hotkey {
+            box-shadow: 1px 1px 1px 1px greenyellow;
+        }
     }
-}
-
-.player-skill-icon {
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.player-skill-hotkey {
-    background-color: white;
-    border-radius: 5px;
-    padding: 5px;
-    color: black;
-    box-shadow: 1px 1px 1px 1px currentColor;
-    transition: .3s;
-    position: absolute;
-    top: 50px;
-    font-size: 1.3rem;
+    &-icon {
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    &-hotkey {
+        background-color: white;
+        border-radius: 5px;
+        padding: 5px;
+        color: black;
+        box-shadow: 1px 1px 1px 1px currentColor;
+        transition: .3s;
+        position: absolute;
+        top: 50px;
+        font-size: 1.3rem;
+    }
 }
 

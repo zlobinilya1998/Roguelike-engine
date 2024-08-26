@@ -3,38 +3,35 @@
     border-radius: 5px;
     background-color: #50300E;
     box-shadow: 1px 1px 1px 1px black;
-}
-.player-inventory-items {
-    background-color: #D19A68;
-    padding: 10px;
-    display: grid;
-    border-radius: 5px;
-    grid-template-columns: repeat(6,1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 5px;
-}
-.player-inventory-item {
-    border-radius: 5px;
-    background-color: #9F7F53;
-    height: 32px;
-    display: flex;
-    width: 32px;
-    cursor: pointer;
-    box-shadow: -1px -1px 1px 1px #827142;
-    transition: .3s;
-    &:hover {
-        background-color: #87643A;
-    }
-
-    img {
-        margin: auto;
-        max-width: 100%;
+    &-items {
+        background-color: #D19A68;
+        padding: 10px;
+        display: grid;
         border-radius: 5px;
+        grid-template-columns: repeat(6,1fr);
+        grid-template-rows: repeat(6, 1fr);
+        gap: 5px;
+    }
+    &-item {
+        border-radius: 5px;
+        background-color: #9F7F53;
+        height: 32px;
+        display: flex;
+        width: 32px;
+        cursor: pointer;
+        box-shadow: -1px -1px 1px 1px #827142;
+        transition: .3s;
+        &:hover {
+            background-color: #87643A;
+        }
+    
+        img {
+            margin: auto;
+            max-width: 100%;
+            border-radius: 5px;
+        }
     }
 }
-
-
-
 
 #inventoryToggle {
     position: absolute;

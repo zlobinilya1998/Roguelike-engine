@@ -2,13 +2,13 @@ import './style/index.css';
 import './style/variables/variables.scss';
 import './style/components/components.scss'
 
-import { GameEvent } from "core/events/GameEvent";
+import { GameEvent } from "@/core/events/GameEvent";
 import { Player } from "@/models/base/player/Player";
 
-import { UI } from './game/UI/UI';
-import { World } from './game/World/World';
-import { HUD } from './game/HUD/HUD';
-import { Scene } from './game/Scene/Scene';
+import { UI } from '@/game/UI/UI';
+import { World } from '@/game/World/World';
+import { HUD } from '@/game/HUD/HUD';
+import { Scene } from '@/game/Scene/Scene';
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");

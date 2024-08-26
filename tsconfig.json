@@ -1,34 +1,34 @@
 {
     "include": [
-        "src/**/*",
-        "src/custom.d.ts"
+        "./src/**/*",
+        "./src/custom.d.ts"
     ],
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
             "@/*": [
-                "src/*"
+                "./src/*"
             ],
             "assets/*": [
-                "src/assets/*"
+                "./src/assets/*"
             ],
             "models/*": [
-                "src/models/*"
+                "./src/models/*"
             ],
             "game/*": [
-                "src/models/game/*"
+                "./src/models/game/*"
             ],
             "event/*": [
-                "src/core/events/*"
+                "./src/core/events/*"
             ],
             "components/*": [
-                "src/components/*"
+                "./src/components/*"
             ],
             "utils/*": [
-                "src/utils/*"
+                "./src/utils/*"
             ],
             "core/*": [
-                "src/core/*",
+                "./src/core/*",
             ],
         },
         "outDir": "./dist/",
