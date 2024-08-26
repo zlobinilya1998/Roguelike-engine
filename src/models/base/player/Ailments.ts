@@ -39,6 +39,9 @@ export class Ailments {
         const attackBlockers = [this.list[AilmentType.Stunned], this.list[AilmentType.Disarmed]]
         return attackBlockers.every(ailment => !ailment)
     }
+    get canMove() {
+        return !this.list[AilmentType.Rooted];
+    }
 
     applyAilment(ailmentType: AilmentType, expirationTime = 5000){
         this.list[ailmentType] = true;

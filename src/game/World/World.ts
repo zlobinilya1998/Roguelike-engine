@@ -6,6 +6,7 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 import { TorchGoblin } from "@/models/base/enemy/goblin/Goblin";
 import collisionBlocks from "@/models/base/levels/collisions";
 import { Box } from "@/models/base/object/box/Box";
+import { ExplosiveBox } from "@/models/base/object/box/ExplosiveBox";
 import { Door } from "@/models/base/object/door/Door";
 import { GameObject } from "@/models/base/object/GameObject";
 
@@ -17,7 +18,7 @@ export class World {
     }
     collisions = collisionBlocks;
     gameObject = {
-      list: [new Door(), new Box()] as GameObject[],
+      list: [new Door(), new ExplosiveBox()] as GameObject[],
       remove: (gameObject: GameObject) => {
         const list = this.gameObject.list
         const index = list.indexOf(gameObject);
@@ -26,7 +27,7 @@ export class World {
       }
     }
     creature = {
-      list: [new IceGolem(), new TorchGoblin()] as Enemy[],
+      list: [] as Enemy[],
       remove: (creature: Enemy) => {
         const list = this.creature.list
         const index = list.indexOf(creature);

@@ -34,24 +34,27 @@ export class DamageSystem {
   }
 }
 
+export interface DamageProps {
+  damageCount: DamageCount;
+  damageType: DamageType;
+}
+
 export class Damage {
   damageCount: DamageCount;
   damageType: DamageType;
-  constructor(damageCount: DamageCount, damageType: DamageType) {
+  constructor({damageCount,damageType}: DamageProps) {
     this.damageCount = damageCount;
     this.damageType = damageType;
   }
 }
 
-
-
 export class PhysicDamage extends Damage {
   constructor(damageCount: DamageCount) {
-    super(damageCount, DamageType.Physic)
+    super({damageCount, damageType: DamageType.Physic})
   }
 }
 export class MagicDamage extends Damage {
   constructor(damageCount: DamageCount) {
-    super(damageCount, DamageType.Magic)
+    super({damageCount, damageType: DamageType.Magic})
   }
 }

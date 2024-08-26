@@ -10,13 +10,13 @@ const banana = new Effect("Banana", EffectIcons.Heal, 'You heal some health ever
 
 const fireTrap = new Effect("Burning", EffectIcons.Fire, 'You take 1 fire damage every second', EffectType.Negative, () => {
     const player: Player = window.Game.player;
-    const damage = new Damage(1, DamageType.Fire);
+    const damage = new Damage({damageCount:1, damageType: DamageType.Fire});
     player.damage.take(damage);
 })
 
 const sawTrapBleed = new Effect("Bleeding", EffectIcons.Bleed, 'You take 1 physical damage every second', EffectType.Negative, () => {
     const player: Player = window.Game.player;
-    const damage = new Damage(1, DamageType.Physic);
+    const damage = new Damage({damageCount:1, damageType: DamageType.Physic});
     player.damage.take(damage);
 })
 

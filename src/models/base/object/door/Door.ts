@@ -4,6 +4,8 @@ import { InteractableObject } from "models/base/object/InteractableObject";
 import DoorIdle from 'assets/gameObject/Door/Idle.png';
 import DoorOpening from 'assets/gameObject/Door/Opening.png';
 import DoorClosing from 'assets/gameObject/Door/Closing.png';
+import { AilmentType } from "../../player/Ailments";
+import { GameEvent } from "@/core/events/GameEvent";
 
 const DoorIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: DoorIdle, maxFrames: 1 });
 const DoorOpeningAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Interactable, imageSrc: DoorOpening, maxFrames: 5 });
@@ -27,5 +29,6 @@ export class Door extends InteractableObject {
 
     onInteract(): void {
         super.onInteract();
+        GameEvent.dispatch.player.ailment.apply(AilmentType.Rooted, true)
     }
 }

@@ -39,131 +39,6 @@ export class Sprite {
   };
   hitBoxOffset: SpriteGeometry;
   animations = new SpriteAnimations();
-
-
-  get game(): typeof Game {
-    return window.Game;
-  }
-
-  get player(): Player {
-    return window.Game.player;
-  }
-
-  get geometry(): SpriteGeometry {
-    return {
-      x: this.hitBox.x,
-      y: this.hitBox.y,
-      width: this.hitBox.width,
-      height: this.hitBox.height,
-    };
-  }
-
-  get state() {
-    return {
-      moves: this.velocity.x !== 0,
-      falling: this.velocity.y > 1,
-    }
-  }
-
-  onCreated() {
-    this.applyListeners();
-  }
-
-  onDestroy() {
-
-  }
-
-  draw() {
-    if (!this.frames) return;
-
-    const isHaveRows = this.frames.maxRows > 1
-    const oneFrameWidth = this.image.width / this.frames.maxFrames;
-    const oneFrameHeight = this.image.height / this.frames.maxRows;
-
-    const sourceXOffset = this.frames.currentFrame * oneFrameWidth;
-    const sourceYOffset = isHaveRows ? this.frames.currentRow * oneFrameHeight : 0;
-
-    const destinationHeight = isHaveRows ? oneFrameHeight : this.image.height;
-
-    this.game.ctx.drawImage(
-      this.image,
-      sourceXOffset,
-      sourceYOffset,
-      oneFrameWidth,
-      destinationHeight,
-      this.position.x,
-      this.position.y,
-      oneFrameWidth * this.scale,
-      destinationHeight * this.scale,
-    )
-  }
-
-  update() {
-    this.draw();
-    this.updatePosition();
-    this.updateAnimations();
-    if (this.frames) this.updateFrames();
-  }
-
-  updateAnimations() {
-    if (this.state.moves) this.onMoveAnimation();
-    else {
-      this.onIdleAnimation();
-    }
-  }
-
-  onMoveAnimation() {
-    this.animation.play(SpriteAnimationType.Moving, false, true)
-  }
-  onIdleAnimation() {
-    this.animation.play(SpriteAnimationType.Idle, false, true)
-  }
-
-  updateFrames() {
-    if (!this.frames.active) return;
-    this.frames.elapsed++;
-    if (this.frames.elapsed % this.frames.hold === 0) {
-      if (this.frames.currentFrame < (this.frames.maxFrames - this.frames.slice - 1)) {
-        this.frames.currentFrame++;
-      } else {
-        this.frames.currentFrame = 0;
-        this.animation.resolve?.();
-      }
-    }
-  }
-
-  updateGravity() {
-    this.position.y += this.velocity.y;
-    this.sizes.bottom = this.position.y + this.size.height;
-
-    if (this.sizes.bottom + this.velocity.y < this.game.ctx.canvas.height) {
-      this.velocity.y += this.gravity;
-      this.sizes.bottom = this.position.y + this.size.height;
-    } else {
-      this.velocity.y = 0
-    }
-  }
-
-  updatePosition() {
-    this.position.x += this.velocity.x;
-    this.updateHitBox();
-    this.collision.horizontal();
-    this.updateGravity();
-    this.updateHitBox()
-    this.collision.vertical();
-  }
-
-
-  updateHitBox() {
-    this.hitBox = {
-      x: this.position.x + this.hitBoxOffset.x,
-      y: this.position.y + this.hitBoxOffset.y,
-      width: this.hitBoxOffset.width,
-      height: this.hitBoxOffset.height,
-    };
-    this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
-  }
-
   animation = {
     current: null as SpriteAnimation,
     lock: false,
@@ -194,7 +69,6 @@ export class Sprite {
       });
     },
   }
-
   collision = {
     vertical: () => {
       const collisions = this.game.world.collisions;
@@ -238,11 +112,149 @@ export class Sprite {
     }
   }
 
+  get game(): typeof Game {
+    return window.Game;
+  }
+
+  get player(): Player {
+    return window.Game.player;
+  }
+
+  get geometry(): SpriteGeometry {
+    return {
+      x: this.hitBox.x,
+      y: this.hitBox.y,
+      width: this.hitBox.width,
+      height: this.hitBox.height,
+    };
+  }
+
+  get state() {
+    return {
+      moves: this.velocity.x !== 0,
+      falling: this.velocity.y > 1,
+    }
+  }
+
+  onCreated() {
+    this.applyListeners();
+  }
+
+  onDestroy() { }
+
+  draw() {
+    if (!this.frames) return;
+
+    const isHaveRows = this.frames.maxRows > 1
+    const oneFrameWidth = this.image.width / this.frames.maxFrames;
+    const oneFrameHeight = this.image.height / this.frames.maxRows;
+
+    const sourceXOffset = this.frames.currentFrame * oneFrameWidth;
+    const sourceYOffset = isHaveRows ? this.frames.currentRow * oneFrameHeight : 0;
+
+    const destinationHeight = isHaveRows ? oneFrameHeight : this.image.height;
+
+    this.game.ctx.drawImage(
+      this.image,
+      sourceXOffset,
+      sourceYOffset,
+      oneFrameWidth,
+      destinationHeight,
+      this.position.x,
+      this.position.y,
+      oneFrameWidth * this.scale,
+      destinationHeight * this.scale,
+    )
+  }
+
+  update() {
+    this.draw();
+    this.updatePosition();
+    this.updateAnimations();
+    if (this.frames) this.updateFrames();
+  }
+
+  updateAnimations() {
+    this.onUpdateAnimation();
+  }
+
+  updateFrames() {
+    this.onUpdateFrames();
+  }
+
+  updateGravity() {
+    this.onUpdateGravity();
+  }
+
+  updatePosition() {
+    this.onUpdatePosition();
+  }
+
+  updateHitBox() {
+    this.onUpdateHitBox();
+  }
+
+  onUpdateAnimation() {
+    if (this.state.moves) this.onMoveAnimation();
+    else {
+      this.onIdleAnimation();
+    }
+  }
+
+  onUpdateFrames() {
+    if (!this.frames.active) return;
+    this.frames.elapsed++;
+
+    const isHoldFramesPassed = this.frames.elapsed % this.frames.hold === 0
+    if (!isHoldFramesPassed) return;
+
+    const isLastAnimationFrame = this.frames.currentFrame >= (this.frames.maxFrames - this.frames.slice - 1)
+    if (isLastAnimationFrame) {
+      this.frames.currentFrame = 0;
+      this.animation.resolve?.();
+      return;
+    }
+    this.frames.currentFrame++;
+  }
+
+  onMoveAnimation() {
+    this.animation.play(SpriteAnimationType.Moving, false, true)
+  }
+  onIdleAnimation() {
+    this.animation.play(SpriteAnimationType.Idle, false, true)
+  }
+
+  onUpdateGravity() {
+    this.position.y += this.velocity.y;
+    this.sizes.bottom = this.position.y + this.size.height;
+
+    const isFalling = this.sizes.bottom + this.velocity.y - 1 < this.game.ctx.canvas.height
+    if (!isFalling) return this.velocity.y = 0;
+    this.velocity.y += this.gravity;
+    this.sizes.bottom = this.position.y + this.size.height;
+  }
+
+  onUpdatePosition() {
+    this.position.x += this.velocity.x;
+    this.updateHitBox();
+    this.collision.horizontal();
+    this.updateGravity();
+    this.updateHitBox()
+    this.collision.vertical();
+  }
+
+  onUpdateHitBox() {
+    this.hitBox = {
+      x: this.position.x + this.hitBoxOffset.x,
+      y: this.position.y + this.hitBoxOffset.y,
+      width: this.hitBoxOffset.width,
+      height: this.hitBoxOffset.height,
+    };
+    this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
+  }
 
   applyListeners() { }
 
-  removeListeners() {
-
-  }
+  removeListeners() { }
 }
 

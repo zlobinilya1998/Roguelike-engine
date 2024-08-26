@@ -8,6 +8,7 @@ import { Game } from "@/index";
 import { Creature } from "@/models/base/creature/Creature";
 import { Spell } from "../spells/Spell";
 import { Bindings } from "@/models/keyboard/Bindings";
+import { AilmentType } from "@/models/base/player/Ailments";
 
 export type GameEventListener = {
   source: unknown;
@@ -84,6 +85,9 @@ export class GameEvent {
       spell: {
         useByIndex: (index: number) => createEvent(Events.player.spell.useByIndex, index),
         use: (spell: Spell) => createEvent(Events.player.spell.use, spell),
+      },
+      ailment: {
+        apply: (ailment: AilmentType, value: boolean) => createEvent(Events.player.ailment.apply, {ailment,value})
       },
       interact: () => createEvent(Events.player.interact),
     },

@@ -9,15 +9,17 @@ export type GameObjectProps = {
     position: GameObjectPosition;
     size: GameObjectSize;
     hitBox: GameObjectGeometry;
-    scale?: number
+    scale?: number;
+    imageSrc?: string;
 }
 
 export class GameObject {
-    constructor({ position, size, scale, hitBox }: GameObjectProps) {
+    constructor({ position, size, scale, hitBox, imageSrc }: GameObjectProps) {
         this.position = position;
         this.size = size;
         this.scale = scale || 1;
         this.image = new Image();
+        if (imageSrc) this.image.src = imageSrc
         this.hitBoxOffset = hitBox
 
         this.onCreate();
@@ -38,6 +40,65 @@ export class GameObject {
 
     animations = new GameObjectAnimations();
     interactionRadius = InteractionRadius.Medium;
+    animation = {
+        animation: null as GameObjectAnimation,
+        lock: false,
+        resolve: null as (value?: unknown) => void,
+        play: (type: GameObjectAnimationType, force = false) => {
+            if (force) this.animation.lock = false;
+            if (this.animation.animation?.type === type) return;
+            if (!type || this.animation.lock) return;
+            const animation = this.animations.get(type);
+            if (!animation) return;
+
+            this.animation.lock = true;
+            this.animation.animation = animation;
+
+            const image = new Image();
+            image.src = animation.imageSrc;
+            this.image = image;
+            this.frames = animation;
+            this.frames.currentFrame = 0;
+
+            return new Promise((res) => {
+                const resolve = () => {
+                    res(animation);
+                    this.animation.lock = false;
+                    this.onAnimationEnd();
+                }
+                this.animation.resolve = resolve;
+            });
+        },
+    }
+
+    get game(): typeof Game {
+        return window.Game;
+    }
+
+    get player(): Player {
+        return window.Game.player;
+    }
+
+    get isCanInteract() {
+        const player = this.player;
+        return GameUtils.gameObject.isInteractive(player.geometry, this.geometry, this.interactionRadius);
+    }
+
+    get geometry(): GameObjectGeometry {
+        return {
+            x: this.hitBox.x,
+            y: this.hitBox.y,
+            width: this.hitBox.width * this.scale,
+            height: this.hitBox.height * this.scale,
+        }
+    }
+
+
+
+    removeMe() {
+        this.onRemove();
+        this.game.world.gameObject.remove(this);
+    }
 
     draw() {
         if (!this.frames) return;
@@ -77,83 +138,27 @@ export class GameObject {
     }
 
     updateHitBox() {
-        this.hitBox = {
-            x: this.position.x + this.hitBoxOffset.x,
-            y: this.position.y + this.hitBoxOffset.y,
-            width: this.hitBoxOffset.width,
-            height: this.hitBoxOffset.height,
-        };
+        this.onUpdateHitBox();
     }
 
-    removeMe() {
-        this.onRemove();
-        this.game.world.gameObject.remove(this);
+    updateFrames() {
+        this.onUpdateFrames();
     }
 
-    onCreate() {
-        this.applyListeners();
+    updateAnimation() {
+        this.onAnimationUpdate();
     }
 
     onRemove() {
 
     }
 
-
-    get game(): typeof Game {
-        return window.Game;
-    }
-
-    get player(): Player {
-        return window.Game.player;
-    }
-
-    get isCanInteract() {
-        const player = this.player;
-        return GameUtils.gameObject.isInteractive(player.geometry, this.geometry, this.interactionRadius);
-    }
-
-    get geometry(): GameObjectGeometry {
-        return {
-            x: this.hitBox.x,
-            y: this.hitBox.y,
-            width: this.hitBox.width * this.scale,
-            height: this.hitBox.height * this.scale,
-        }
+    onCreate() {
+        this.applyListeners();
     }
 
 
-    animation = {
-        animation: null as GameObjectAnimation,
-        lock: false,
-        resolve: null as (value?: unknown) => void,
-        play: (type: GameObjectAnimationType, force = false) => {
-            if (force) this.animation.lock = false;
-            if (this.animation.animation?.type === type) return;
-            if (!type || this.animation.lock) return;
-            const animation = this.animations.get(type);
-            if (!animation) return;
-
-            this.animation.lock = true;
-            this.animation.animation = animation;
-
-            const image = new Image();
-            image.src = animation.imageSrc;
-            this.image = image;
-            this.frames = animation;
-            this.frames.currentFrame = 0;
-
-            return new Promise((res) => {
-                const resolve = () => {
-                    res(animation);
-                    this.animation.lock = false;
-                    this.onAnimationEnd();
-                }
-                this.animation.resolve = resolve;
-            });
-        },
-    }
-
-    updateFrames() {
+    onUpdateFrames() {
         if (!this.frames.active) return;
         this.frames.elapsed++;
 
@@ -167,13 +172,22 @@ export class GameObject {
         this.animation.resolve?.();
     }
 
-    updateAnimation() {
+
+    onAnimationUpdate() {
         this.animation.play(GameObjectAnimationType.Idle);
     }
 
     onAnimationEnd() {
     }
 
+    onUpdateHitBox() {
+        this.hitBox = {
+            x: this.position.x + this.hitBoxOffset.x,
+            y: this.position.y + this.hitBoxOffset.y,
+            width: this.hitBoxOffset.width,
+            height: this.hitBoxOffset.height,
+        };
+    }
 
     applyListeners() { }
 

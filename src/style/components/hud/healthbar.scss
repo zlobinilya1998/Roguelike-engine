@@ -12,6 +12,7 @@
     background-color: black;
     border-radius: 5px;
     box-shadow: 1px 1px 1px 1px;
+    user-select: none;
     border-color: rgba(255, 0, 0, 0.5);
     &.lowHealth:not(.died) {
         animation: low-health .3s infinite;

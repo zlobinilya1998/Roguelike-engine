@@ -27,7 +27,7 @@ export class InteractableObject extends GameObject {
         if (this.isInteracted) {
             if (this.isCanInteract) this.animation.play(GameObjectAnimationType.Interactable)
             else {
-                this.animation.play(GameObjectAnimationType.LeaveInteractable);
+                this.animation.play(GameObjectAnimationType.LeaveInteractable, true);
                 this.isInteracted = false;
             }
             return;

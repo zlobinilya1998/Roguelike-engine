@@ -4,7 +4,7 @@ import { GameAnimation } from "./GameAnimation";
 
 import Explosion from 'assets/Animation/Explosions.png';
 
-const ExplosionIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: Explosion, maxFrames: 9 });
+const ExplosionIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: Explosion, maxFrames: 9, hold: 8 });
 
 export class ExplosionAnimation extends GameAnimation {
     constructor(position: GameObjectPosition) {

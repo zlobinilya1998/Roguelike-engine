@@ -9,7 +9,7 @@ import { Enemy } from "@/models/base/enemy/Enemy";
 import { TextBubble } from "@/models/base/animation/TextBubble";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
-import { Ailments } from "./Ailments";
+import { Ailments, AilmentType } from "./Ailments";
 import { PlayerSpells } from "@/core/spells/PlayerSpells";
 import { Spell } from "@/core/spells/Spell";
 
@@ -56,10 +56,7 @@ export class Player extends Sprite {
     lock: false,
     immune: false,
     cause: () => {
-      if (!this.ailments.canAttack) {
-        new TextBubble('Stunned', 'black', this.position);
-        return;
-      };
+      if (!this.ailments.canAttack) return;
       GameEvent.dispatch.player.combat.attack.land(this.equipment.attackDamage);
       this.animation.play(SpriteAnimationType.Attack, true, true);
     },
@@ -78,14 +75,24 @@ export class Player extends Sprite {
   }
 
   move = {
-    left: () => this.velocity.x = -3,
-    right: () => this.velocity.x = 3,
+    left: () => {
+      if (!this.ailments.canMove) return;
+      this.velocity.x = -3
+    },
+    right: () => {
+      if (!this.ailments.canMove) return;
+      this.velocity.x = 3
+    },
     jump: () => {
+      if (!this.ailments.canMove) return;
       if (this.state.falling) return;
       this.velocity.y = -15;
       this.gravity = 1;
     },
-    down: () => this.velocity.y = 1,
+    down: () => {
+      if (!this.ailments.canMove) return;
+      this.velocity.y = 1
+    },
     stop: {
       x: () => this.velocity.x = 0,
       y: () => this.velocity.y = 0,
@@ -115,6 +122,9 @@ export class Player extends Sprite {
       console.log(`SPELL BY INDEX CASTED ${index}`);
       this.player.spells.useSpell(this.spells.list[index])
     });
+    GameEvent.subscribe(Events.player.ailment.apply, this, ({ ailment, value }: { ailment: AilmentType, value: boolean }) => {
+      this.ailments.applyAilment(ailment)
+    })
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
     GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => this.effects.applyEffect(effect));
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());

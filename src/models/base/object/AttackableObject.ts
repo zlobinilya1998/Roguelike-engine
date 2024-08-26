@@ -20,10 +20,10 @@ export class AttackableObject extends MovingObject {
         if (!this.isCanInteract) return;
         this.durability -= 1;
         await this.animation.play(GameObjectAnimationType.TakeHit, true);
-        if (this.durability <= 0) this.onDurabilityLoss();
+        if (this.durability <= 0) this.onFatalHit();
     }
 
-    onDurabilityLoss(){
+    onFatalHit(){
         this.removeMe();
     }
 

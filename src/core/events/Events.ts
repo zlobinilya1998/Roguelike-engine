@@ -37,6 +37,9 @@ export class Events {
             use: 'player:spell:use',
             useByIndex: 'player:spell:use:by:index',
         },
+        ailment: {
+            apply: 'player:ailment:apply',
+        },
         interact: 'player:interact',
     }
 
