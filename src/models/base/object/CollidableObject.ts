@@ -13,7 +13,7 @@ export class CollidableObject extends GameObject {
         const collisionBlock = new CollisionBlock(this.geometry.x,this.geometry.y, this.size.width,this.size.height);
     }
 
-    onRemove(): void {
-        super.onRemove()
+    onDestroy(): void {
+        super.destroy()
     }
 }

@@ -128,6 +128,7 @@ export class Player extends Sprite {
 
   applyListeners(): void {
     super.applyListeners();
+
     GameEvent.subscribe(Events.player.status.dead, this, () => {
       this.onDeath();
     });

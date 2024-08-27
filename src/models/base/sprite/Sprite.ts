@@ -3,6 +3,8 @@ import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocit
 import { Game } from '@/index';
 import { Player } from '@/models/base/player/Player';
 import { SpriteSounds } from '@/models/types/base/sprite/SpriteSound';
+import { GameEvent } from '@/core/events/GameEvent';
+import { Events } from '@/core/events/Events';
 
 export interface SpriteProps {
   position: SpritePosition;
@@ -113,7 +115,10 @@ export class Sprite {
       }
     }
   }
-
+  direction: "left" | "right" = "right";
+  mouse = {
+    hovered: false,
+  }
   get game(): typeof Game {
     return window.Game;
   }
@@ -173,6 +178,7 @@ export class Sprite {
     this.draw();
     this.updatePosition();
     this.updateAnimations();
+    this.updatePlayerClick();
     if (this.frames) this.updateFrames();
   }
 
@@ -196,6 +202,14 @@ export class Sprite {
     this.onUpdateHitBox();
   }
 
+  updatePlayerClick() {
+    if (!this.mouse.hovered) return;
+    this.onPlayerClick()
+  }
+
+  onPlayerClick() {
+  }
+
   onUpdateAnimation() {
     if (this.state.moves) this.onMoveAnimation();
     else {
@@ -210,7 +224,8 @@ export class Sprite {
     const isHoldFramesPassed = this.frames.elapsed % this.frames.hold === 0
     if (!isHoldFramesPassed) return;
 
-    const isLastAnimationFrame = this.frames.currentFrame >= (this.frames.maxFrames - this.frames.slice - 1)
+    const maxFrames = this.frames.maxFrames - this.frames.slice - 1
+    const isLastAnimationFrame = this.frames.currentFrame >= maxFrames
     if (isLastAnimationFrame) {
       this.frames.currentFrame = 0;
       this.animation.resolve?.();
@@ -236,7 +251,6 @@ export class Sprite {
     this.sizes.bottom = this.position.y + this.size.height;
   }
 
-  direction: "left" | "right" = "right";
   onUpdatePosition() {
     this.position.x += this.velocity.x;
     this.updateHitBox();
@@ -261,11 +275,22 @@ export class Sprite {
     };
 
     const isDev = import.meta.env.VITE_APP_BORDERS;
+
+    if (this.mouse.hovered) this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
+
+
     if (!isDev) return;
     this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
   }
 
-  applyListeners() { }
+  applyListeners() {
+    GameEvent.subscribe(Events.mouse.move, this, (position: { x: number, y: number }) => {
+      const x = Math.abs(this.hitBox.x + this.hitBox.width / 2 - position.x) < 30;
+      const y = Math.abs(this.hitBox.y + this.hitBox.height / 2 - position.y) < 30;
+      this.mouse.hovered = x && y;
+    })
+
+  }
 
   removeListeners() { }
 }

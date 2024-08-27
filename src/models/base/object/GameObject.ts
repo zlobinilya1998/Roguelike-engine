@@ -101,9 +101,8 @@ export class GameObject {
 
 
 
-    removeMe() {
-        this.onRemove();
-        this.game.world.gameObject.remove(this);
+    destroy() {
+        this.onDestroy();
     }
 
     draw() {
@@ -157,8 +156,8 @@ export class GameObject {
         this.onAnimationUpdate();
     }
 
-    onRemove() {
-
+    onDestroy() {
+        this.game.world.gameObject.remove(this);
     }
 
     onCreate() {

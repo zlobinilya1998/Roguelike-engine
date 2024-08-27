@@ -10,12 +10,4 @@ export class GameAnimation extends GameObject {
         super(props);
         this.game.world.animation.spawn(this);
     }
-
-    onAnimationEnd(): void {
-        this.game.world.animation.remove(this);
-    }
-
-    onRemove(): void {
-        this.game.world.animation.remove(this)
-    }
 }

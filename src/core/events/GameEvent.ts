@@ -87,7 +87,7 @@ export class GameEvent {
         use: (spell: Spell) => createEvent(Events.player.spell.use, spell),
       },
       ailment: {
-        apply: (ailment: AilmentType, value: boolean) => createEvent(Events.player.ailment.apply, {ailment,value})
+        apply: (ailment: AilmentType, value: boolean) => createEvent(Events.player.ailment.apply, { ailment, value })
       },
       interact: () => createEvent(Events.player.interact),
     },
@@ -122,7 +122,11 @@ export class GameEvent {
           skills: () => createEvent(Events.hud.update.player.skills),
         }
       }
-    }
+    },
+
+    mouse: {
+      move: (position: { x: number, y: number }) => createEvent(Events.mouse.move, position)
+    },
   };
 
   static unsubscribe(event: Events, source: unknown) {
@@ -139,7 +143,17 @@ export class GameEvent {
   }
 
   static create = {
-    baseListeners: () => { },
+    baseListeners: () => {
+      const canvas = window.game;
+
+
+      window.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const canvasX = Math.ceil(e.clientX - rect.left);
+        const canvasY = Math.ceil(e.clientY - rect.top)
+        GameEvent.dispatch.mouse.move({ x: canvasX, y: canvasY })
+      })
+    },
     keyboardListeners: () => {
       window.addEventListener("keydown", (e) => {
         switch (e.key) {

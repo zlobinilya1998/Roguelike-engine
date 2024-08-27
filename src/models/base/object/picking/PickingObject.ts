@@ -44,9 +44,8 @@ export class PickingObject extends GameObject {
         this.image.src = PickedPng;
         this.frames.maxFrames = 6;
         this.sound.play(GameObjectSoundType.Picking);
-        this.velocity.y = -10
         setTimeout(() => {
-            this.removeMe();
+            this.destroy();
         }, 500)
     }
 }

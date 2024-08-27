@@ -77,4 +77,8 @@ export class Events {
             }
         }
     }
+
+    static mouse = {
+        move: 'mouse:move',
+    }
 }

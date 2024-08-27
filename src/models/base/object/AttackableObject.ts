@@ -26,7 +26,7 @@ export class AttackableObject extends MovingObject {
     }
 
     onFatalHit(){
-        this.removeMe();
+        this.destroy();
         this.sound.play(GameObjectSoundType.FatalHit)
     }
 

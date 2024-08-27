@@ -11,17 +11,4 @@ export class BoxPiece extends GameAnimation {
         super(props);
         this.animations.addList([BoxPieceIdleAnimation])
     }
-
-    onAnimationEnd(): void {
-
-    }
-
-    onRemove() {
-        super.onRemove();
-        
-    }
-
-    update(ts: EpochTimeStamp): void {
-        super.update(ts);
-    }
 }

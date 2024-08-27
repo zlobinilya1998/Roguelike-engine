@@ -1,5 +1,6 @@
 declare global {
   interface Window {
+    game: HTMLCanvasElement;
     Game: any;
     healthBar: HTMLDivElement;
     healthBarText: HTMLDivElement;
