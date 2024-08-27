@@ -9,6 +9,11 @@ export class GameUtils {
         randomInteger: (min: number, max: number) => {
             const rand = min + Math.random() * (max + 1 - min);
             return Math.floor(rand);
+        },
+        isChancePassed: (chance: number) => {
+            if (chance < 0 || chance > 100) throw new Error("Процент должен быть в диапазоне от 0 до 100.");
+            const randomValue = Math.random() * 100;
+            return randomValue <= chance;
         }
     }
     static gameObject = {

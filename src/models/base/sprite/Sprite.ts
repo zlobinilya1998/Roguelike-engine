@@ -234,6 +234,7 @@ export class Sprite {
     this.sizes.bottom = this.position.y + this.size.height;
   }
 
+  direction: "left" | "right" = "right";
   onUpdatePosition() {
     this.position.x += this.velocity.x;
     this.updateHitBox();
@@ -241,6 +242,12 @@ export class Sprite {
     this.updateGravity();
     this.updateHitBox()
     this.collision.vertical();
+
+    if (this.velocity.x !== 0) {
+      const newDirection = this.velocity.x > 0 ? "right" : "left";
+      if (newDirection === this.direction) return;
+      this.direction = newDirection
+    }
   }
 
   onUpdateHitBox() {

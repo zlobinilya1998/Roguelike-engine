@@ -21,8 +21,13 @@ export class PickingObject extends GameObject {
     update(ts: EpochTimeStamp): void {
         super.update(ts);
 
-        this.velocity.y += this.gravity;
-        this.position.y += this.velocity.y
+        if (this.position.y < this.game.ctx.canvas.height - 220) {
+            this.velocity.y += this.gravity;
+            this.position.y += this.velocity.y
+        } else {
+            this.velocity.y = 0;
+        }
+
 
         if (this.isCanInteract) this.onPickedUp();
     }
