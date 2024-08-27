@@ -2,11 +2,13 @@ import { SpriteAnimationType } from "@/models/types/base/sprite";
 import { GameEvent } from "core/events/GameEvent";
 import { AggressiveEnemyEquipment } from "@/models/base/combat/Equipment";
 import { Enemy } from "models/base/enemy/Enemy";
+import { SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 
 export class AggressiveEnemy extends Enemy {
     equipment: AggressiveEnemyEquipment = new AggressiveEnemyEquipment();
     canAttack = true;
     aggroRadius = 200;
+    combatEntered = false;
 
 
     get isCanAttackPlayer() {
@@ -29,11 +31,14 @@ export class AggressiveEnemy extends Enemy {
         this.canAttack = false;
         setTimeout(() => this.canAttack = true, weapon.swingTime);
         this.animation.play(SpriteAnimationType.Attack, true, true);
+        this.sound.play(SpriteSoundType.Attack)
     }
 
     update() {
         super.update();
-        if (this.isNearPlayer) this.tryAttack();
+        if (this.isNearPlayer) {
+            this.tryAttack();
+        };
         this.chasePlayer();
     }
 
@@ -43,6 +48,9 @@ export class AggressiveEnemy extends Enemy {
             return;
         }
 
+        this.combatEnter();
+
+
         if (this.geometry.x > this.player.geometry.x) {
             this.velocity.x = -1;
         } else {
@@ -50,7 +58,17 @@ export class AggressiveEnemy extends Enemy {
         }
     }
 
-    get isPlayerInAggroRadius(){
+    combatEnter() {
+        if (this.combatEntered) return;
+        this.combatEntered = true;
+        this.onCombatEnter();
+    }
+
+    onCombatEnter() {
+        this.sound.play(SpriteSoundType.CombatEnter);
+    }
+
+    get isPlayerInAggroRadius() {
         return Math.abs(this.geometry.x - this.player.geometry.x) > this.aggroRadius;
 
     }

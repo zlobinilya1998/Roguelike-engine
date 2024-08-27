@@ -9,12 +9,14 @@ import { Equipment } from "../combat/Equipment";
 import { CreatureEffects, Effect } from "@/core/effects/Effects";
 import { EnemySpells } from "@/core/spells/EnemySpells";
 import { Spell } from "@/core/spells/Spell";
+import { SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 
 export class Enemy extends Creature {
     equipment = new Equipment();
     effects = new CreatureEffects(this);
     spells = new EnemySpells(this)
     health = new Health(this)
+
 
     update() {
         super.update();
@@ -31,10 +33,12 @@ export class Enemy extends Creature {
         GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
             if (!this.isNearPlayer) return;
             this.health.takeDamage(damage.damageCount);
+            this.sound.play(SpriteSoundType.TakeDamage)
             this.animation.play(SpriteAnimationType.TakeDamage, true, true);
         })
         GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
             if (!this.itsMe(creature)) return;
+            this.sound.play(SpriteSoundType.Death);
             await this.animation.play(SpriteAnimationType.Death, true, true);
             this.game.world.creature.remove(this)
         })
@@ -53,5 +57,7 @@ export class Enemy extends Creature {
     removeListeners(): void {
         this.removeListeners();
     }
+
+    
 
 }

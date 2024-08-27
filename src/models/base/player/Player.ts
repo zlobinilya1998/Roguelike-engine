@@ -15,6 +15,7 @@ import { Spell } from "@/core/spells/Spell";
 
 
 import PlayerImage from 'assets/Player/Player.png';
+import { SpriteSound, SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 
 const IdleAnimation = new SpriteAnimation({ type: SpriteAnimationType.Idle, imageSrc: PlayerImage, currentRow: 0, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 10 })
 const MovingAnimation = new SpriteAnimation({ type: SpriteAnimationType.Moving, imageSrc: PlayerImage, currentRow: 1, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
@@ -23,6 +24,15 @@ const AttackAnimation1 = new SpriteAnimation({ type: SpriteAnimationType.Attack,
 const AttackAnimation2 = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 4, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
 const AttackAnimation3 = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 5, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
 const CastSpellAnimation = new SpriteAnimation({ type: SpriteAnimationType.CastSpell, imageSrc: PlayerImage, currentRow: 6, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
+
+import PlayerAttackSound from 'assets/Audio/player/attack.wav';
+import PlayerTakeDamageSound from 'assets/Audio/player/takeDamage.wav';
+import PlayerDeathSound from 'assets/Audio/player/death.wav';
+
+const AttackSound = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound, volume: 0.2 });
+const DeathSound = new SpriteSound({ type: SpriteSoundType.Death, src: PlayerDeathSound });
+const TakeDamageSound = new SpriteSound({ type: SpriteSoundType.TakeDamage, src: PlayerTakeDamageSound, volume: 0.5});
+
 
 export class Player extends Sprite {
   constructor() {
@@ -40,6 +50,7 @@ export class Player extends Sprite {
       AttackAnimation3,
       CastSpellAnimation
     ]);
+    this.sound.addList([AttackSound,TakeDamageSound,DeathSound])
   }
   inventory = new Inventory();
   equipment = new PlayerEquipment();
@@ -59,6 +70,7 @@ export class Player extends Sprite {
       if (!this.ailments.canAttack) return;
       GameEvent.dispatch.player.combat.attack.land(this.equipment.attackDamage);
       this.animation.play(SpriteAnimationType.Attack, true, true);
+      this.sound.play(SpriteSoundType.Attack)
     },
     take: (damage: Damage, from: Enemy = null) => {
       if (this.damage.immune || this.isDead) return;
@@ -66,6 +78,7 @@ export class Player extends Sprite {
       this.stats.health.takeDamage(damageCount);
       new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
       this.animation.play(SpriteAnimationType.TakeDamage, true, true);
+      this.sound.play(SpriteSoundType.TakeDamage);
     },
     restore: (count: number) => {
       this.stats.health.heal(count);
@@ -106,6 +119,7 @@ export class Player extends Sprite {
 
   onDeath() {
     this.effects.clearQueue();
+    this.sound.play(SpriteSoundType.Death)
   }
 
   applyListeners(): void {

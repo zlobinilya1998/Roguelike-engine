@@ -10,6 +10,7 @@ export class Boss extends AggressiveEnemy {
     constructor(props: BossProps) {
         super(props)
         this.title = props.title;
+
     }
 
     draw(): void {
@@ -30,6 +31,7 @@ export class Boss extends AggressiveEnemy {
         this.game.ctx.fillRect(this.hitBox.x, this.hitBox.y - 10, this.hitBox.width * (this.health.percent / 100), 10)
         this.game.ctx.restore();
     }
+
 }
 
 

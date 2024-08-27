@@ -83,6 +83,7 @@ export class SpriteFrames {
 
 
 
+
 export class SpriteHitBox {
     x: number;
     y: number;

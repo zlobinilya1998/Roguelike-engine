@@ -2,6 +2,7 @@ import { GameUtils } from '@/utils';
 import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType, SpriteAnimation } from '@/models/types/base/sprite'
 import { Game } from '@/index';
 import { Player } from '@/models/base/player/Player';
+import { SpriteSounds } from '@/models/types/base/sprite/SpriteSound';
 
 export interface SpriteProps {
   position: SpritePosition;
@@ -69,6 +70,7 @@ export class Sprite {
       });
     },
   }
+  sound = new SpriteSounds();
   collision = {
     vertical: () => {
       const collisions = this.game.world.collisions;
