@@ -1,6 +1,9 @@
-declare module "*.png" {
-  const value: string;
-  export default value;
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly VITE_APP_BORDERS: string
 }
 
-declare module '*.jpg';
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}

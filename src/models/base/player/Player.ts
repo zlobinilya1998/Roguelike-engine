@@ -1,4 +1,4 @@
-import { Equipment } from "@/models/base/combat/Equipment";
+import { PlayerEquipment } from "@/models/base/combat/Equipment";
 import { PlayerStats } from "./Stats";
 import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem, DamageType } from "@/core/damage/Damage";
@@ -42,7 +42,7 @@ export class Player extends Sprite {
     ]);
   }
   inventory = new Inventory();
-  equipment = new Equipment();
+  equipment = new PlayerEquipment();
   stats = new PlayerStats(this);
   effects = new PlayerEffects(this);
   ailments = new Ailments(this);

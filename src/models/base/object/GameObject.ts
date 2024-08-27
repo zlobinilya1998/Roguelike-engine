@@ -79,9 +79,13 @@ export class GameObject {
         return window.Game.player;
     }
 
-    get isCanInteract() {
+    get isPlayerNearby() {
         const player = this.player;
         return GameUtils.gameObject.isInteractive(player.geometry, this.geometry, this.interactionRadius);
+    }
+
+    get isCanInteract() {
+        return this.isPlayerNearby;
     }
 
     get geometry(): GameObjectGeometry {
@@ -126,6 +130,8 @@ export class GameObject {
     }
 
     drawBorder() {
+        const isDev = import.meta.env.VITE_APP_BORDERS;
+        if (!isDev) return;
         this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
     }
 

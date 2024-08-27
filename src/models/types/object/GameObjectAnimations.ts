@@ -3,6 +3,7 @@ import { GameObjectFrames, GameObjectFramesProps } from "./GameObject";
 export enum GameObjectAnimationType {
     Idle = 1,
     Interactable,
+    Interacted,
     LeaveInteractable,
     TakeHit,
 }

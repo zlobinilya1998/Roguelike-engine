@@ -1,8 +1,8 @@
 {
     "include": [
         "./src/**/*",
-        "./src/custom.d.ts"
-    ],
+        "src/custom.d.ts"
+, "src/window.d.ts"    ],
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {

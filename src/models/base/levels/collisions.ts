@@ -34,6 +34,8 @@ export class CollisionBlock {
    }
 
    draw() {
+      const isDev = import.meta.env.VITE_APP_BORDERS;
+      if (!isDev) return;
       window.Game.ctx.fillStyle = 'rgba(255,0,0,0.5)';
       window.Game.ctx.fillRect(this.x, this.y, this.width, this.height)
    }

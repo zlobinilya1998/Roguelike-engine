@@ -18,6 +18,7 @@ export class Boss extends AggressiveEnemy {
     }
 
     drawBossHealth() {
+        if (this.health.isDead) return;
         this.game.ctx.save();
         this.game.ctx.font = '10px Ugly'
         this.game.ctx.fillStyle = 'black';

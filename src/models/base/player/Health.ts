@@ -54,11 +54,11 @@ export class Health {
   }
 
   takeDamage(damage: number) {
+    if (this.isDead) return;
     const restHealth = this.health - damage;
     this.health = restHealth > 0 ? restHealth : 0;
     if (this.isDead) {
       const isPlayer = this.creature instanceof Player;
-
       if (isPlayer) {
         GameEvent.dispatch.player.status.dead();
       } else {

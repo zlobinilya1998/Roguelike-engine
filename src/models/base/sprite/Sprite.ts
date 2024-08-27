@@ -257,6 +257,9 @@ export class Sprite {
       width: this.hitBoxOffset.width,
       height: this.hitBoxOffset.height,
     };
+
+    const isDev = import.meta.env.VITE_APP_BORDERS;
+    if (!isDev) return;
     this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
   }
 

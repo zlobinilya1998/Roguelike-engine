@@ -27,7 +27,7 @@ export class World {
       }
     }
     creature = {
-      list: [] as Enemy[],
+      list: [new IceGolem()] as Enemy[],
       remove: (creature: Enemy) => {
         const list = this.creature.list
         const index = list.indexOf(creature);
@@ -51,6 +51,10 @@ export class World {
   
     get entities() {
       return [...this.gameObject.list, ...this.creature.list, ...this.animation.list, ...this.collisions];
+    }
+
+    get isHaveEnemies() {
+      return this.creature.list.length > 0;
     }
   
     draw() {

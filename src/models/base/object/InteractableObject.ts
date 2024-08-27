@@ -44,5 +44,6 @@ export class InteractableObject extends GameObject {
     }
 
     onInteract() {
+        this.animation.play(GameObjectAnimationType.Interacted, true);
     }
 }

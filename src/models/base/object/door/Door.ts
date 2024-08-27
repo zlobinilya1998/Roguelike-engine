@@ -31,4 +31,9 @@ export class Door extends InteractableObject {
         super.onInteract();
         GameEvent.dispatch.player.ailment.apply(AilmentType.Rooted, true)
     }
+
+    get isCanInteract(){
+        if (this.game.world.isHaveEnemies) return;
+        return this.isPlayerNearby;
+    }
 }
