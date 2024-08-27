@@ -1,3 +1,5 @@
+import { GameUtils } from "@/utils";
+
 export enum SpriteSoundType {
     Moving,
     Attack,
@@ -28,8 +30,7 @@ export class SpriteSound {
 export class SpriteSounds {
     list: SpriteSound[] = [];
     play(type: SpriteSoundType) {
-        let audio = this.list.find(item => item.type === type);
-        if (!audio) return;
+        const audio = this.get(type)
         const element = new Audio(audio.src);
         element.volume = audio.volume;
         element.playbackRate = audio.playbackRate
@@ -39,6 +40,16 @@ export class SpriteSounds {
 
     add(sound: SpriteSound) {
         this.list.push(sound)
+    }
+
+    get(type: SpriteSoundType){
+        const soundsWithType = this.list.filter(item => item.type === type);
+        if (soundsWithType.length > 1) {
+            const randomIndex = GameUtils.number.randomInteger(0, soundsWithType.length - 1)
+            const randomAnimation = soundsWithType[randomIndex];
+            return randomAnimation
+        }
+        return soundsWithType[0]
     }
 
     addList(list: SpriteSound[]){

@@ -25,13 +25,17 @@ const AttackAnimation2 = new SpriteAnimation({ type: SpriteAnimationType.Attack,
 const AttackAnimation3 = new SpriteAnimation({ type: SpriteAnimationType.Attack, imageSrc: PlayerImage, currentRow: 5, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
 const CastSpellAnimation = new SpriteAnimation({ type: SpriteAnimationType.CastSpell, imageSrc: PlayerImage, currentRow: 6, maxRows: 8, currentFrame: 0, maxFrames: 6, hold: 5 })
 
-import PlayerAttackSound from 'assets/Audio/player/attack.wav';
+import PlayerAttackSound1 from 'assets/Audio/player/attack1.wav';
+import PlayerAttackSound2 from 'assets/Audio/player/attack2.wav';
+import PlayerAttackSound3 from 'assets/Audio/player/attack3.wav';
 import PlayerTakeDamageSound from 'assets/Audio/player/takeDamage.wav';
 import PlayerDeathSound from 'assets/Audio/player/death.wav';
 
-const AttackSound = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound, volume: 0.2 });
+const AttackSound1 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound1, volume: 0.5 });
+const AttackSound2 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound2, volume: 0.5 });
+const AttackSound3 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound3, volume: 0.5 });
 const DeathSound = new SpriteSound({ type: SpriteSoundType.Death, src: PlayerDeathSound });
-const TakeDamageSound = new SpriteSound({ type: SpriteSoundType.TakeDamage, src: PlayerTakeDamageSound, volume: 0.5});
+const TakeDamageSound = new SpriteSound({ type: SpriteSoundType.TakeDamage, src: PlayerTakeDamageSound, volume: 0.5 });
 
 
 export class Player extends Sprite {
@@ -50,7 +54,7 @@ export class Player extends Sprite {
       AttackAnimation3,
       CastSpellAnimation
     ]);
-    this.sound.addList([AttackSound,TakeDamageSound,DeathSound])
+    this.sound.addList([AttackSound1, AttackSound2, AttackSound3, TakeDamageSound, DeathSound])
   }
   inventory = new Inventory();
   equipment = new PlayerEquipment();
@@ -140,7 +144,10 @@ export class Player extends Sprite {
       this.ailments.applyAilment(ailment)
     })
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
-    GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => this.effects.applyEffect(effect));
+    GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => {
+      this.effects.applyEffect(effect)
+      this.sound
+    });
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());
     GameEvent.subscribe(Events.player.move.right, this, () => this.move.right());
     GameEvent.subscribe(Events.player.move.jump, this, () => this.move.jump());
