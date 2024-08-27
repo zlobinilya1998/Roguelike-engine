@@ -146,7 +146,6 @@ export class Player extends Sprite {
     GameEvent.subscribe(Events.player.combat.takeDamage, this, (damage: Damage) => this.damage.take(damage));
     GameEvent.subscribe(Events.player.effect.apply, this, (effect: Effect) => {
       this.effects.applyEffect(effect)
-      this.sound
     });
     GameEvent.subscribe(Events.player.move.left, this, () => this.move.left());
     GameEvent.subscribe(Events.player.move.right, this, () => this.move.right());

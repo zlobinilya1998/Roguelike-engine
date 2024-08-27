@@ -1,11 +1,16 @@
 import { GameObject, GameObjectProps } from "models/base/object/GameObject";
 
 import PickedPng from 'assets/gameObject/Picking/Collected.png'
+import { GameObjectSound, GameObjectSoundType } from "@/models/types/object/GameObjectSound";
 
-export interface PickingObjectProps extends GameObjectProps {
-}
+import PickingSound from 'assets/Audio/object/picking.wav';
+
+const PickingSound1 = new GameObjectSound({ type: GameObjectSoundType.Picking, src: PickingSound })
+
+export interface PickingObjectProps extends GameObjectProps { }
 
 export class PickingObject extends GameObject {
+    isPicked = false;
     gravity = 1
     velocity = {
         y: -10,
@@ -14,7 +19,7 @@ export class PickingObject extends GameObject {
     constructor(props: PickingObjectProps) {
         super(props);
         this.game.world.gameObject.list.push(this);
-
+        this.sound.add(PickingSound1)
     }
 
 
@@ -34,8 +39,11 @@ export class PickingObject extends GameObject {
 
 
     onPickedUp() {
+        if (this.isPicked) return;
+        this.isPicked = true;
         this.image.src = PickedPng;
         this.frames.maxFrames = 6;
+        this.sound.play(GameObjectSoundType.Picking);
         this.velocity.y = -10
         setTimeout(() => {
             this.removeMe();

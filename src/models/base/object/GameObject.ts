@@ -4,6 +4,7 @@ import { Player } from "@/models/base/player/Player";
 import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { Game } from "@/index";
 import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
+import { GameObjectSounds } from "@/models/types/object/GameObjectSound";
 
 export type GameObjectProps = {
     position: GameObjectPosition;
@@ -70,6 +71,7 @@ export class GameObject {
             });
         },
     }
+    sound = new GameObjectSounds();
 
     get game(): typeof Game {
         return window.Game;

@@ -2,6 +2,7 @@ import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimati
 import { GameObject } from "./GameObject";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
+import { GameObjectSoundType } from "@/models/types/object/GameObjectSound";
 
 export class InteractableObject extends GameObject {
     isInteracted = false;
@@ -45,5 +46,6 @@ export class InteractableObject extends GameObject {
 
     onInteract() {
         this.animation.play(GameObjectAnimationType.Interacted, true);
+        this.sound.play(GameObjectSoundType.Interacted)
     }
 }

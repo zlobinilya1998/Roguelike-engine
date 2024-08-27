@@ -6,10 +6,15 @@ import DoorOpening from 'assets/gameObject/Door/Opening.png';
 import DoorClosing from 'assets/gameObject/Door/Closing.png';
 import { AilmentType } from "../../player/Ailments";
 import { GameEvent } from "@/core/events/GameEvent";
+import DoorSound from 'assets/Audio/object/door/open.mp3';
+import { GameObjectSound, GameObjectSoundType } from "@/models/types/object/GameObjectSound";
 
 const DoorIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: DoorIdle, maxFrames: 1 });
 const DoorOpeningAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Interactable, imageSrc: DoorOpening, maxFrames: 5 });
 const DoorClosingAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.LeaveInteractable, imageSrc: DoorClosing, maxFrames: 3 });
+
+const DoorOpenSound = new GameObjectSound({ type: GameObjectSoundType.Interacted, src: DoorSound })
+
 
 export class Door extends InteractableObject {
     constructor() {
@@ -25,6 +30,7 @@ export class Door extends InteractableObject {
         });
 
         this.animations.addList([DoorIdleAnimation, DoorOpeningAnimation, DoorClosingAnimation])
+        this.sound.add(DoorOpenSound)
     }
 
     onInteract(): void {
@@ -32,7 +38,7 @@ export class Door extends InteractableObject {
         GameEvent.dispatch.player.ailment.apply(AilmentType.Rooted, true)
     }
 
-    get isCanInteract(){
+    get isCanInteract() {
         if (this.game.world.isHaveEnemies) return;
         return this.isPlayerNearby;
     }

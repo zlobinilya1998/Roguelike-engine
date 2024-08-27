@@ -4,6 +4,7 @@ import { Events } from "@/core/events/Events";
 import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 import { InteractionRadius } from "models/base/geometry/Geometry";
 import { MovingObject } from "./MovingObject";
+import { GameObjectSoundType } from "@/models/types/object/GameObjectSound";
 
 export interface AttackableObjectProps extends GameObjectProps {
     durability?: number
@@ -20,11 +21,13 @@ export class AttackableObject extends MovingObject {
         if (!this.isCanInteract) return;
         this.durability -= 1;
         await this.animation.play(GameObjectAnimationType.TakeHit, true);
+        this.sound.play(GameObjectSoundType.TakeHit);
         if (this.durability <= 0) this.onFatalHit();
     }
 
     onFatalHit(){
         this.removeMe();
+        this.sound.play(GameObjectSoundType.FatalHit)
     }
 
     applyListeners(): void {
