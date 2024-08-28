@@ -5,6 +5,7 @@ import { Player } from '@/models/base/player/Player';
 import { SpriteSounds } from '@/models/types/base/sprite/SpriteSound';
 import { GameEvent } from '@/core/events/GameEvent';
 import { Events } from '@/core/events/Events';
+import { GameEventListeners } from '@/core/events/Listeners';
 
 export interface SpriteProps {
   position: SpritePosition;
@@ -115,6 +116,7 @@ export class Sprite {
       }
     }
   }
+  listeners = new GameEventListeners<Sprite>(this);
   direction: "left" | "right" = "right";
   mouse = {
     hovered: false,
@@ -147,7 +149,9 @@ export class Sprite {
     this.applyListeners();
   }
 
-  onDestroy() { }
+  onDestroy() {
+    this.removeListeners()
+  }
 
   draw() {
     if (!this.frames) return;
@@ -178,7 +182,6 @@ export class Sprite {
     this.draw();
     this.updatePosition();
     this.updateAnimations();
-    this.updatePlayerClick();
     if (this.frames) this.updateFrames();
   }
 
@@ -208,6 +211,7 @@ export class Sprite {
   }
 
   onPlayerClick() {
+
   }
 
   onUpdateAnimation() {
@@ -284,14 +288,16 @@ export class Sprite {
   }
 
   applyListeners() {
-    GameEvent.subscribe(Events.mouse.move, this, (position: { x: number, y: number }) => {
+    const moveListener = GameEvent.subscribe(Events.mouse.move, this, (position: { x: number, y: number }) => {
       const x = Math.abs(this.hitBox.x + this.hitBox.width / 2 - position.x) < 30;
       const y = Math.abs(this.hitBox.y + this.hitBox.height / 2 - position.y) < 30;
       this.mouse.hovered = x && y;
     })
-
+    this.listeners.add(moveListener);
   }
 
-  removeListeners() { }
+  removeListeners() { 
+    this.listeners.removeAll();
+  }
 }
 

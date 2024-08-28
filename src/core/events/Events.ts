@@ -42,6 +42,15 @@ export class Events {
         },
         interact: 'player:interact',
     }
+    static sound = {
+        boss: {
+            combat: {
+                start: "sound:boss:combat:start",
+                end: "sound:boss:combat:end",
+            }
+        },
+        background: "sound:background",
+    }
 
     static creature = {
         effect: {

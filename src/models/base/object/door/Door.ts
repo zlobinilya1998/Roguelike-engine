@@ -15,10 +15,14 @@ const DoorClosingAnimation = new GameObjectAnimation({ type: GameObjectAnimation
 
 const DoorOpenSound = new GameObjectSound({ type: GameObjectSoundType.Interacted, src: DoorSound })
 
+export interface DoorProps {
+    x: number,
+    y: number
+}
 
 export class Door extends InteractableObject {
-    constructor() {
-        const position = new GameObjectPosition(300, 330);
+    constructor({ x, y }: DoorProps) {
+        const position = new GameObjectPosition(x, y);
         const size = new GameObjectSize(46, 56);
         super({
             position, size, hitBox: {

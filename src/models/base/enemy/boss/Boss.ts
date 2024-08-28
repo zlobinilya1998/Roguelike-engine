@@ -1,5 +1,7 @@
 import { AggressiveEnemy } from "models/base/enemy/AggressiveEnemy";
 import { SpriteProps } from "@/models/base/sprite/Sprite";
+import { GameEvent } from "@/core/events/GameEvent";
+
 
 export interface BossProps extends SpriteProps {
     title: string;
@@ -10,12 +12,21 @@ export class Boss extends AggressiveEnemy {
     constructor(props: BossProps) {
         super(props)
         this.title = props.title;
-
     }
 
     draw(): void {
         super.draw();
         this.drawBossHealth();
+    }
+
+    onCombatEnter(): void {
+        super.onCombatEnter();
+        GameEvent.dispatch.sound.boss.combat.start();
+    }
+
+    async onDestroy() {
+        GameEvent.dispatch.sound.boss.combat.end();
+        super.onDestroy();
     }
 
     drawBossHealth() {

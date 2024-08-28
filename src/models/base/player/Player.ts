@@ -123,7 +123,7 @@ export class Player extends Sprite {
 
   onDeath() {
     this.effects.clearQueue();
-    this.sound.play(SpriteSoundType.Death)
+    this.sound.play(SpriteSoundType.Death);
   }
 
   applyListeners(): void {

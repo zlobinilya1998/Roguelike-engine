@@ -4,6 +4,7 @@ export enum SpriteSoundType {
     Moving,
     Attack,
     CombatEnter,
+    BossCombatEnter,
     Death,
     TakeDamage,
 }

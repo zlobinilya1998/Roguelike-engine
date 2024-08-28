@@ -127,6 +127,15 @@ export class GameEvent {
     mouse: {
       move: (position: { x: number, y: number }) => createEvent(Events.mouse.move, position)
     },
+    sound: {
+      boss: {
+        combat: {
+          start: () => createEvent(Events.sound.boss.combat.start),
+          end: () => createEvent(Events.sound.boss.combat.end),
+        }
+      },
+      background: () => createEvent(Events.sound.background),
+    }
   };
 
   static unsubscribe(event: Events, source: unknown) {
@@ -146,16 +155,22 @@ export class GameEvent {
     baseListeners: () => {
       const canvas = window.game;
 
-
       window.addEventListener("mousemove", (e) => {
         const rect = canvas.getBoundingClientRect();
         const canvasX = Math.ceil(e.clientX - rect.left);
         const canvasY = Math.ceil(e.clientY - rect.top)
         GameEvent.dispatch.mouse.move({ x: canvasX, y: canvasY })
       })
+      
     },
     keyboardListeners: () => {
       window.addEventListener("keydown", (e) => {
+
+        if (!this.game.state.started){
+          this.game.state.started = true;
+          GameEvent.dispatch.sound.background();
+        }
+
         switch (e.key) {
           case Bindings.player.spells[0]:
             GameEvent.dispatch.player.spell.useByIndex(0);

@@ -32,8 +32,8 @@ export class AttackableObject extends MovingObject {
 
     applyListeners(): void {
         super.applyListeners();
-        GameEvent.subscribe(Events.player.combat.attack.land, this, () => {
+        this.listeners.add(GameEvent.subscribe(Events.player.combat.attack.land, this, () => {
             this.onTakeHit();
-        })
+        }))
     }
 }

@@ -28,36 +28,36 @@ export class Enemy extends Creature {
         super.updatePosition();
     }
 
+    async onDestroy() {
+        super.onDestroy();
+        this.sound.play(SpriteSoundType.Death);
+        await this.animation.play(SpriteAnimationType.Death, true, true);
+        this.game.world.creature.remove(this)
+    }
+
     applyListeners(): void {
         super.applyListeners();
-        GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
+
+
+        this.listeners.add(GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
             if (!this.isNearPlayer) return;
             this.health.takeDamage(damage.damageCount);
             this.sound.play(SpriteSoundType.TakeDamage)
             this.animation.play(SpriteAnimationType.TakeDamage, true, true);
-        })
-        GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
+        }))
+        this.listeners.add(GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
             if (!this.itsMe(creature)) return;
-            this.sound.play(SpriteSoundType.Death);
-            await this.animation.play(SpriteAnimationType.Death, true, true);
-            this.game.world.creature.remove(this)
-        })
+            this.onDestroy();
+        }))
 
-        GameEvent.subscribe(Events.creature.effect.apply, this, (effect: Effect) => {
+        this.listeners.add(GameEvent.subscribe(Events.creature.effect.apply, this, (effect: Effect) => {
             this.effects.applyEffect(effect)
-        });
+        }));
 
-        GameEvent.subscribe(Events.creature.spell.damage.take, this, ({spell,creature}: {spell: Spell,creature: Creature}) => {
+        this.listeners.add(GameEvent.subscribe(Events.creature.spell.damage.take, this, ({ spell, creature }: { spell: Spell, creature: Creature }) => {
             if (!this.itsMe(creature)) return;
             this.health.takeDamage(spell.damage.damageCount)
-        });
+        }));
 
     }
-
-    removeListeners(): void {
-        this.removeListeners();
-    }
-
-    
-
 }

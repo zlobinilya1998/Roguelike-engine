@@ -5,6 +5,7 @@ import { InteractionRadius } from "@/models/base/geometry/Geometry";
 import { Game } from "@/index";
 import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 import { GameObjectSounds } from "@/models/types/object/GameObjectSound";
+import { GameEventListeners } from "@/core/events/Listeners";
 
 export type GameObjectProps = {
     position: GameObjectPosition;
@@ -71,6 +72,7 @@ export class GameObject {
             });
         },
     }
+    listeners = new GameEventListeners<GameObject>(this);
     sound = new GameObjectSounds();
 
     get game(): typeof Game {
@@ -102,6 +104,7 @@ export class GameObject {
 
 
     destroy() {
+        this.removeListeners();
         this.onDestroy();
     }
 
@@ -158,6 +161,7 @@ export class GameObject {
 
     onDestroy() {
         this.game.world.gameObject.remove(this);
+        this.removeListeners();
     }
 
     onCreate() {
@@ -199,6 +203,6 @@ export class GameObject {
     applyListeners() { }
 
     removeListeners() {
-
+        this.listeners.removeAll();
     }
 }

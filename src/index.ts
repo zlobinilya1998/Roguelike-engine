@@ -18,6 +18,7 @@ canvas.height = 64 * 9;
 export class Game {
   static state = {
     paused: false,
+    started: false,
   }
   static ctx = c;
   static player = new Player();
