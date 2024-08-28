@@ -3,6 +3,7 @@ import { SoundProps, Sound, Sounds } from "@/models/types/base/sound";
 export enum SpriteSoundType {
     Moving,
     Attack,
+    Jump,
     CombatEnter,
     BossCombatEnter,
     Death,

@@ -6,6 +6,8 @@ import { Game } from "@/index";
 import { GameObjectAnimation, GameObjectAnimations, GameObjectAnimationType } from "@/models/types/object/GameObjectAnimations";
 import { GameObjectSounds } from "@/models/types/object/GameObjectSound";
 import { GameEventListeners } from "@/core/events/Listeners";
+import { Events } from "@/core/events/Events";
+import { GameEvent } from "@/core/events/GameEvent";
 
 export type GameObjectProps = {
     position: GameObjectPosition;
@@ -74,7 +76,9 @@ export class GameObject {
     }
     listeners = new GameEventListeners<GameObject>(this);
     sound = new GameObjectSounds();
-
+    mouse = {
+        hovered: false,
+    }
     get game(): typeof Game {
         return window.Game;
     }
@@ -134,9 +138,7 @@ export class GameObject {
     }
 
     drawBorder() {
-        const isDev = import.meta.env.VITE_APP_BORDERS;
-        if (!isDev) return;
-        this.game.ctx.strokeRect(this.geometry.x, this.geometry.y, this.geometry.width, this.geometry.height)
+        if (this.mouse.hovered) this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
     }
 
     update(ts: EpochTimeStamp) {
@@ -145,10 +147,16 @@ export class GameObject {
         if (this.frames) this.updateFrames();
         this.updateAnimation();
         this.updateHitBox()
+        this.updatePlayerClick();
     }
 
     updateHitBox() {
         this.onUpdateHitBox();
+    }
+
+    updatePlayerClick() {
+        if (!this.mouse.hovered) return;
+        this.onPlayerClick()
     }
 
     updateFrames() {
@@ -168,6 +176,9 @@ export class GameObject {
         this.applyListeners();
     }
 
+    onPlayerClick() {
+        console.log('Click on banana');
+    }
 
     onUpdateFrames() {
         if (!this.frames.active) return;
@@ -200,7 +211,14 @@ export class GameObject {
         };
     }
 
-    applyListeners() { }
+    applyListeners() {
+        const moveListener = GameEvent.subscribe(Events.mouse.move, this, (position: { x: number, y: number }) => {
+            const x = Math.abs(this.hitBox.x + this.hitBox.width / 2 - position.x) < 30;
+            const y = Math.abs(this.hitBox.y + this.hitBox.height / 2 - position.y) < 30;
+            this.mouse.hovered = x && y;
+        })
+        this.listeners.add(moveListener);
+    }
 
     removeListeners() {
         this.listeners.removeAll();

@@ -13,6 +13,7 @@ export class PickingObject extends GameObject {
     isPicked = false;
     gravity = 1
     velocity = {
+        x: 1,
         y: -10,
     }
     landed = false;
@@ -26,11 +27,13 @@ export class PickingObject extends GameObject {
     update(ts: EpochTimeStamp): void {
         super.update(ts);
 
+        this.position.x += this.velocity.x
         if (this.position.y < this.game.ctx.canvas.height - 220) {
             this.velocity.y += this.gravity;
             this.position.y += this.velocity.y
         } else {
             this.velocity.y = 0;
+            this.velocity.x = 0
         }
 
 

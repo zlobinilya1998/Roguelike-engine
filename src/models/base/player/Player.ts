@@ -29,6 +29,7 @@ import PlayerAttackSound1 from 'assets/Audio/player/attack1.wav';
 import PlayerAttackSound2 from 'assets/Audio/player/attack2.wav';
 import PlayerAttackSound3 from 'assets/Audio/player/attack3.wav';
 import PlayerTakeDamageSound from 'assets/Audio/player/takeDamage.wav';
+import PlayerJumpSound from 'assets/Audio/player/jump.wav';
 import PlayerDeathSound from 'assets/Audio/player/death.wav';
 
 const AttackSound1 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound1, volume: 0.5 });
@@ -36,6 +37,7 @@ const AttackSound2 = new SpriteSound({ type: SpriteSoundType.Attack, src: Player
 const AttackSound3 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound3, volume: 0.5 });
 const DeathSound = new SpriteSound({ type: SpriteSoundType.Death, src: PlayerDeathSound });
 const TakeDamageSound = new SpriteSound({ type: SpriteSoundType.TakeDamage, src: PlayerTakeDamageSound, volume: 0.5 });
+const JumpSound = new SpriteSound({ type: SpriteSoundType.Jump, src: PlayerJumpSound, volume: 0.3 });
 
 
 export class Player extends Sprite {
@@ -54,7 +56,7 @@ export class Player extends Sprite {
       AttackAnimation3,
       CastSpellAnimation
     ]);
-    this.sound.addList([AttackSound1, AttackSound2, AttackSound3, TakeDamageSound, DeathSound])
+    this.sound.addList([AttackSound1, AttackSound2, AttackSound3, TakeDamageSound, DeathSound, JumpSound])
   }
   inventory = new Inventory();
   equipment = new PlayerEquipment();
@@ -103,6 +105,7 @@ export class Player extends Sprite {
     jump: () => {
       if (!this.ailments.canMove) return;
       if (this.state.falling) return;
+      this.sound.play(SpriteSoundType.Jump);
       this.velocity.y = -15;
       this.gravity = 1;
     },

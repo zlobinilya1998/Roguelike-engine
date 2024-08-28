@@ -37,6 +37,7 @@ export class GameAudio {
         if (!audio) {
             audio = new Audio(GameBackground)
             audio.volume = backgroundVolume;
+            audio.loop = true;
         };
         if (audio.volume < 0.1){
             const interval = setInterval(() => {
