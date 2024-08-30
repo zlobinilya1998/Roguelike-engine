@@ -6,7 +6,6 @@ import { GameObjectSound, GameObjectSoundType } from "@/models/types/object/Game
 import PickingSound from 'assets/Audio/object/picking.wav';
 
 const PickingSound1 = new GameObjectSound({ type: GameObjectSoundType.Picking, src: PickingSound })
-
 export interface PickingObjectProps extends GameObjectProps { }
 
 export class PickingObject extends GameObject {
@@ -26,20 +25,25 @@ export class PickingObject extends GameObject {
 
     update(ts: EpochTimeStamp): void {
         super.update(ts);
+        this.updatePosition();
+        this.updatePickUp();
+    }
 
+    updatePosition() {
         this.position.x += this.velocity.x
         if (this.position.y < this.game.ctx.canvas.height - 220) {
             this.velocity.y += this.gravity;
             this.position.y += this.velocity.y
         } else {
             this.velocity.y = 0;
-            this.velocity.x = 0
+            this.velocity.x = 0;
         }
-
-
-        if (this.isCanInteract) this.onPickedUp();
     }
 
+    updatePickUp(){
+        if (!this.isCanInteract) return;
+        this.onPickedUp();
+    }
 
     onPickedUp() {
         if (this.isPicked) return;

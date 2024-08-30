@@ -50,8 +50,14 @@ export class GameObject {
         resolve: null as (value?: unknown) => void,
         play: (type: GameObjectAnimationType, force = false) => {
             if (force) this.animation.lock = false;
-            if (this.animation.animation?.type === type) return;
-            if (!type || this.animation.lock) return;
+            if (!type) return;
+            if (this.animation.animation?.type === type) {
+                console.log('Cancel animation', this);
+                
+                return
+            };
+            if (this.animation.lock) return;
+
             const animation = this.animations.get(type);
             if (!animation) return;
 

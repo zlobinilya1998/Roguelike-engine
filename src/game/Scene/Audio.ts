@@ -10,7 +10,7 @@ export class GameAudio {
             this.playBackground();
         })
         GameEvent.subscribe(Events.sound.boss.combat.start,this, async () => {
-            await this.stopBackgroundWithDelay();
+            this.stopBackgroundWithDelay();
             this.play(BossCombatStart,0.2);
         })
 
@@ -70,6 +70,10 @@ export class GameAudio {
                 this.current.volume = volume - 0.01;
             }, 100)
         })
+    }
+
+    stopBackground(){
+        this.background.pause();
     }
 
     stopBackgroundWithDelay(){

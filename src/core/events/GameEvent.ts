@@ -135,7 +135,11 @@ export class GameEvent {
         }
       },
       background: () => createEvent(Events.sound.background),
-    }
+    },
+
+    game: {
+      pause: () => createEvent(Events.game.pause),
+    },
   };
 
   static unsubscribe(event: Events, source: unknown) {
@@ -170,8 +174,10 @@ export class GameEvent {
           this.game.state.started = true;
           GameEvent.dispatch.sound.background();
         }
-
         switch (e.key) {
+          case Bindings.game.pause:
+            GameEvent.dispatch.game.pause();
+            break;
           case Bindings.player.spells[0]:
             GameEvent.dispatch.player.spell.useByIndex(0);
             break;

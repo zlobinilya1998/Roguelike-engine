@@ -5,6 +5,7 @@ import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimati
 import { InteractionRadius } from "models/base/geometry/Geometry";
 import { MovingObject } from "./MovingObject";
 import { GameObjectSoundType } from "@/models/types/object/GameObjectSound";
+import { TextBubble } from "../animation/TextBubble";
 
 export interface AttackableObjectProps extends GameObjectProps {
     durability?: number

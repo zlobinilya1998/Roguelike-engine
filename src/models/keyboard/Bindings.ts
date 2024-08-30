@@ -5,4 +5,8 @@ export class Bindings {
         jump: ' ',
         interact: 'f',
     }
+    
+    static game = {
+        pause: 'Escape',
+    }
 }

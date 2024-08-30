@@ -90,4 +90,8 @@ export class Events {
     static mouse = {
         move: 'mouse:move',
     }
+
+    static game = {
+        pause: 'game:pause',
+    }
 }
