@@ -52,8 +52,6 @@ export class GameObject {
             if (force) this.animation.lock = false;
             if (!type) return;
             if (this.animation.animation?.type === type) {
-                console.log('Cancel animation', this);
-                
                 return
             };
             if (this.animation.lock) return;
