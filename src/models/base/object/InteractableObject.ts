@@ -39,9 +39,13 @@ export class InteractableObject extends GameObject {
     applyListeners(): void {
         super.applyListeners();
         GameEvent.subscribe(Events.player.interact, this, () => {
-            if (!this.isCanInteract) return;
-            this.onInteract();
+            this.interact();
         })
+    }
+
+    interact() {
+        if (!this.isCanInteract) return;
+        this.onInteract();
     }
 
     onInteract() {

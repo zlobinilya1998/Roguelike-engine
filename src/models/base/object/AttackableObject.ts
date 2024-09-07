@@ -5,7 +5,6 @@ import { GameObjectAnimationType } from "@/models/types/object/GameObjectAnimati
 import { InteractionRadius } from "models/base/geometry/Geometry";
 import { MovingObject } from "./MovingObject";
 import { GameObjectSoundType } from "@/models/types/object/GameObjectSound";
-import { TextBubble } from "../animation/TextBubble";
 
 export interface AttackableObjectProps extends GameObjectProps {
     durability?: number
@@ -18,15 +17,20 @@ export class AttackableObject extends MovingObject {
         this.durability = props.durability || 2;
         this.interactionRadius = InteractionRadius.Large
     }
-    async onTakeHit() {
+
+    takeHit() {
         if (!this.isCanInteract) return;
+        this.onTakeHit();
+    }
+
+    async onTakeHit() {
         this.durability -= 1;
         await this.animation.play(GameObjectAnimationType.TakeHit, true);
         this.sound.play(GameObjectSoundType.TakeHit);
         if (this.durability <= 0) this.onFatalHit();
     }
 
-    onFatalHit(){
+    onFatalHit() {
         this.destroy();
         this.sound.play(GameObjectSoundType.FatalHit)
     }
@@ -34,7 +38,7 @@ export class AttackableObject extends MovingObject {
     applyListeners(): void {
         super.applyListeners();
         this.listeners.add(GameEvent.subscribe(Events.player.combat.attack.land, this, () => {
-            this.onTakeHit();
+            this.takeHit();
         }))
     }
 }

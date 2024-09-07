@@ -1,5 +1,7 @@
-import { Enemy } from "../enemy/Enemy";
-import { Player } from "./Player";
+import { GameEvent } from "@/core/events/GameEvent";
+import { TextBubble } from "@/models/base/animation/TextBubble";
+import { Enemy } from "@/models/base/enemy/Enemy";
+import { Player } from "@/models/base/player/Player";
 
 export class Health {
   constructor(creature: Player | Enemy) {
@@ -55,6 +57,7 @@ export class Health {
 
   decrease(amount: number) {
     if (this.isDead) return;
+    new TextBubble(`-${amount}`, 'red', { x: this.creature.position.x, y: this.creature.position.y });
     const restHealth = this.health - amount;
     this.health = restHealth > 0 ? restHealth : 0;
     if (!this.isDead) return;
@@ -62,6 +65,8 @@ export class Health {
   }
 
   increase(amount: number) {
+    const bubble = new TextBubble(`+${amount}`, 'green', { x: this.creature.position.x, y: this.creature.position.y });
+    GameEvent.dispatch.animation.spawn(bubble);
     const portion = this.health + amount;
     if (portion > this.maxHealth) return this.health = this.maxHealth
     this.health += amount;

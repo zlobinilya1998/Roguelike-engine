@@ -65,9 +65,6 @@ export class GameEvent {
           y: () => createEvent(Events.player.move.stop.y),
         }
       },
-      level: {
-        up: () => createEvent(Events.player.level.up),
-      },
       combat: {
         attack: {
           start: () => createEvent(Events.player.combat.attack.start),

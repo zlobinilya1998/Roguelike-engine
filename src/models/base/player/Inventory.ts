@@ -2,12 +2,13 @@ import { Item } from "models/item/Item";
 import { Player } from "./Player";
 
 export class Inventory {
-    items: Item[] = [];
-    get player(): Player {
-        return window.Game.player;
+    constructor(creature: Player) {
+        this.creature = creature;
     }
+    creature: Player;
+    items: Item[] = [];
 
-    takeItem(item: Item) {
+    addItem(item: Item) {
         this.items.push(item);
     }
 }

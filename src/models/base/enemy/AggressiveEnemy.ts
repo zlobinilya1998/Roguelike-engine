@@ -1,11 +1,11 @@
 import { SpriteAnimationType } from "@/models/types/base/sprite";
 import { GameEvent } from "core/events/GameEvent";
-import { AggressiveEnemyEquipment } from "@/models/base/combat/Equipment";
+import { Equipment } from "@/models/base/combat/Equipment";
 import { Enemy } from "models/base/enemy/Enemy";
 import { SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 
 export class AggressiveEnemy extends Enemy {
-    equipment: AggressiveEnemyEquipment = new AggressiveEnemyEquipment();
+    equipment: Equipment = new Equipment(this);
     canAttack = true;
     aggroRadius = 200;
     combatEntered = false;
@@ -70,7 +70,6 @@ export class AggressiveEnemy extends Enemy {
 
     get isPlayerInAggroRadius() {
         return Math.abs(this.geometry.x - this.player.geometry.x) > this.aggroRadius;
-
     }
 }
 

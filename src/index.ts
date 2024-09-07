@@ -30,16 +30,18 @@ export class Game {
     return [...this.scene.entities, ...this.world.entities, this.player];
   }
 
-  static start() {
-    this.entities.forEach((entity) => entity.draw());
-    requestAnimationFrame((timestamp) => this.update(timestamp));
-  }
-  static update(timestamp: EpochTimeStamp) {
+
+  private static update(timestamp: EpochTimeStamp) {
     if (this.state.paused) return;
     this.entities.forEach((obj) => obj.update(timestamp));
     requestAnimationFrame((timestamp) => this.update(timestamp));
   }
-  static setup() {
+
+  public static start() {
+    this.entities.forEach((entity) => entity.draw());
+    requestAnimationFrame((timestamp) => this.update(timestamp));
+  }
+  public static setup() {
     window.Game = Game;
     GameEvent.createListeners();
   }

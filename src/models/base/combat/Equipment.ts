@@ -3,6 +3,8 @@ import { Weapon } from "models/item/Weapon";
 import { Armour } from "models/item/Armour";
 import { Item } from "models/item/Item";
 import { Damage, DamageType } from "@/core/damage/Damage";
+import { Player } from "@/models/base/player/Player";
+import { Enemy } from "@/models/base/enemy/Enemy";
 
 export class EquipmentItems {
   weapon: Weapon = null
@@ -10,6 +12,11 @@ export class EquipmentItems {
 }
 
 export class Equipment {
+  constructor(creature: Enemy | Player){
+    this.creature = creature;
+    this.equipItem(weapons[0]);
+  }
+  creature: Enemy | Player = null;
   items = new EquipmentItems();
 
   equipItem(item: Item) {
@@ -22,10 +29,12 @@ export class Equipment {
   }
 
   equipWeapon(item: Weapon) {
+    if (!item) return;
     this.items.weapon = item;
   }
 
   equipArmour(item: Armour) {
+    if (!item) return;
     this.items.armour = item;
   }
 
@@ -49,20 +58,5 @@ export class Equipment {
       return this.armour.defense;
     }
     return 0;
-  }
-}
-
-export class PlayerEquipment extends Equipment {
-  constructor() {
-    super();
-    this.equipWeapon(weapons[0]) 
-  }
-
-}
-
-export class AggressiveEnemyEquipment extends Equipment {
-  constructor() {
-    super();
-    this.equipItem(weapons[0]);
   }
 }

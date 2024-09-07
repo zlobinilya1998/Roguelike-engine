@@ -11,7 +11,7 @@ import { Spell } from "@/core/spells/Spell";
 import { SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 
 export class Enemy extends Creature {
-    equipment = new Equipment();
+    equipment = new Equipment(this);
     effects = new CreatureEffects(this);
     spells = new EnemySpells(this)
     health = new Health(this)

@@ -6,11 +6,12 @@ export class PlayerStats {
   constructor(player: Player){
     this.player = player;
     this.health = new Health(player);
+    this.experience = new Experience(player)
   }
 
   player: Player;
   health: Health;
-  experience = new Experience();
+  experience: Experience;
   _level = 1;
   _mana = 30;
 

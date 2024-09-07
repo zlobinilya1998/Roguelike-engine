@@ -1,7 +1,10 @@
-import { GameEvent } from "core/events/GameEvent";
 import { Player } from "@/models/base/player/Player";
 
 export class Experience {
+  constructor(creature: Player) {
+    this.creature = creature;
+  }
+  creature: Player;
   _baseXp = 0;
   _xp = this._baseXp;
   _xpPerLevel = 50;
@@ -41,6 +44,6 @@ export class Experience {
   }
 
   levelUp() {
-    GameEvent.dispatch.player.level.up();
+    this.creature.stats.level += 1
   }
 }
