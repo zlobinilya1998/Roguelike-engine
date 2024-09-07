@@ -145,6 +145,10 @@ export class Sprite {
     }
   }
 
+  destroy(){
+    this.onDestroy();
+  }
+
   onCreated() {
     this.applyListeners();
   }

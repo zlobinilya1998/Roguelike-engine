@@ -1,13 +1,11 @@
-import { GameEvent } from "@/core/events/GameEvent";
 import { Enemy } from "../enemy/Enemy";
 import { Player } from "./Player";
-import { Creature } from "../creature/Creature";
 
 export class Health {
-  creature: Player | Enemy;
   constructor(creature: Player | Enemy) {
     this.creature = creature;
   }
+  creature: Player | Enemy;
   _baseHealth = 100;
   _health = this._baseHealth;
   _healthPerLevel = 10;
@@ -53,26 +51,19 @@ export class Health {
     return this.health === 0;
   }
 
-  takeDamage(damage: number) {
+
+
+  decrease(amount: number) {
     if (this.isDead) return;
-    const restHealth = this.health - damage;
+    const restHealth = this.health - amount;
     this.health = restHealth > 0 ? restHealth : 0;
-    if (this.isDead) {
-      const isPlayer = this.creature instanceof Player;
-      if (isPlayer) {
-        GameEvent.dispatch.player.status.dead();
-      } else {
-        GameEvent.dispatch.creature.status.dead(this.creature as Creature)
-      }
-    }
+    if (!this.isDead) return;
+    this.creature.destroy()
   }
 
-  heal(points: number) {
-    const portion = this.health + points;
-    if (portion > this.maxHealth) { this.health = this.maxHealth }
-    else {
-      this.health += points;
-    }
-
+  increase(amount: number) {
+    const portion = this.health + amount;
+    if (portion > this.maxHealth) return this.health = this.maxHealth
+    this.health += amount;
   }
 }

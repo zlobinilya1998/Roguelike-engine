@@ -1,4 +1,3 @@
-import { SpriteGeometry, SpritePosition, SpriteSize } from "@/models/types/base/sprite/Sprite";
 import { Creature } from "models/base/creature/Creature";
 import { Health } from "../player/Health";
 import { GameEvent } from "@/core/events/GameEvent";
@@ -41,13 +40,9 @@ export class Enemy extends Creature {
 
         this.listeners.add(GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
             if (!this.isNearPlayer) return;
-            this.health.takeDamage(damage.damageCount);
+            this.health.decrease(damage.damageCount);
             this.sound.play(SpriteSoundType.TakeDamage)
             this.animation.play(SpriteAnimationType.TakeDamage, true, true);
-        }))
-        this.listeners.add(GameEvent.subscribe(Events.creature.status.dead, this, async (creature: Creature) => {
-            if (!this.itsMe(creature)) return;
-            this.onDestroy();
         }))
 
         this.listeners.add(GameEvent.subscribe(Events.creature.effect.apply, this, (effect: Effect) => {
@@ -56,7 +51,7 @@ export class Enemy extends Creature {
 
         this.listeners.add(GameEvent.subscribe(Events.creature.spell.damage.take, this, ({ spell, creature }: { spell: Spell, creature: Creature }) => {
             if (!this.itsMe(creature)) return;
-            this.health.takeDamage(spell.damage.damageCount)
+            this.health.decrease(spell.damage.damageCount)
         }));
 
     }

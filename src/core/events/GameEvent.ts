@@ -80,7 +80,6 @@ export class GameEvent {
         apply: (effect: Effect) => createEvent(Events.player.effect.apply, effect)
       },
       status: {
-        dead: () => createEvent(Events.player.status.dead),
       },
       spell: {
         useByIndex: (index: number) => createEvent(Events.player.spell.useByIndex, index),
@@ -93,7 +92,6 @@ export class GameEvent {
     },
     creature: {
       status: {
-        dead: (creature: Creature) => createEvent(Events.creature.status.dead, creature),
       },
       effect: {
         apply: (effect: Effect, creature: Creature) => createEvent(Events.player.effect.apply, effect)

@@ -81,13 +81,13 @@ export class Player extends Sprite {
     take: (damage: Damage, from: Enemy = null) => {
       if (this.damage.immune || this.isDead) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
-      this.stats.health.takeDamage(damageCount);
+      this.stats.health.decrease(damageCount);
       new TextBubble(`-${damageCount}`, 'red', { x: this.position.x, y: this.position.y });
       this.animation.play(SpriteAnimationType.TakeDamage, true, true);
       this.sound.play(SpriteSoundType.TakeDamage);
     },
     restore: (count: number) => {
-      this.stats.health.heal(count);
+      this.stats.health.increase(count);
       const bubble = new TextBubble(`+${count}`, 'green', { x: this.position.x, y: this.position.y });
       GameEvent.dispatch.animation.spawn(bubble);
     },
@@ -124,7 +124,8 @@ export class Player extends Sprite {
     super.update();
   }
 
-  onDeath() {
+  destroy(): void {
+    super.destroy();
     this.effects.clearQueue();
     this.sound.play(SpriteSoundType.Death);
   }
@@ -132,9 +133,6 @@ export class Player extends Sprite {
   applyListeners(): void {
     super.applyListeners();
 
-    GameEvent.subscribe(Events.player.status.dead, this, () => {
-      this.onDeath();
-    });
     GameEvent.subscribe(Events.player.level.up, this, () => this.stats.level += 1);
     GameEvent.subscribe(Events.player.combat.attack.start, this, () => this.damage.cause());
     GameEvent.subscribe(Events.player.spell.use, this, (spell: Spell) => {

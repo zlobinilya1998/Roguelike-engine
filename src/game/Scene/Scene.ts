@@ -14,7 +14,6 @@ export class Scene {
         this.audio = new GameAudio();
 
         GameEvent.subscribe(Events.game.pause, this, () => {
-            console.log('Subscribe');
             this.game.pause();
         });
     }
