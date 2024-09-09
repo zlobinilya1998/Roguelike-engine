@@ -5,6 +5,9 @@ import { CollidableAnimation } from "./CollidableAnimation";
 import IceCast from 'assets/Animation/IcePick.png';
 import { IceCastAnimation } from "./IceCastAnimation";
 import IceCastCollide from 'assets/Audio/spell/ice-pick-collide.wav';
+import { Creature } from "../creature/Creature";
+import { EffectList } from "@/core/effects/EffectList";
+import { EffectIcons } from "@/core/effects/EffectIcons";
 
 const IcePickIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: IceCast, maxFrames: 30, hold: 2,loop: true });
 export class IcePickAnimation extends CollidableAnimation {
@@ -18,12 +21,12 @@ export class IcePickAnimation extends CollidableAnimation {
     update(ts: EpochTimeStamp): void {
         super.update(ts)
         this.position.x += 12;
-       
     }
 
-    onAnimationEnd(): void {
-        super.onAnimationEnd();
+    onCollide(creature: Creature): void {
+        super.onCollide(creature);
         new IceCastAnimation(this.position);
         this.game.scene.audio.play(IceCastCollide, 0.1)
+        creature.effects.applyEffect(EffectList.trap.fire)
     }
 }

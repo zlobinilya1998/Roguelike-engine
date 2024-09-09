@@ -1,9 +1,9 @@
-import { Equipment } from "@/models/base/combat/Equipment";
+import { Creature } from "../creature/Creature";
 import { PlayerStats } from "./Stats";
-import { Damage, DamageSystem, DamageType } from "@/core/damage/Damage";
+import { Damage, DamageSystem } from "@/core/damage/Damage";
 import { SpriteAnimation, SpriteAnimationType, SpriteHitBox, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
 import { Inventory } from "@/models/base/player/Inventory";
-import { CreatureEffects, Effect, PlayerEffects } from "core/effects/Effects";
+import { Effect, PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
@@ -29,7 +29,6 @@ import PlayerAttackSound3 from 'assets/Audio/player/attack3.wav';
 import PlayerTakeDamageSound from 'assets/Audio/player/takeDamage.wav';
 import PlayerJumpSound from 'assets/Audio/player/jump.wav';
 import PlayerDeathSound from 'assets/Audio/player/death.wav';
-import { Creature } from "../creature/Creature";
 
 const AttackSound1 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound1, volume: 0.5 });
 const AttackSound2 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound2, volume: 0.5 });
@@ -58,7 +57,7 @@ export class Player extends Creature {
   }
   inventory = new Inventory(this);
   stats = new PlayerStats(this);
-  effects = new PlayerEffects(this);
+  effects: PlayerEffects = new PlayerEffects(this);
   ailments = new Ailments(this);
   spells = new PlayerSpells(this);
 

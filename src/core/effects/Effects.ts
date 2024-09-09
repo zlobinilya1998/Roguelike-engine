@@ -1,53 +1,68 @@
 import { Game } from "@/index";
 import { Creature } from "@/models/base/creature/Creature";
-import { Player } from "@/models/base/player/Player";
 
 export enum EffectType {
     Positive = 1,
     Negative,
 }
 
-export class Effect {
+export interface EffectProps {
+    title: string;
+    description: string;
+    imageSrc: string;
+    type: EffectType;
+    onApply?: (victim: Creature) => void;
+    onTick?: (victim: Creature) => void;
+    onEnd?: (creature: Creature) => void;
+    duration?: number;
+}
+
+export class Effect implements EffectProps {
+    constructor(props: EffectProps) {
+        this.title = props.title;
+        this.description = props.description;
+        this.imageSrc = props.imageSrc;
+        this.type = props.type
+        this.onApply = props.onApply
+        this.onTick = props.onTick;
+        this.onEnd = props.onEnd
+        this.duration = props.duration || 10_000;
+        this.baseDuration = this.duration;
+    }
     title: string;
     type: EffectType;
-    baseDuration: number = 10_000;
+    baseDuration: number;
     duration: number;
     imageSrc: string;
     description: string;
     stacks: number;
     maxStacks: number;
-    onApply: () => void;
-    onEnd?: () => void;
-
-    constructor(title: string, imageSrc: string, description: string, type: EffectType, onApply: () => void, onEnd?: () => void, duration: number = 10_000) {
-        this.title = title;
-        this.type = type
-        this.onApply = onApply
-        this.onEnd = onEnd
-        this.duration = duration
-        this.imageSrc = imageSrc;
-        this.description = description;
-    }
+    onApply: (victim: Creature) => void;
+    onTick: (victim: Creature) => void;
+    onEnd?: (victim: Creature) => void;
 
     get isPositive() {
         return this.type === EffectType.Positive
     }
 
-    resetDuration() {
-        this.duration = this.baseDuration;
-    }
-
     get durationText() {
         return `${this.duration / 1000}s`;
+    }
+
+    get isFirstTick() {
+        return this.baseDuration === this.duration
+    }
+
+    resetDuration() {
+        this.duration = this.baseDuration;
     }
 }
 
 export class CreatureEffects {
-    creature: Creature | Player;
-    constructor(creature: Creature | Player){
+    constructor(creature: Creature) {
         this.creature = creature;
     }
-
+    creature: Creature;
     effects: Effect[] = [];
     applyEffectInterval: any = null;
 
@@ -68,8 +83,9 @@ export class CreatureEffects {
         if (isEffectApplied) {
             effect.resetDuration();
         } else {
-            this.effects.push(effect)
+            this.effects.push(effect);
         }
+        if (effect.onApply) effect.onApply(this.creature);
         this.createEffectQueue();
     }
 
@@ -88,14 +104,14 @@ export class CreatureEffects {
         this.onDrawEffects();
         if (this.applyEffectInterval) return
         this.applyEffectInterval = setInterval(() => {
-            if (this.isEmpty || this.game.player.isDead) return this.clearQueue();
+            if (this.isEmpty) return this.clearQueue();
             this.effects.forEach(effect => {
                 if (effect.duration <= 0) {
                     this.removeEffect(effect)
-                    effect.onEnd?.();
+                    effect.onEnd?.(this.creature);
                     return;
                 }
-                effect.onApply()
+                if (effect.onTick) effect.onTick(this.creature)
                 effect.duration -= 1_000;
             })
             this.onDrawEffects();
