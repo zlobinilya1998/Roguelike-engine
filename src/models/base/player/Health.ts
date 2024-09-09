@@ -1,13 +1,13 @@
 import { GameEvent } from "@/core/events/GameEvent";
 import { TextBubble } from "@/models/base/animation/TextBubble";
-import { Enemy } from "@/models/base/enemy/Enemy";
 import { Player } from "@/models/base/player/Player";
+import { Creature } from "@/models/base/creature/Creature";
 
 export class Health {
-  constructor(creature: Player | Enemy) {
+  constructor(creature: Player | Creature) {
     this.creature = creature;
   }
-  creature: Player | Enemy;
+  creature: Player | Creature;
   _baseHealth = 100;
   _health = this._baseHealth;
   _healthPerLevel = 10;

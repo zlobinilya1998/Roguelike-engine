@@ -1,5 +1,4 @@
 import { Creature } from "models/base/creature/Creature";
-import { Health } from "../player/Health";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
@@ -13,30 +12,20 @@ import { SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 export class Enemy extends Creature {
     equipment = new Equipment(this);
     effects = new CreatureEffects(this);
-    spells = new EnemySpells(this)
-    health = new Health(this)
-
+    spells = new EnemySpells(this);
 
     update() {
         super.update();
         this.spells.createSpellQueue();
     }
 
-    updatePosition(): void {
-        if (this.health.isDead) return;
-        super.updatePosition();
-    }
-
     async onDestroy() {
         super.onDestroy();
-        this.sound.play(SpriteSoundType.Death);
-        await this.animation.play(SpriteAnimationType.Death, true, true);
-        this.game.world.creature.remove(this)
+        
     }
 
     applyListeners(): void {
         super.applyListeners();
-
 
         this.listeners.add(GameEvent.subscribe(Events.player.combat.attack.land, this, (damage: Damage) => {
             if (!this.isNearPlayer) return;

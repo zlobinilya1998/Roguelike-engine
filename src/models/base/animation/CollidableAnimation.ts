@@ -1,4 +1,4 @@
-import { Enemy } from "../enemy/Enemy";
+import { Creature } from "@/models/base/creature/Creature";
 import { GameAnimation } from "./GameAnimation";
 
 
@@ -12,7 +12,7 @@ export class CollidableAnimation extends GameAnimation {
         })
     }
 
-    onCollide(creature: Enemy) {
+    onCollide(creature: Creature) {
         this.onAnimationEnd();
     }
 }

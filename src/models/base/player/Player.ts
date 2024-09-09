@@ -124,7 +124,6 @@ export class Player extends Sprite {
   destroy(): void {
     super.destroy();
     this.effects.clearQueue();
-    this.sound.play(SpriteSoundType.Death);
   }
 
   applyListeners(): void {

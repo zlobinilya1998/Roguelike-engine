@@ -2,7 +2,7 @@ import { GameUtils } from '@/utils';
 import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType, SpriteAnimation } from '@/models/types/base/sprite'
 import { Game } from '@/index';
 import { Player } from '@/models/base/player/Player';
-import { SpriteSounds } from '@/models/types/base/sprite/SpriteSound';
+import { SpriteSounds, SpriteSoundType } from '@/models/types/base/sprite/SpriteSound';
 import { GameEvent } from '@/core/events/GameEvent';
 import { Events } from '@/core/events/Events';
 import { GameEventListeners } from '@/core/events/Listeners';
@@ -153,8 +153,10 @@ export class Sprite {
     this.applyListeners();
   }
 
-  onDestroy() {
-    this.removeListeners()
+  async onDestroy() {
+    this.removeListeners();
+    this.sound.play(SpriteSoundType.Death);
+    await this.animation.play(SpriteAnimationType.Death, true, true);      
   }
 
   draw() {
