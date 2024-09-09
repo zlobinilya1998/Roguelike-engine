@@ -3,8 +3,7 @@ import { Weapon } from "models/item/Weapon";
 import { Armour } from "models/item/Armour";
 import { Item } from "models/item/Item";
 import { Damage, DamageType } from "@/core/damage/Damage";
-import { Player } from "@/models/base/player/Player";
-import { Enemy } from "@/models/base/enemy/Enemy";
+import { Creature } from "@/models/base/creature/Creature";
 
 export class EquipmentItems {
   weapon: Weapon = null
@@ -12,11 +11,11 @@ export class EquipmentItems {
 }
 
 export class Equipment {
-  constructor(creature: Enemy | Player){
+  constructor(creature: Creature){
     this.creature = creature;
     this.equipItem(weapons[0]);
   }
-  creature: Enemy | Player = null;
+  creature: Creature = null;
   items = new EquipmentItems();
 
   equipItem(item: Item) {

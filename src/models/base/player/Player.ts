@@ -1,12 +1,10 @@
 import { Equipment } from "@/models/base/combat/Equipment";
 import { PlayerStats } from "./Stats";
-import { Sprite } from "@/models/base/sprite/Sprite";
 import { Damage, DamageSystem, DamageType } from "@/core/damage/Damage";
 import { SpriteAnimation, SpriteAnimationType, SpriteHitBox, SpritePosition, SpriteSize } from "@/models/types/base/sprite";
 import { Inventory } from "@/models/base/player/Inventory";
-import { Effect, PlayerEffects } from "core/effects/Effects";
+import { CreatureEffects, Effect, PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
-import { TextBubble } from "@/models/base/animation/TextBubble";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
 import { Ailments, AilmentType } from "./Ailments";
@@ -31,6 +29,7 @@ import PlayerAttackSound3 from 'assets/Audio/player/attack3.wav';
 import PlayerTakeDamageSound from 'assets/Audio/player/takeDamage.wav';
 import PlayerJumpSound from 'assets/Audio/player/jump.wav';
 import PlayerDeathSound from 'assets/Audio/player/death.wav';
+import { Creature } from "../creature/Creature";
 
 const AttackSound1 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound1, volume: 0.5 });
 const AttackSound2 = new SpriteSound({ type: SpriteSoundType.Attack, src: PlayerAttackSound2, volume: 0.5 });
@@ -39,8 +38,7 @@ const DeathSound = new SpriteSound({ type: SpriteSoundType.Death, src: PlayerDea
 const TakeDamageSound = new SpriteSound({ type: SpriteSoundType.TakeDamage, src: PlayerTakeDamageSound, volume: 0.5 });
 const JumpSound = new SpriteSound({ type: SpriteSoundType.Jump, src: PlayerJumpSound, volume: 0.3 });
 
-
-export class Player extends Sprite {
+export class Player extends Creature {
   constructor() {
     const position = new SpritePosition(220, 220);
     const size = new SpriteSize(192, 192);
@@ -59,7 +57,6 @@ export class Player extends Sprite {
     this.sound.addList([AttackSound1, AttackSound2, AttackSound3, TakeDamageSound, DeathSound, JumpSound])
   }
   inventory = new Inventory(this);
-  equipment = new Equipment(this);
   stats = new PlayerStats(this);
   effects = new PlayerEffects(this);
   ailments = new Ailments(this);
@@ -82,8 +79,7 @@ export class Player extends Sprite {
       if (this.damage.immune || this.isDead) return;
       const damageCount = DamageSystem.calculate(damage, from, this)
       this.stats.health.decrease(damageCount);
-      this.animation.play(SpriteAnimationType.TakeDamage, true, true);
-      this.sound.play(SpriteSoundType.TakeDamage);
+
     },
     restore: (count: number) => {
       this.stats.health.increase(count);
