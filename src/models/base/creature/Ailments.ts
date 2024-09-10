@@ -1,5 +1,5 @@
-import { Creature } from "../creature/Creature";
-import { Player } from "./Player";
+import { Creature } from "./Creature";
+import { Player } from "../player/Player";
 
 export enum AilmentType {
     Stunned = 1,
@@ -8,13 +8,13 @@ export enum AilmentType {
 }
 
 export class Ailment {
-    name: string
-    type: AilmentType
-    applied: boolean = false
     constructor(name: string, type: AilmentType) {
         this.name = name;
         this.type = type;
     }
+    name: string
+    type: AilmentType
+    applied: boolean = false
 }
 
 interface ExpirationTimer {
@@ -29,18 +29,29 @@ export class Ailments {
 
     list = {
         [AilmentType.Stunned]: false,
-        [AilmentType.Disarmed]: false,
         [AilmentType.Rooted]: false,
+        [AilmentType.Disarmed]: false,
     }
 
     expirationTimer: ExpirationTimer = {}
 
     get canAttack() {
-        const attackBlockers = [this.list[AilmentType.Stunned], this.list[AilmentType.Disarmed]]
-        return attackBlockers.every(ailment => !ailment)
+        const ailments = [AilmentType.Stunned,AilmentType.Disarmed]
+        return !this.isSomeApplied(ailments);
     }
     get canMove() {
-        return !this.list[AilmentType.Rooted];
+        const ailments = [AilmentType.Stunned,AilmentType.Rooted]
+        return !this.isSomeApplied(ailments);
+    }
+
+    isListApplied(list: AilmentType[]){
+        return list.every(type => this.isApplied(type));
+    }
+    isSomeApplied(list: AilmentType[]){
+        return list.some(type => this.isApplied(type));
+    }
+    isApplied(type: AilmentType){
+        return this.list[type]
     }
 
     applyAilment(ailmentType: AilmentType, expirationTime = 5000){

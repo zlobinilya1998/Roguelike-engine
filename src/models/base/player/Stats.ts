@@ -1,5 +1,5 @@
 import { Experience } from "./Experience";
-import { Health } from "./Health";
+import { Health } from "../creature/Health";
 import { Player } from "./Player";
 
 export class PlayerStats {

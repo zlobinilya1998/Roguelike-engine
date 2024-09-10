@@ -8,7 +8,7 @@ import { Game } from "@/index";
 import { Creature } from "@/models/base/creature/Creature";
 import { Spell } from "../spells/Spell";
 import { Bindings } from "@/models/keyboard/Bindings";
-import { AilmentType } from "@/models/base/player/Ailments";
+import { AilmentType } from "@/models/base/creature/Ailments";
 
 export type GameEventListener = {
   source: unknown;

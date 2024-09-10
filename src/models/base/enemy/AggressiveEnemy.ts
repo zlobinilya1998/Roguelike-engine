@@ -49,7 +49,7 @@ export class AggressiveEnemy extends Enemy {
         }
 
         this.combatEnter();
-
+        if (!this.ailments.canMove) return;
 
         if (this.geometry.x > this.player.geometry.x) {
             this.velocity.x = -1;
@@ -71,6 +71,7 @@ export class AggressiveEnemy extends Enemy {
     get isPlayerInAggroRadius() {
         return Math.abs(this.geometry.x - this.player.geometry.x) > this.aggroRadius;
     }
+
 }
 
 

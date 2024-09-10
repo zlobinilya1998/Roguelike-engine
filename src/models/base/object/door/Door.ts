@@ -4,7 +4,7 @@ import { InteractableObject } from "models/base/object/InteractableObject";
 import DoorIdle from 'assets/gameObject/Door/Idle.png';
 import DoorOpening from 'assets/gameObject/Door/Opening.png';
 import DoorClosing from 'assets/gameObject/Door/Closing.png';
-import { AilmentType } from "../../player/Ailments";
+import { AilmentType } from "../../creature/Ailments";
 import { GameEvent } from "@/core/events/GameEvent";
 import DoorSound from 'assets/Audio/object/door/open.mp3';
 import { GameObjectSound, GameObjectSoundType } from "@/models/types/object/GameObjectSound";

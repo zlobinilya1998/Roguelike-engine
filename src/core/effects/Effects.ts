@@ -122,6 +122,10 @@ export class CreatureEffects {
         clearInterval(this.applyEffectInterval);
         this.effects = [];
         this.applyEffectInterval = null;
+        this.drawEffects();
+    }
+
+    drawEffects() {
         this.onDrawEffects();
     }
 

@@ -7,7 +7,7 @@ import { Effect, PlayerEffects } from "core/effects/Effects";
 import { Enemy } from "@/models/base/enemy/Enemy";
 import { GameEvent } from "@/core/events/GameEvent";
 import { Events } from "@/core/events/Events";
-import { Ailments, AilmentType } from "./Ailments";
+import { Ailments, AilmentType } from "../creature/Ailments";
 import { PlayerSpells } from "@/core/spells/PlayerSpells";
 import { Spell } from "@/core/spells/Spell";
 
@@ -58,7 +58,6 @@ export class Player extends Creature {
   inventory = new Inventory(this);
   stats = new PlayerStats(this);
   effects: PlayerEffects = new PlayerEffects(this);
-  ailments = new Ailments(this);
   spells = new PlayerSpells(this);
 
   get isDead() {

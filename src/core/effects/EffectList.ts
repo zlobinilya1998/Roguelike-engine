@@ -1,5 +1,3 @@
-import { Player } from "@/models/base/player/Player";
-import { Damage, DamageType } from "core/damage/Damage";
 import { Effect, EffectType } from "core/effects/Effects";
 import { EffectIcons } from "core/effects/EffectIcons";
 

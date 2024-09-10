@@ -1,24 +1,27 @@
 import { GameEntityGeometry, GameUtils } from "@/utils";
 import { Sprite, SpriteProps } from "models/base/sprite/Sprite";
-import { Health } from "models/base/player/Health";
+import { Health } from "@/models/base/creature/Health";
 import { SpriteSoundType } from "@/models/types/base/sprite/SpriteSound";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
 import { TextBubble } from "models/base/animation/TextBubble";
 import { Equipment } from "../combat/Equipment";
 import { CreatureEffects } from "@/core/effects/Effects";
+import { Ailments } from "./Ailments";
 
 interface CreatureProps extends SpriteProps { }
 
 export class Creature extends Sprite {
-    health: Health;
-    equipment: Equipment;
-    effects: CreatureEffects;
     constructor(props: CreatureProps) {
         super(props);
         this.health = new Health(this);
         this.equipment = new Equipment(this);
         this.effects = new CreatureEffects(this);
+        this.ailments = new Ailments(this);
     }
+    health: Health;
+    equipment: Equipment;
+    effects: CreatureEffects;
+    ailments: Ailments;
 
     get isNearPlayer() {
         return GameUtils.gameObject.isCollide(this.player.geometry, this.geometry);
