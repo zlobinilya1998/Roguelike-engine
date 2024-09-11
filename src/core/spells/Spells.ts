@@ -34,7 +34,8 @@ export class Spells {
     onSpellUse(spell: Spell) { }
     onUpdateSpellsCd() {}
     useSpell(spell: Spell) {
-        // spell = this.list[0];
+        if (!this.creature.ailments.canCast) return;
+
         if (!spell?.isCanUse) return;
         spell.use();
         if (this.updateCdIntervalId) return;

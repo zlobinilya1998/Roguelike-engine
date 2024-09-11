@@ -2,7 +2,6 @@ import { AggressiveEnemy } from "models/base/enemy/AggressiveEnemy";
 import { SpriteProps } from "@/models/base/sprite/Sprite";
 import { GameEvent } from "@/core/events/GameEvent";
 
-
 export interface BossProps extends SpriteProps {
     title: string;
 }
@@ -31,9 +30,12 @@ export class Boss extends AggressiveEnemy {
 
     drawBossHealth() {
         if (this.health.isDead) return;
+
+        const textColor = this.ailments.canMove ? 'black' : 'blue';
+
         this.game.ctx.save();
         this.game.ctx.font = '10px Ugly'
-        this.game.ctx.fillStyle = 'black';
+        this.game.ctx.fillStyle = textColor;
         this.game.ctx.textAlign = 'left';
         this.game.ctx.fillText(this.title, this.hitBox.x, this.hitBox.y - 20)
         this.game.ctx.restore();

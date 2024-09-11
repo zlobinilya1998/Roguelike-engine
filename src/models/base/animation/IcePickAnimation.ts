@@ -7,11 +7,11 @@ import { IceCastAnimation } from "./IceCastAnimation";
 import IceCastCollide from 'assets/Audio/spell/ice-pick-collide.wav';
 import { Creature } from "../creature/Creature";
 import { EffectList } from "@/core/effects/EffectList";
-import { EffectIcons } from "@/core/effects/EffectIcons";
+import { AilmentType } from "../creature/Ailments";
 
 const IcePickIdleAnimation = new GameObjectAnimation({ type: GameObjectAnimationType.Idle, imageSrc: IceCast, maxFrames: 30, hold: 2,loop: true });
+
 export class IcePickAnimation extends CollidableAnimation {
-    rotation = 0;
     constructor(position: GameObjectPosition) {
         const size = new GameObjectSize(64, 64);
         super({ position, size, hitBox: { x: 0, y: 0, width: 64, height: 64 } });
@@ -28,5 +28,6 @@ export class IcePickAnimation extends CollidableAnimation {
         new IceCastAnimation(this.position);
         this.game.scene.audio.play(IceCastCollide, 0.1)
         creature.effects.applyEffect(EffectList.trap.fire)
+        creature.ailments.applyAilment(AilmentType.Rooted);
     }
 }
