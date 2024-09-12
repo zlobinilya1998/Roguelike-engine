@@ -1,4 +1,4 @@
-import { GameAnimation } from "@/models/base/animation/GameAnimation";
+import { GameAnimation } from "@/models/base/sprite/object/animation/GameAnimation";
 import { WorldEntity } from "@/models/base/world";
 
 export class WorldAnimation extends WorldEntity<GameAnimation> {

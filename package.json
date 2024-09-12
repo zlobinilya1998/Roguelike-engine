@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "vite serve",
-    "start:stage": "vite serve --mode staging",
+    "start": "vite serve --mode staging",
+    "start:preview": "vite serve --mode production",
     "build": "vite build"
   },
   "devDependencies": {

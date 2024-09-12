@@ -1,7 +1,7 @@
 import { GameUtils } from '@/utils';
 import { SpritePosition, SpriteSize, SpriteFrames, SpriteGeometry, SpriteVelocity, SpriteSizes, SpriteAnimations, SpriteAnimationType, SpriteAnimation } from '@/models/types/base/sprite'
 import { Game } from '@/index';
-import { Player } from '@/models/base/player/Player';
+import { Player } from '@/models/base/sprite/creature/player/Player';
 import { SpriteSounds, SpriteSoundType } from '@/models/types/base/sprite/SpriteSound';
 import { GameEvent } from '@/core/events/GameEvent';
 import { Events } from '@/core/events/Events';
@@ -286,7 +286,7 @@ export class Sprite {
 
     const isDev = import.meta.env.VITE_APP_BORDERS;
 
-    if (this.mouse.hovered) this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
+    if (this.mouse.hovered && isDev) this.game.ctx.strokeRect(this.hitBox.x, this.hitBox.y, this.hitBox.width, this.hitBox.height)
 
 
     if (!isDev) return;

@@ -1,6 +1,6 @@
 import { Events } from "@/core/events/Events";
 import { GameEvent } from "@/core/events/GameEvent";
-import { GameAnimation } from "@/models/base/animation/GameAnimation";
+import { GameAnimation } from "@/models/base/sprite/object/animation/GameAnimation";
 import collisionBlocks from "@/models/base/levels/collisions";
 import { WorldGameObject } from "./GameObjects";
 import { WorldAnimation } from "./Animations";

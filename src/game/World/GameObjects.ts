@@ -1,6 +1,6 @@
-import { ExplosiveBox } from "@/models/base/object/box/ExplosiveBox";
-import { Door } from "@/models/base/object/door/Door";
-import { GameObject } from "@/models/base/object/GameObject";
+import { ExplosiveBox } from "@/models/base/sprite/object/box/ExplosiveBox";
+import { Door } from "@/models/base/sprite/object/door/Door";
+import { GameObject } from "@/models/base/sprite/object/GameObject";
 import { WorldEntity } from "@/models/base/world";
 
 export class WorldGameObject extends WorldEntity<GameObject> { 

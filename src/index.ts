@@ -3,7 +3,7 @@ import './style/variables/variables.scss';
 import './style/components/components.scss'
 
 import { GameEvent } from "@/core/events/GameEvent";
-import { Player } from "@/models/base/player/Player";
+import { Player } from "@/models/base/sprite/creature/player/Player";
 
 import { UI } from '@/game/UI/UI';
 import { World } from '@/game/World/World';

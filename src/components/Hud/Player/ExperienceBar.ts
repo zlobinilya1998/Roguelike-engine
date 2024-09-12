@@ -1,5 +1,5 @@
 import { UIComponent } from "@/components/ui/UIComponent";
-import { Player } from "@/models/base/player/Player";
+import { Player } from "@/models/base/sprite/creature/player/Player";
 
 export class ExperienceBar extends UIComponent {
     bar = window.experienceBar;

@@ -1,6 +1,6 @@
-import { Creature } from "@/models/base/creature/Creature";
+import { Creature } from "@/models/base/sprite/creature/Creature";
 import { Spell } from "@/core/spells/Spell";
-import { Player } from "@/models/base/player/Player";
+import { Player } from "@/models/base/sprite/creature/player/Player";
 import { Game } from "@/index";
 import { GameUtils } from "@/utils";
 

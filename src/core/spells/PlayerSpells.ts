@@ -1,9 +1,9 @@
 import { Spells } from "@/core/spells/Spells";
 import { Spell, SpellId } from "@/core/spells/Spell";
-import { Player } from "@/models/base/player/Player";
+import { Player } from "@/models/base/sprite/creature/player/Player";
 import { GameEvent } from "@/core/events/GameEvent";
-import { IceCastAnimation } from "@/models/base/animation/IceCastAnimation";
-import { IcePickAnimation } from "@/models/base/animation/IcePickAnimation";
+import { IceCastAnimation } from "@/models/base/sprite/object/animation/IceCastAnimation";
+import { IcePickAnimation } from "@/models/base/sprite/object/animation/IcePickAnimation";
 import { SpriteAnimationType } from "@/models/types/base/sprite";
 import { DamageType } from "../damage/Damage";
 

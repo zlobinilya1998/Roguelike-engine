@@ -1,6 +1,6 @@
 import { Item } from "@/models/item/Item";
-import { Inventory } from "@/models/base/player/Inventory";
-import { Player } from "@/models/base/player/Player";
+import { Inventory } from "@/models/base/sprite/creature/player/Inventory";
+import { Player } from "@/models/base/sprite/creature/player/Player";
 
 export class PlayerInventory {
   dialog = window.inventoryDialog;

@@ -1,14 +1,14 @@
 import { Item } from "models/item/Item";
-import { Chest } from "@/models/base/object/chest/Chest";
+import { Chest } from "@/models/base/sprite/object/chest/Chest";
 import { Events } from "core/events/Events";
 import { Damage } from "core/damage/Damage";
 import { Effect } from "core/effects/Effects";
-import { GameAnimation } from "@/models/base/animation/GameAnimation";
+import { GameAnimation } from "@/models/base/sprite/object/animation/GameAnimation";
 import { Game } from "@/index";
-import { Creature } from "@/models/base/creature/Creature";
+import { Creature } from "@/models/base/sprite/creature/Creature";
 import { Spell } from "../spells/Spell";
 import { Bindings } from "@/models/keyboard/Bindings";
-import { AilmentType } from "@/models/base/creature/Ailments";
+import { AilmentType } from "@/models/base/sprite/creature/Ailments";
 
 export type GameEventListener = {
   source: unknown;

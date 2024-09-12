@@ -1,5 +1,5 @@
 import { Game } from "@/index";
-import { Creature } from "@/models/base/creature/Creature";
+import { Creature } from "@/models/base/sprite/creature/Creature";
 
 export enum EffectType {
     Positive = 1,

@@ -1,4 +1,4 @@
-import { Chest, ChestItem } from "@/models/base/object/chest/Chest";
+import { Chest, ChestItem } from "@/models/base/sprite/object/chest/Chest";
 import { Weapon } from "@/models/item/Weapon";
 import { GameEvent } from "@/core/events/GameEvent";
 

@@ -1,5 +1,5 @@
-import { Player } from "@/models/base/player/Player";
-import { Enemy } from "@/models/base/enemy/Enemy";
+import { Player } from "@/models/base/sprite/creature/player/Player";
+import { Enemy } from "@/models/base/sprite/creature/enemy/Enemy";
 
 export enum DamageType {
   Physic = 1,

@@ -1,4 +1,4 @@
-import { Player } from "@/models/base/player/Player";
+import { Player } from "@/models/base/sprite/creature/player/Player";
 import { Game } from "@/index";
 
 
